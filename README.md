@@ -1,24 +1,7 @@
-# README
+# SHROOM (Service Helping get Research Online and Open with Machine learning)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+***"Have you tried SHROOM? It's magic!"***
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+SHROOM is a proof-of-concept Rails application to explore:
+* The use of the [GROBID](https://github.com/kermitt2/grobid) machine learning library to extract bibliographic metadata from scholarly articles to minimize manual entry by users.
+* The use of SDR / DSA for the persistence of Cocina model digital objects to avoid synchronization problems between the deposit application and the repository.
