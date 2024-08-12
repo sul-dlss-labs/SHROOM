@@ -1,4 +1,4 @@
-class MapperService
+class WorkCocinaMapperService
   class ToCocinaMapper
     def self.call(...)
       new(...).call

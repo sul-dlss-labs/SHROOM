@@ -1,5 +1,5 @@
 # Maps between Cocina model and local model.
-class MapperService
+class WorkCocinaMapperService
   class Error < StandardError; end
   # Cocina object contains a field that cannot be mapped to a Work.
   class UnmappableError < Error; end

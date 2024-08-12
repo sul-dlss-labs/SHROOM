@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe MapperService::ToCocinaMapper do
+RSpec.describe WorkCocinaMapperService::ToCocinaMapper do
   subject(:cocina_object) { described_class.call(work: work) }
 
   let(:work) { Work.new(title:) }

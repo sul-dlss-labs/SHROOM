@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe MapperService do
+RSpec.describe WorkCocinaMapperService do
   let(:cocina_object) do
     Cocina::Models.build_request({
       type: Cocina::Models::ObjectType.object,
@@ -30,7 +30,7 @@ RSpec.describe MapperService do
 
     context 'when not roundtrippable' do
       it 'raises UnmappableError' do
-        expect { described_class.to_work(cocina_object: cocina_object.new(geographic: { iso19139: '' })) }.to raise_error(MapperService::UnmappableError)
+        expect { described_class.to_work(cocina_object: cocina_object.new(geographic: { iso19139: '' })) }.to raise_error(described_class::UnmappableError)
       end
     end
   end
