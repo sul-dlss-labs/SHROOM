@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   # Defines the root path route ("/")
-  root "works#new_file"
+  root to: redirect("works/new_file", status: 302)
 
   resources :works, only: [ :new, :create ] do
     collection do

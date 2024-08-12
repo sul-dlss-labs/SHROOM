@@ -1,0 +1,6 @@
+<%= form_with model: @work do |form| %>
+    <div>
+        <%= form.label :title, class: 'form-label' %>
+        <%= form.text_field :title, class: 'form-control', required: true %>
+    </div>
+<% end %>

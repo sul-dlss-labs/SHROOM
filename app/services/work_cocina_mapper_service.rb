@@ -4,12 +4,12 @@ class WorkCocinaMapperService
   # Cocina object contains a field that cannot be mapped to a Work.
   class UnmappableError < Error; end
 
-  def self.to_cocina(work:)
-    new.to_cocina(work: work)
+  def self.to_cocina(...)
+    new.to_cocina(...)
   end
 
-  def self.to_work(cocina_object:)
-    new.to_work(cocina_object: cocina_object)
+  def self.to_work(...)
+    new.to_work(...)
   end
 
   # param [Work] work
@@ -19,11 +19,12 @@ class WorkCocinaMapperService
   end
 
   # param [Cocina::Models::DRO] cocina_object
+  # param [Boolean] validate_lossless validate that data will not be lost in mapping to work
   # return [Work]
   # raises [UnmappableError]
-  def to_work(cocina_object:)
+  def to_work(cocina_object:, validate_lossless: true)
     work = ToWorkMapper.call(cocina_object: cocina_object)
-    raise UnmappableError unless roundtrippable?(mapped_work: work, original_cocina_object: cocina_object)
+    raise UnmappableError if validate_lossless && !roundtrippable?(mapped_work: work, original_cocina_object: cocina_object)
 
     work
   end
