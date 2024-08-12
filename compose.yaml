@@ -14,6 +14,12 @@ services:
       - 6379:6379
     volumes:
       - redis-data:/data
+  grobid:
+    image: lfoppiano/grobid:latest-crf
+    ulimits:
+      core: 0
+    ports:
+      - 8070:8070
 volumes:
   postgres-data:
   redis-data:
