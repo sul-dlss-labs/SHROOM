@@ -11,7 +11,7 @@ RSpec::Matchers.define :equal_cocina do |expected|
   failure_message do |actual|
     SuperDiff::EqualityMatchers::Hash.new(
       expected: expected.to_h.deep_symbolize_keys,
-      actual: JSON.parse(actual, symbolize_names: true)
+      actual: actual.to_h.deep_symbolize_keys
     ).fail
   rescue StandardError => e
     "ERROR in CocinaMatchers: #{e}"

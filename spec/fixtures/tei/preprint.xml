@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve"
+    xmlns="http://www.tei-c.org/ns/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <teiHeader xml:lang="en">
+        <fileDesc>
+            <titleStmt>
+                <title level="a" type="main">A Circulation Analysis Of Print Books And e-Books In An Academic Research Library</title>
+            </titleStmt>
+            <publicationStmt>
+                <publisher/>
+                <availability status="unknown">
+                    <licence/>
+                </availability>
+            </publicationStmt>
+            <sourceDesc>
+                <biblStruct>
+                    <analytic>
+                        <author>
+                            <persName>
+                                <forename type="first">Justin</forename>
+                                <surname>Littman</surname>
+                            </persName>
+                        </author>
+                        <author role="corresp">
+                            <persName>
+                                <forename type="first">Lynn</forename>
+                                <forename type="middle">Silipigni</forename>
+                                <surname>Connaway</surname>
+                            </persName>
+                        </author>
+                        <author>
+                            <affiliation key="aff0">
+                                <orgName type="department" key="dep1">Information Technology Specialist Office of Strategic Initiatives Library of Congress</orgName>
+                                <orgName type="department" key="dep2">Online Computer Library Center</orgName>
+                                <address>
+                                    <region>Inc</region>
+                                </address>
+                            </affiliation>
+                        </author>
+                        <author>
+                            <affiliation key="aff1">
+                                <orgName type="department">Consulting Research Scientist</orgName>
+                                <orgName type="institution" key="instit1">III Office of Research</orgName>
+                                <orgName type="institution" key="instit2">OCLC Online Computer Library Center</orgName>
+                                <address>
+                                    <region>Inc</region>
+                                </address>
+                            </affiliation>
+                        </author>
+                        <author>
+                            <affiliation key="aff2">
+                                <orgName type="institution">Online Computer Library Center</orgName>
+                                <address>
+                                    <addrLine>6565 Frantz Road</addrLine>
+                                    <postCode>43017-3395</postCode>
+                                    <settlement>Dublin</settlement>
+                                    <region>Inc Ohio</region>
+                                    <country key="US">USA</country>
+                                </address>
+                            </affiliation>
+                        </author>
+                        <title level="a" type="main">A CIRCULATION ANALYSIS OF PRINT BOOKS AND E-BOOKS IN AN ACADEMIC RESEARCH LIBRARY</title>
+                    </analytic>
+                    <monogr>
+                        <imprint>
+                            <date/>
+                        </imprint>
+                    </monogr>
+                    <idno type="MD5">46B763EC34319CAA5C1ED090ACA46EF2</idno>
+                </biblStruct>
+            </sourceDesc>
+        </fileDesc>
+        <encodingDesc>
+            <appInfo>
+                <application version="0.8.1-SNAPSHOT" ident="GROBID" when="2024-08-12T18:32+0000">
+                    <desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+                    <ref target="https://github.com/kermitt2/grobid"/>
+                </application>
+            </appInfo>
+        </encodingDesc>
+        <profileDesc>
+            <abstract>
+                <p>In order for collection development librarians to justify the adoption of electronic books (e-books), they need to determine if e-books satisfy the information needs of patrons. One method to determine this is to measure e-book usage. This study compared the usage of 7,880 titles that were available in both print and e-book format at the Duke University Libraries. Although the results of this study cannot be generalized, it does provide information on the use of e-books in one academic research library and implications for e-book collection development.</p>
+            </abstract>
+        </profileDesc>
+    </teiHeader>
+    <text xml:lang="en"></text>
+</TEI>
