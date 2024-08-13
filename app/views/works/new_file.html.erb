@@ -1,6 +1,6 @@
 <%# Disabling turbo on this form because it returns 200. Turbo expects a redirect for success. %>
-<%= form_with url: new_from_file_works_path, data: {turbo: false} do |form| %>
-    <%= form.label :file, "Upload article:", class: 'form-label' %>
-    <%= form.file_field :file, required: true, accept: 'application/pdf', class: 'form-control' %>
-    <%= form.submit 'Submit', class: 'btn btn-primary mt-3', data: { turbo_submits_with: 'Working...' } %>
+<%= form_with url: new_from_file_works_path, data: { turbo: false } do |form| %>
+    <%= form.label :file, "Upload article:", class: "form-label" %>
+    <%= form.file_field :file, required: true, accept: "application/pdf", class: "form-control" %>
+    <%= form.submit "Submit", class: "btn btn-primary mt-3", data: { turbo_submits_with: "Working..." } %>
 <% end %>
