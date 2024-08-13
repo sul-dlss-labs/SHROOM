@@ -30,7 +30,7 @@ class GrobidService
       conn.request :multipart
       conn.response :raise_error
     end
-    payload = { input: Faraday::Multipart::FilePart.new(path, "application/pdf") }
+    payload = { input: Faraday::Multipart::FilePart.new(path, "application/pdf"), consolidateHeader: 1 }
     headers = { "Accept" => "application/xml" }
     response = conn.post("#{Settings.grobid.host}/api/processHeaderDocument", payload, headers)
     response.body
