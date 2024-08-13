@@ -1,6 +1,8 @@
-<%= form_with model: @work do |form| %>
+<%= form_with model: @work, data: {turbo: false} do |form| %>
     <div>
         <%= form.label :title, class: 'form-label' %>
         <%= form.text_field :title, class: 'form-control', required: true %>
+
+        <%= form.submit 'Submit', class: 'btn btn-primary mt-3' %>
     </div>
 <% end %>

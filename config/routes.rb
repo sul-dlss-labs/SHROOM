@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resources :works, only: [ :new, :create ] do
     collection do
       get "new_file"
-      post "new"
+      post "new_from_file", to: "works#new"
     end
   end
 end
