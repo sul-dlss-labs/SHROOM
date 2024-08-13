@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     collection do
       get "new_file"
       post "new_from_file", to: "works#new"
+      get "new_from_file", to: redirect("works/new_file", status: 302)
     end
   end
 end
