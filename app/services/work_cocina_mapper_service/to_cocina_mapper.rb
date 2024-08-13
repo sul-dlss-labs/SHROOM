@@ -20,7 +20,7 @@ class WorkCocinaMapperService
       {
         type: Cocina::Models::ObjectType.object,
         label: work.title,
-        description: { title: [ { value: work.title } ] },
+        description: WorkCocinaMapperService::ToCocina::DescriptionMapper.call(work: work),
         version: 1,
         identification: { sourceId: "shroom:object-1" },
         administrative: { hasAdminPolicy: Settings.apo }

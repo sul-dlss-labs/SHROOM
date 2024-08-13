@@ -5,7 +5,7 @@ RSpec.describe WorkCocinaMapperService do
     Cocina::Models.build_request({
       type: Cocina::Models::ObjectType.object,
       label: title,
-      description: { title: [ { value: title } ] },
+      description: { title: CocinaDescriptionSupport.title(title: title) },
       version: 1,
       identification: { sourceId: "shroom:object-1" },
       administrative: { hasAdminPolicy: Settings.apo }

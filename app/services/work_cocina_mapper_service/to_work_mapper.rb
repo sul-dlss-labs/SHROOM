@@ -18,7 +18,8 @@ class WorkCocinaMapperService
 
     def params
       {
-        title: cocina_object.description.title.first.value
+        title: cocina_object.description.title.first.value,
+        authors: WorkCocinaMapperService::FromCocina::AuthorsMapper.call(cocina_object:)
       }
     end
   end

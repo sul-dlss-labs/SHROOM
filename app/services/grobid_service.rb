@@ -15,7 +15,9 @@ class GrobidService
   # @raise [Error] if there is an error extracting metadata from the PDF
   def call
     tei = fetch_tei
+    Rails.logger.info("TEI: #{tei}")
     cocina_object = TeiCocinaMapperService.call(tei_ng_xml: Nokogiri::XML(tei))
+    Rails.logger.info("Cocina object: #{CocinaSupport.pretty(cocina_object:)}")
     WorkCocinaMapperService.to_work(cocina_object: cocina_object, validate_lossless: false)
   end
 
