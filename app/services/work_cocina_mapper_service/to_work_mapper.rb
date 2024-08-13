@@ -19,7 +19,8 @@ class WorkCocinaMapperService
     def params
       {
         title: cocina_object.description.title.first.value,
-        authors: WorkCocinaMapperService::FromCocina::AuthorsMapper.call(cocina_object:)
+        authors: WorkCocinaMapperService::FromCocina::AuthorsMapper.call(cocina_object:),
+        abstract: cocina_object.description.note.find { |note| note.type == "abstract" }&.value
       }
     end
   end

@@ -7,4 +7,6 @@ class Work < Base
   def authors_attributes=(attributes)
     self.authors = attributes.map { |_, author| Author.new(author) }
   end
+
+  attribute :abstract, :string
 end

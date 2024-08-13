@@ -28,12 +28,12 @@ class TeiCocinaMapperService
     }
   end
 
-
   def description_params
     {
       title: CocinaDescriptionSupport.title(title: tei_doc.title),
-      contributor: tei_doc.authors.map { |author_attrs| CocinaDescriptionSupport.person_contributor(**author_attrs) }
-     }
+      contributor: tei_doc.authors.map { |author_attrs| CocinaDescriptionSupport.person_contributor(**author_attrs) },
+      note: tei_doc.abstract.present? ? [ CocinaDescriptionSupport.note(type: "abstract", value: tei_doc.abstract) ] : nil
+  }.compact
   end
 
   class TeiDocument
@@ -53,6 +53,10 @@ class TeiCocinaMapperService
           surname: pers_name_node.at_xpath("tei:surname", namespaces)&.text
         }
       end
+    end
+
+    def abstract
+      @abstract ||= ng_xml.at_xpath("//tei:profileDesc/tei:abstract/tei:p", namespaces)&.text
     end
 
     private

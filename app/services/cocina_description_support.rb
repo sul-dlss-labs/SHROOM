@@ -16,4 +16,11 @@ class CocinaDescriptionSupport
               type: "person"
             }
   end
+
+  def self.note(type:, value:)
+    {
+      type: type,
+      value: value
+    }
+  end
 end

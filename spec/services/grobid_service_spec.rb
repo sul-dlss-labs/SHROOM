@@ -21,7 +21,9 @@ RSpec.describe GrobidService do
         authors: [
           Author.new(first_name: 'Justin', last_name: 'Littman'),
           Author.new(first_name: 'Lynn', last_name: 'Connaway')
-        ])
+        ],
+        abstract: 'In order for collection development librarians to justify the adoption of electronic books ...'
+      )
     end
 
     it 'calls grobid web service and returns a Work' do

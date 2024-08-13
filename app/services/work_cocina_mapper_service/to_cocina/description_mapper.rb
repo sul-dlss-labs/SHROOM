@@ -23,13 +23,20 @@ class WorkCocinaMapperService
       def params
         {
           title: CocinaDescriptionSupport.title(title: work.title),
-          contributor: contributors_params.presence
+          contributor: contributors_params.presence,
+          note: note_params.presence
         }.compact
       end
 
       def contributors_params
         work.authors.map do |contributor|
           CocinaDescriptionSupport.person_contributor(forename: contributor.first_name, surname: contributor.last_name)
+        end
+      end
+
+      def note_params
+        [].tap do |params|
+          params << CocinaDescriptionSupport.note(type: "abstract", value: work.abstract) if work.abstract.present?
         end
       end
     end
