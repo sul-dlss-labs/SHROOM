@@ -32,8 +32,21 @@ class TeiCocinaMapperService
     {
       title: CocinaDescriptionSupport.title(title: tei_doc.title),
       contributor: tei_doc.authors.map { |author_attrs| CocinaDescriptionSupport.person_contributor(**author_attrs) },
-      note: tei_doc.abstract.present? ? [ CocinaDescriptionSupport.note(type: "abstract", value: tei_doc.abstract) ] : nil
+      note: note_params,
+      event: event_params
   }.compact
+  end
+
+  def note_params
+    return unless tei_doc.abstract.present?
+
+    [ CocinaDescriptionSupport.note(type: "abstract", value: tei_doc.abstract) ]
+  end
+
+  def event_params
+    return unless tei_doc.published_date.present?
+
+    [ CocinaDescriptionSupport.event(date_type: "publication", date_value: tei_doc.published_date) ]
   end
 
   class TeiDocument
@@ -57,6 +70,10 @@ class TeiCocinaMapperService
 
     def abstract
       @abstract ||= ng_xml.at_xpath("//tei:profileDesc/tei:abstract/tei:p", namespaces)&.text
+    end
+
+    def published_date
+      @published_date ||= ng_xml.at_xpath("//tei:publicationStmt/tei:date[@type='published']/@when", namespaces)&.text
     end
 
     private

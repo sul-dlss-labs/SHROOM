@@ -4,4 +4,8 @@ class Author < Base
 
   attribute :last_name, :string
   validates :last_name, presence: true
+
+  def blank?
+    first_name.blank? && last_name.blank?
+  end
 end

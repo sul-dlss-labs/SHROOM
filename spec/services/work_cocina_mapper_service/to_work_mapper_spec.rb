@@ -13,7 +13,9 @@ RSpec.describe WorkCocinaMapperService::ToWorkMapper do
             CocinaDescriptionSupport.person_contributor(forename: 'Justin', surname: 'Littman'),
             CocinaDescriptionSupport.person_contributor(forename: 'Lynn', surname: 'Connaway')
           ],
-          note: [ CocinaDescriptionSupport.note(type: "abstract", value: abstract) ]
+          note: [ CocinaDescriptionSupport.note(type: "abstract", value: abstract) ],
+          event: [ CocinaDescriptionSupport.event(date_type: 'publication', date_value: '2004-10-01') ]
+
         },
         version: 1,
         identification: { sourceId: "shroom:object-1" },
@@ -27,7 +29,16 @@ RSpec.describe WorkCocinaMapperService::ToWorkMapper do
   let(:abstract) { 'In order for collection development librarians to justify the adoption of electronic books ...' }
 
   describe '#call' do
-    let(:expected) { Work.new(title:, authors: [ author1, author2 ], abstract:) }
+    let(:expected) do
+      Work.new(
+        title: title,
+        authors: [ author1, author2 ],
+        abstract: abstract,
+        published_year: 2004,
+        published_month: 10,
+        published_day: 1
+      )
+    end
 
     it 'maps to work' do
       expect(work).to equal_work expected

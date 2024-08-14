@@ -13,7 +13,8 @@ RSpec.describe TeiCocinaMapperService do
             CocinaDescriptionSupport.person_contributor(forename: 'Justin', surname: 'Littman'),
             CocinaDescriptionSupport.person_contributor(forename: 'Lynn', surname: 'Connaway')
           ],
-          note: [ CocinaDescriptionSupport.note(type: "abstract", value: 'In order for collection development librarians to justify the adoption of electronic books ...') ]
+          note: [ CocinaDescriptionSupport.note(type: "abstract", value: 'In order for collection development librarians to justify the adoption of electronic books ...') ],
+          event: [ CocinaDescriptionSupport.event(date_type: 'publication', date_value: '2004-10-01') ]
         },
         version: 1,
         identification: { sourceId: "shroom:object-1" },

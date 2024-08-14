@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   resources :works, only: [ :new, :create ] do
     collection do
+      get "/", to: redirect("works/new", status: 302)
       get "new_file"
       post "new_from_file", to: "works#new"
       get "new_from_file", to: redirect("works/new_file", status: 302)

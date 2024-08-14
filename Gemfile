@@ -41,6 +41,7 @@ gem "cocina-models", "~> 0.99.0"
 
 # Additional gems
 gem "config"
+gem "edtf"
 gem "faraday" # For posting to grobid web service
 gem "faraday-multipart"
 

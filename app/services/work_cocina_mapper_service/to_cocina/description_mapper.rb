@@ -24,7 +24,8 @@ class WorkCocinaMapperService
         {
           title: CocinaDescriptionSupport.title(title: work.title),
           contributor: contributors_params.presence,
-          note: note_params.presence
+          note: note_params.presence,
+          event: event_params.presence
         }.compact
       end
 
@@ -37,6 +38,13 @@ class WorkCocinaMapperService
       def note_params
         [].tap do |params|
           params << CocinaDescriptionSupport.note(type: "abstract", value: work.abstract) if work.abstract.present?
+        end
+      end
+
+      def event_params
+        [].tap do |params|
+          date_value = EdtfSupport.to_edtf(year: work.published_year, month: work.published_month, day: work.published_day)
+          params << CocinaDescriptionSupport.event(date_value:, date_type: "publication") if date_value.present?
         end
       end
     end

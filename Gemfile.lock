@@ -417,6 +417,7 @@ DEPENDENCIES
   config
   cssbundling-rails
   debug
+  edtf
   erb_lint
   faraday
   faraday-multipart

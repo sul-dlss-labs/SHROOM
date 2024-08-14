@@ -23,4 +23,16 @@ class CocinaDescriptionSupport
       value: value
     }
   end
+
+  def self.event(type: "deposit", date_type:, date_value:, date_encoding_code: "edtf")
+    {
+      type: type,
+      date: [ {
+        value: date_value,
+        type: date_type,
+        encoding: { code: date_encoding_code }
+
+      } ]
+    }
+  end
 end
