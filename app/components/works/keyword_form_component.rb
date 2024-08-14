@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Work
+module Works
   class KeywordFormComponent < BaseNestedFormComponent
   end
 end

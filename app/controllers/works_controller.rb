@@ -2,8 +2,6 @@
 
 # Controller for Works
 class WorksController < ApplicationController
-  def new_file; end
-
   def new
     @work = build_new_work
     Rails.logger.info("Work: #{@work.to_json}")
@@ -18,15 +16,17 @@ class WorksController < ApplicationController
     Rails.logger.info("Work: #{@work.to_json}")
     @cocina_object = WorkCocinaMapperService.to_cocina(work: @work)
 
+    FileStore.delete(key: file_key_param) if file_key_param.present?
+
     render :create
   end
 
   private
 
   def build_new_work
-    return Work.new unless params.key?(:file)
+    return Work.new unless params.key?(:file_key)
 
-    GrobidService.call(path: params[:file].to_path)
+    GrobidService.call(path: FileStore.lookup(key: params[:file_key]))
   end
 
   def work_params
@@ -37,5 +37,9 @@ class WorksController < ApplicationController
       authors_attributes: %i[first_name last_name],
       keywords_attributes: %i[value]
     )
+  end
+
+  def file_key_param
+    @file_key_param ||= params[:work][:file_key]
   end
 end

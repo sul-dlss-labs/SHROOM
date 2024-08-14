@@ -2,3 +2,6 @@ apo: 'druid:zx485kb6348'
 
 grobid:
   host: 'http://localhost:8070'
+
+file_store:
+  path: 'tmp/files'

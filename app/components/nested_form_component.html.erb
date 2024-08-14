@@ -1,7 +1,7 @@
 <div data-controller="form-add">
     <template data-form-add-target="template">
-        <%= form.fields_for field, model_class.new, child_index: "NEW_RECORD" do |nested_form| %>
-            <%= tag.div data: { controller: "form-delete", index: nested_form.options[:child_index], form_add_target: "row" } do %>
+        <%= form.fields_for field, model_class.new, child_index: 'NEW_RECORD' do |nested_form| %>
+            <%= tag.div data: { controller: 'form-delete', index: nested_form.options[:child_index], form_add_target: 'row' } do %>
                 <%= render form_component.new(form: nested_form) %>
                 <button class="btn btn-secondary mt-2" data-action="form-delete#delete">Delete</button>
             <% end %>
@@ -9,7 +9,7 @@
     </template>
     <div data-form-add-target="rowContainer">
         <%= form.fields_for field do |nested_form| %>
-            <%= tag.div data: { controller: "form-delete", index: nested_form.options[:child_index], form_add_target: "row" } do %>
+            <%= tag.div data: { controller: 'form-delete', index: nested_form.options[:child_index], form_add_target: 'row' } do %>
                 <%= render form_component.new(form: nested_form) %>
                 <button class="btn btn-secondary mt-2" data-action="form-delete#delete">Delete</button>
             <% end %>

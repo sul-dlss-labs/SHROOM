@@ -1,0 +1,5 @@
+<%= form_with url: files_path(file_key: params[:file_key]) do |form| %>
+    <%= form.label :file, 'Upload article:', class: 'form-label' %>
+    <%= form.file_field :file, required: true, accept: 'application/pdf', class: 'form-control' %>
+    <%= form.submit 'Submit', class: 'btn btn-primary mt-3', data: { turbo_submits_with: 'Working...' } %>
+<% end %>
