@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Model for an author
 class Author < Base
   attribute :first_name, :string
   validates :first_name, presence: true

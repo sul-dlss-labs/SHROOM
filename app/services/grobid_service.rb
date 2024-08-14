@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Extracts metadata from a supplied PDF using the Grobid web service and maps to Cocina model.
 class GrobidService
   class Error < StandardError; end
@@ -18,7 +20,7 @@ class GrobidService
     Rails.logger.info("TEI: #{tei}")
     cocina_object = TeiCocinaMapperService.call(tei_ng_xml: Nokogiri::XML(tei))
     Rails.logger.info("Cocina object: #{CocinaSupport.pretty(cocina_object:)}")
-    WorkCocinaMapperService.to_work(cocina_object: cocina_object, validate_lossless: false)
+    WorkCocinaMapperService.to_work(cocina_object:, validate_lossless: false)
   end
 
   private
@@ -26,12 +28,12 @@ class GrobidService
   attr_reader :path
 
   def fetch_tei
-    conn = Faraday.new do |conn|
-      conn.request :multipart
-      conn.response :raise_error
+    conn = Faraday.new do |c|
+      c.request :multipart
+      c.response :raise_error
     end
-    payload = { input: Faraday::Multipart::FilePart.new(path, "application/pdf"), consolidateHeader: 1 }
-    headers = { "Accept" => "application/xml" }
+    payload = { input: Faraday::Multipart::FilePart.new(path, 'application/pdf'), consolidateHeader: 1 }
+    headers = { 'Accept' => 'application/xml' }
     response = conn.post("#{Settings.grobid.host}/api/processHeaderDocument", payload, headers)
     response.body
   rescue Faraday::Error => e

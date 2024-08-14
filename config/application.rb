@@ -1,12 +1,15 @@
-require_relative "boot"
+# frozen_string_literal: true
 
-require "rails/all"
+require_relative 'boot'
+
+require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
 module Shroom
+  # The SHROOM application
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.2
@@ -25,8 +28,8 @@ module Shroom
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Bootstrap form error handling
-    ActionView::Base.field_error_proc = proc do |html_tag, instance|
-      html_tag.gsub("form-control", "form-control is-invalid").html_safe
+    ActionView::Base.field_error_proc = proc do |html_tag, _instance|
+      html_tag.gsub('form-control', 'form-control is-invalid').html_safe # rubocop:disable Rails/OutputSafety
     end
   end
 end

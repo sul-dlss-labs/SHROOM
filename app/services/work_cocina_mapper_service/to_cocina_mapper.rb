@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 class WorkCocinaMapperService
+  # Map from Work to Cocina model
   class ToCocinaMapper
     def self.call(...)
       new(...).call
@@ -20,9 +23,9 @@ class WorkCocinaMapperService
       {
         type: Cocina::Models::ObjectType.object,
         label: work.title,
-        description: WorkCocinaMapperService::ToCocina::DescriptionMapper.call(work: work),
+        description: WorkCocinaMapperService::ToCocina::DescriptionMapper.call(work:),
         version: 1,
-        identification: { sourceId: "shroom:object-1" },
+        identification: { sourceId: 'shroom:object-1' },
         administrative: { hasAdminPolicy: Settings.apo }
       }
     end

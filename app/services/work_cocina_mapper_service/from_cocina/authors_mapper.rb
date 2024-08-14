@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 class WorkCocinaMapperService
   module FromCocina
+    # Map from Cocina model to Authors
     class AuthorsMapper
       def self.call(...)
         new(...).call
@@ -11,15 +14,18 @@ class WorkCocinaMapperService
       end
 
       # @return [Array<Author>]
+      # rubocop:disable Metrics/AbcSize
       def call
-        cocina_object.description.contributor.map do |contributor|
-          next unless contributor.type == "person"
+        cocina_object.description.contributor.filter_map do |contributor|
+          next unless contributor.type == 'person'
+
           Author.new(
-            first_name: contributor.name.first.structuredValue.find { |name| name.type == "forename" }.value,
-            last_name: contributor.name.first.structuredValue.find { |name| name.type == "surname" }.value
+            first_name: contributor.name.first.structuredValue.find { |name| name.type == 'forename' }.value,
+            last_name: contributor.name.first.structuredValue.find { |name| name.type == 'surname' }.value
           )
-        end.compact
+        end
       end
+      # rubocop:enable Metrics/AbcSize
 
       private
 

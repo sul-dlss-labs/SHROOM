@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
+# Helpers for working with Extended Date/Time Format (EDTF)
 class EdtfSupport
   def self.to_edtf(year:, month: nil, day: nil)
     return if year.nil?
 
-    date_parts = [ year, month, day ].compact
+    date_parts = [year, month, day].compact
     date = Date.new(*date_parts)
     case date_parts.length
     when 1

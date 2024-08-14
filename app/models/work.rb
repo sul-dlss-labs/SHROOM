@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
+# Model for a scholarly work
 class Work < Base
   attribute :title, :string
   validates :title, presence: true
 
-  attribute :authors, array: true, default: []
+  attribute :authors, array: true, default: -> { [] }
   before_validation :compact_authors
   validate :authors_are_valid
 
@@ -11,7 +14,7 @@ class Work < Base
   end
 
   def compact_authors
-    authors.delete_if(&:blank?)
+    authors.compact_blank!
   end
 
   def authors_are_valid
@@ -27,14 +30,14 @@ class Work < Base
   attribute :abstract, :string
 
   attribute :published_year, :integer
-  validates :published_year, numericality: { only_integer: true, in: 1900..Date.current.year  }, allow_nil: true
+  validates :published_year, numericality: { only_integer: true, in: 1900..Date.current.year }, allow_nil: true
 
   attribute :published_month, :integer
   validates :published_month, numericality: { only_integer: true, in: 1..12 }, allow_nil: true
   validate :published_month_is_valid
 
   def published_month_is_valid
-    errors.add(:published_month, "requires a year") if published_year.blank? && published_month.present?
+    errors.add(:published_month, 'requires a year') if published_year.blank? && published_month.present?
   end
 
   attribute :published_day, :integer
@@ -42,6 +45,11 @@ class Work < Base
   validate :published_day_is_valid
 
   def published_day_is_valid
-    errors.add(:published_day, "requires a year and month") if (published_year.blank? || published_month.blank?) && published_day.present?
+    return unless (published_year.blank? || published_month.blank?) && published_day.present?
+
+    errors.add(:published_day,
+               'requires a year and month')
   end
+
+  attribute :publisher, :string
 end

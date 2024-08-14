@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Maps between Cocina model and local model.
 class WorkCocinaMapperService
   class Error < StandardError; end
@@ -15,7 +17,7 @@ class WorkCocinaMapperService
   # param [Work] work
   # return [Cocina::Models::DRO,Cocina::Models::RequestDRO]
   def to_cocina(work:)
-    ToCocinaMapper.call(work: work)
+    ToCocinaMapper.call(work:)
   end
 
   # param [Cocina::Models::DRO] cocina_object
@@ -23,8 +25,9 @@ class WorkCocinaMapperService
   # return [Work]
   # raises [UnmappableError]
   def to_work(cocina_object:, validate_lossless: true)
-    work = ToWorkMapper.call(cocina_object: cocina_object)
-    raise UnmappableError if validate_lossless && !roundtrippable?(mapped_work: work, original_cocina_object: cocina_object)
+    work = ToWorkMapper.call(cocina_object:)
+    raise UnmappableError if validate_lossless && !roundtrippable?(mapped_work: work,
+                                                                   original_cocina_object: cocina_object)
 
     work
   end
