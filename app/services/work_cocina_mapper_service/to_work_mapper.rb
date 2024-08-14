@@ -28,7 +28,8 @@ class WorkCocinaMapperService
         published_year: published_date&.year,
         published_month: published_date&.month,
         published_day: published_date&.day,
-        publisher:
+        publisher:,
+        keywords:
       }
     end
 
@@ -55,5 +56,11 @@ class WorkCocinaMapperService
     # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/PerceivedComplexity
+
+    def keywords
+      cocina_object.description.subject
+                   .select { |subject| subject.type == 'topic' }
+                   .map { |subject| Keyword.new(value: subject.value) }
+    end
   end
 end

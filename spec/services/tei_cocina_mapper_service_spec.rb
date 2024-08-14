@@ -26,7 +26,8 @@ RSpec.describe TeiCocinaMapperService do
             CocinaDescriptionSupport.event_date(date_type: 'publication',
                                                 date_value: '2004-10-01'),
             CocinaDescriptionSupport.event_contributor(contributor_name_value: 'American Library Association')
-          ]
+          ],
+          subject: CocinaDescriptionSupport.subjects(values: ['Electronic books', 'Academic libraries'])
         },
         version: 1,
         identification: { sourceId: 'shroom:object-1' },

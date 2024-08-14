@@ -46,6 +46,7 @@ gem 'config'
 gem 'edtf'
 gem 'faraday' # For posting to grobid web service
 gem 'faraday-multipart'
+gem 'view_component'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

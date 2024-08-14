@@ -27,7 +27,8 @@ class WorkCocinaMapperService
           title: CocinaDescriptionSupport.title(title: work.title),
           contributor: contributors_params.presence,
           note: note_params.presence,
-          event: event_params.presence
+          event: event_params.presence,
+          subject: subject_params.presence
         }.compact
       end
 
@@ -55,6 +56,10 @@ class WorkCocinaMapperService
         end
       end
       # rubocop:enable Metrics/AbcSize
+
+      def subject_params
+        CocinaDescriptionSupport.subjects(values: work.keywords.map(&:value))
+      end
     end
   end
 end

@@ -3,33 +3,8 @@
         <%= form.bs_label :title %>
         <%= form.bs_text_field :title %>
         <%= form.bs_invalid_feedback :title %>
-        <div data-controller="form-add">
-            <template data-form-add-target="template">
-                <%= form.fields_for :authors, Author.new, child_index: "NEW_RECORD" do |author_form| %>
-                    <%= tag.div data: { controller: "form-delete", index: author_form.options[:child_index], form_add_target: "row" } do %>
-                        <%= author_form.bs_label :first_name %>
-                        <%= author_form.bs_text_field :first_name %>
-                        <%= author_form.bs_label :last_name %>
-                        <%= author_form.bs_text_field :last_name %>
-                        <button class="btn btn-secondary mt-2" data-action="form-delete#delete">Delete</button>
-                    <% end %>
-                <% end %>
-            </template>
-            <div data-form-add-target="rowContainer">
-                <%= form.fields_for(:authors) do |author_form| %>
-                    <%= tag.div data: { controller: "form-delete", index: author_form.options[:child_index], form_add_target: "row" } do %>
-                        <%= author_form.bs_label :first_name %>
-                        <%= author_form.bs_text_field :first_name %>
-                        <%= author_form.bs_invalid_feedback :first_name %>
-                        <%= author_form.bs_label :last_name %>
-                        <%= author_form.bs_text_field :last_name %>
-                        <%= author_form.bs_invalid_feedback :last_name %>
-                        <button class="btn btn-secondary mt-2" data-action="form-delete#delete">Delete</button>
-                    <% end %>
-                <% end %>
-            </div>
-            <button class="btn btn-secondary mt-2" data-action="form-add#add">Add author</button>
-        </div>
+
+        <%= render NestedFormComponent.new(form:, model_class: Author, field: :authors, form_component: Work::AuthorFormComponent)%>
 
         <%= form.bs_label :published_year %>
         <%= form.bs_text_field :published_year %>
@@ -50,6 +25,8 @@
         <%= form.bs_label :abstract %>
         <%= form.bs_text_area :abstract %>
         <%= form.bs_invalid_feedback :abstract %>
+
+        <%= render NestedFormComponent.new(form:, model_class: Keyword, field: :keywords, form_component: Work::KeywordFormComponent)%>
 
         <%= form.submit "Submit", class: "btn btn-primary mt-3" %>
     </div>

@@ -36,7 +36,8 @@ class TeiCocinaMapperService
       title: CocinaDescriptionSupport.title(title: tei_doc.title),
       contributor: tei_doc.authors.map { |author_attrs| CocinaDescriptionSupport.person_contributor(**author_attrs) },
       note: note_params,
-      event: event_params
+      event: event_params,
+      subject: subject_params
     }.compact
   end
 
@@ -56,6 +57,12 @@ class TeiCocinaMapperService
         params << CocinaDescriptionSupport.event_contributor(contributor_name_value: tei_doc.publisher)
       end
     end
+  end
+
+  def subject_params
+    return if tei_doc.keywords.blank?
+
+    CocinaDescriptionSupport.subjects(values: tei_doc.keywords)
   end
 
   # Wrapper around a TEI XML document
@@ -88,6 +95,10 @@ class TeiCocinaMapperService
 
     def publisher
       @publisher ||= ng_xml.at_xpath('//tei:publicationStmt/tei:publisher', namespaces)&.text
+    end
+
+    def keywords
+      @keywords ||= ng_xml.xpath('//tei:keywords/tei:term', namespaces).map(&:text)
     end
 
     private

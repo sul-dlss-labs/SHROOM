@@ -23,7 +23,8 @@ RSpec.describe WorkCocinaMapperService::ToWorkMapper do
             CocinaDescriptionSupport.event_date(date_type: 'publication',
                                                 date_value: '2004-10-01'),
             CocinaDescriptionSupport.event_contributor(contributor_name_value: 'American Library Association')
-          ]
+          ],
+          subject: CocinaDescriptionSupport.subjects(values: ['Electronic books', 'Academic libraries'])
         },
         version: 1,
         identification: { sourceId: 'shroom:object-1' },
@@ -45,7 +46,11 @@ RSpec.describe WorkCocinaMapperService::ToWorkMapper do
         published_year: 2004,
         published_month: 10,
         published_day: 1,
-        publisher: 'American Library Association'
+        publisher: 'American Library Association',
+        keywords: [
+          Keyword.new(value: 'Electronic books'),
+          Keyword.new(value: 'Academic libraries')
+        ]
       )
     end
 

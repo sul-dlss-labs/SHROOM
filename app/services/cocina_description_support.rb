@@ -78,4 +78,13 @@ class CocinaDescriptionSupport
       ]
     }
   end
+
+  def self.subjects(values:)
+    values.map do |value|
+      {
+        value:,
+        type: 'topic'
+      }
+    end
+  end
 end

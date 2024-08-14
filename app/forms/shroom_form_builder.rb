@@ -12,9 +12,9 @@ class ShroomFormBuilder < ActionView::Helpers::FormBuilder
     text_area(method, options)
   end
 
-  def bs_label(method, options = {})
+  def bs_label(method, text = nil, options = {}, &)
     append_class(options, 'form-label')
-    label(method, options)
+    label(method, text, options, &)
   end
 
   def bs_invalid_feedback(method, options = {})

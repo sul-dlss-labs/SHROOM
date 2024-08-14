@@ -6,6 +6,7 @@ class WorksController < ApplicationController
 
   def new
     @work = build_new_work
+    Rails.logger.info("Work: #{@work.to_json}")
   end
 
   def create
@@ -14,7 +15,7 @@ class WorksController < ApplicationController
     @work = Work.new(work_params)
     return render :new, status: :unprocessable_entity unless @work.valid?
 
-    Rails.logger.info("Work: #{@work.inspect}")
+    Rails.logger.info("Work: #{@work.to_json}")
     @cocina_object = WorkCocinaMapperService.to_cocina(work: @work)
 
     render :create
@@ -33,7 +34,8 @@ class WorksController < ApplicationController
     params.require(:work).permit(
       :title, :abstract, :publisher,
       :published_year, :published_month, :published_day,
-      authors_attributes: %i[first_name last_name]
+      authors_attributes: %i[first_name last_name],
+      keywords_attributes: %i[value]
     )
   end
 end

@@ -6,15 +6,13 @@ class Work < Base
   validates :title, presence: true
 
   attribute :authors, array: true, default: -> { [] }
-  before_validation :compact_authors
+  before_validation do
+    authors.compact_blank!
+  end
   validate :authors_are_valid
 
   def authors_attributes=(attributes)
     self.authors = attributes.map { |_, author| Author.new(author) }
-  end
-
-  def compact_authors
-    authors.compact_blank!
   end
 
   def authors_are_valid
@@ -52,4 +50,13 @@ class Work < Base
   end
 
   attribute :publisher, :string
+
+  attribute :keywords, array: true, default: -> { [] }
+  before_validation do
+    keywords.compact_blank!
+  end
+
+  def keywords_attributes=(attributes)
+    self.keywords = attributes.map { |_, keyword| Keyword.new(keyword) }
+  end
 end
