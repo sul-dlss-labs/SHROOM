@@ -5,7 +5,18 @@ class FilesController < ApplicationController
   def new; end
 
   def create
-    key = FileStore.store(path: params[:file].to_path)
-    redirect_to new_work_path(file_key: key)
+    work_file = WorkFile.create!(file_params)
+    redirect_to new_work_path(file_key: blob_for_file(work_file.id).key)
+  end
+
+  private
+
+  def file_params
+    # debugger
+    params.permit(:file)
+  end
+
+  def blob_for_file(file_id)
+    ActiveStorage::Blob.find(file_id)
   end
 end

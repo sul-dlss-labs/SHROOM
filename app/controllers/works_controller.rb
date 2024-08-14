@@ -26,7 +26,7 @@ class WorksController < ApplicationController
   def build_new_work
     return WorkForm.new unless params.key?(:file_key)
 
-    GrobidService.call(path: FileStore.lookup(key: params[:file_key]))
+    GrobidService.call(path: ActiveStorage::Blob.service.path_for(file_key_param))
   end
 
   def work_params
@@ -42,6 +42,6 @@ class WorksController < ApplicationController
   end
 
   def file_key_param
-    @file_key_param ||= params[:work][:file_key]
+    @file_key_param ||= params[:file_key]
   end
 end

@@ -2,3 +2,5 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 import * as bootstrap from "bootstrap"
+
+require('@rails/active_storage').start()
