@@ -4,3 +4,6 @@
 <%= form.bs_label :last_name %>
 <%= form.bs_text_field :last_name %>
 <%= form.bs_invalid_feedback :last_name %>
+
+<%= render NestedFormComponent.new(form:, model_class: Affiliation, field: :affiliations, form_component: Works::AffiliationFormComponent) %>
+

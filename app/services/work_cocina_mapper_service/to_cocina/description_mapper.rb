@@ -34,7 +34,17 @@ class WorkCocinaMapperService
 
       def contributors_params
         work.authors.map do |contributor|
-          CocinaDescriptionSupport.person_contributor(forename: contributor.first_name, surname: contributor.last_name)
+          CocinaDescriptionSupport.person_contributor(
+            forename: contributor.first_name,
+            surname: contributor.last_name,
+            affiliations: affiliation_params_for(contributor)
+          )
+        end
+      end
+
+      def affiliation_params_for(contributor)
+        contributor.affiliations.map do |affiliation|
+          { organization: affiliation.organization, department: affiliation.department }.compact
         end
       end
 

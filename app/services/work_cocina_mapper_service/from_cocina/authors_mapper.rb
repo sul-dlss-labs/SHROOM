@@ -21,7 +21,8 @@ class WorkCocinaMapperService
 
           Author.new(
             first_name: contributor.name.first.structuredValue.find { |name| name.type == 'forename' }.value,
-            last_name: contributor.name.first.structuredValue.find { |name| name.type == 'surname' }.value
+            last_name: contributor.name.first.structuredValue.find { |name| name.type == 'surname' }.value,
+            affiliations: affiliations_for(contributor)
           )
         end
       end
@@ -30,6 +31,24 @@ class WorkCocinaMapperService
       private
 
       attr_reader :cocina_object
+
+      def affiliations_for(contributor)
+        affiliation_notes = contributor.note.filter { |note| note.type == 'affiliation' }
+        affiliation_notes.map do |note|
+          affiliation_for(note)
+        end
+      end
+
+      def affiliation_for(note)
+        if note.structuredValue.present?
+          organization = note.structuredValue[0]&.value
+          department = note.structuredValue[1]&.value
+        else
+          organization = note.value
+          department = nil
+        end
+        Affiliation.new(organization:, department:)
+      end
     end
   end
 end

@@ -14,7 +14,11 @@ RSpec.describe TeiCocinaMapperService do
           title: CocinaDescriptionSupport.title(title:),
           contributor: [
             CocinaDescriptionSupport.person_contributor(forename: 'Justin',
-                                                        surname: 'Littman'),
+                                                        surname: 'Littman',
+                                                        affiliations: [{
+                                                          organization: 'Library of Congress',
+                                                          department: 'Repository Development Center'
+                                                        }]),
             CocinaDescriptionSupport.person_contributor(forename: 'Lynn',
                                                         surname: 'Connaway')
           ],

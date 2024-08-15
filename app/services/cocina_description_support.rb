@@ -27,7 +27,11 @@ class CocinaDescriptionSupport
     [{ value: title }]
   end
 
-  def self.person_contributor(forename:, surname:, role: :AUTHOR)
+  # @param forename [String] the forename of the person
+  # @param surname [String] the surname of the person
+  # @param role [Symbol] the role of the person from ROLES
+  # @param affiliations [Array<Hash>] the affiliations of the person that can be passed to affiliation()
+  def self.person_contributor(forename:, surname:, role: :AUTHOR, affiliations: [])
     {
       name: [
         {
@@ -38,8 +42,9 @@ class CocinaDescriptionSupport
         }
       ],
       type: 'person',
-      role: [ROLES.fetch(role)]
-    }
+      role: [ROLES.fetch(role)],
+      note: affiliations.map { |affiliation_attrs| affiliation(**affiliation_attrs) }.presence
+    }.compact
   end
 
   def self.note(type:, value:)
@@ -85,6 +90,19 @@ class CocinaDescriptionSupport
         value:,
         type: 'topic'
       }
+    end
+  end
+
+  def self.affiliation(organization:, department: nil)
+    { type: 'affiliation' }.tap do |params|
+      if department.present?
+        params[:structuredValue] = [
+          { value: organization },
+          { value: department }
+        ]
+      else
+        params[:value] = organization
+      end
     end
   end
 end

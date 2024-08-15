@@ -34,7 +34,9 @@ class WorksController < ApplicationController
     params.require(:work).permit(
       :title, :abstract, :publisher,
       :published_year, :published_month, :published_day,
-      authors_attributes: %i[first_name last_name],
+      authors_attributes: [
+        :first_name, :last_name, { affiliations_attributes: %i[organization department] }
+      ],
       keywords_attributes: %i[value]
     )
   end

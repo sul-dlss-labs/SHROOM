@@ -76,12 +76,12 @@ class TeiCocinaMapperService
     end
 
     def authors
-      pers_name_nodes = ng_xml.xpath('//tei:author/tei:persName', namespaces)
-      pers_name_nodes.map do |pers_name_node|
-        {
-          forename: pers_name_node.at_xpath('tei:forename', namespaces)&.text,
-          surname: pers_name_node.at_xpath('tei:surname', namespaces)&.text
-        }
+      author_nodes = ng_xml.xpath('//tei:author', namespaces)
+      author_nodes.filter_map do |author_node|
+        author_attrs = name_attrs_for(author_node)
+        next if author_attrs.blank?
+
+        author_attrs.merge(affiliations_attrs_for(author_node))
       end
     end
 
@@ -107,6 +107,35 @@ class TeiCocinaMapperService
 
     def namespaces
       { 'tei' => 'http://www.tei-c.org/ns/1.0' }
+    end
+
+    def name_attrs_for(author_node)
+      pers_name_node = author_node.at_xpath('tei:persName', namespaces)
+      return {} unless pers_name_node
+
+      {
+        forename: pers_name_node.at_xpath('tei:forename', namespaces)&.text,
+        surname: pers_name_node.at_xpath('tei:surname', namespaces)&.text
+      }.compact
+    end
+
+    def affiliations_attrs_for(author_node)
+      affiliation_nodes = author_node.xpath('tei:affiliation', namespaces)
+      return {} if affiliation_nodes.blank?
+
+      {
+        affiliations: affiliation_nodes.filter_map { |affiliation_node| affiliation_attrs_for(affiliation_node) }
+      }
+    end
+
+    def affiliation_attrs_for(affiliation_node)
+      organization = affiliation_node.at_xpath('tei:orgName[@type="institution"][last()]', namespaces)&.text
+      return if organization.blank?
+
+      {
+        department: affiliation_node.at_xpath('tei:orgName[@type="department"]', namespaces)&.text,
+        organization:
+      }.compact
     end
   end
 end

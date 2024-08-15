@@ -23,6 +23,11 @@
                                 <forename type="first">Justin</forename>
                                 <surname>Littman</surname>
                             </persName>
+                            <affiliation key="aff0">
+								<orgName type="department">Repository Development Center</orgName>
+								<orgName type="institution" key="instit1">Office of Strategic Initiatives</orgName>
+								<orgName type="institution" key="instit2">Library of Congress</orgName>
+							</affiliation>
                         </author>
                         <author role="corresp">
                             <persName>
@@ -30,37 +35,6 @@
                                 <forename type="middle">Silipigni</forename>
                                 <surname>Connaway</surname>
                             </persName>
-                        </author>
-                        <author>
-                            <affiliation key="aff0">
-                                <orgName type="department" key="dep1">Information Technology Specialist Office of Strategic Initiatives Library of Congress</orgName>
-                                <orgName type="department" key="dep2">Online Computer Library Center</orgName>
-                                <address>
-                                    <region>Inc</region>
-                                </address>
-                            </affiliation>
-                        </author>
-                        <author>
-                            <affiliation key="aff1">
-                                <orgName type="department">Consulting Research Scientist</orgName>
-                                <orgName type="institution" key="instit1">III Office of Research</orgName>
-                                <orgName type="institution" key="instit2">OCLC Online Computer Library Center</orgName>
-                                <address>
-                                    <region>Inc</region>
-                                </address>
-                            </affiliation>
-                        </author>
-                        <author>
-                            <affiliation key="aff2">
-                                <orgName type="institution">Online Computer Library Center</orgName>
-                                <address>
-                                    <addrLine>6565 Frantz Road</addrLine>
-                                    <postCode>43017-3395</postCode>
-                                    <settlement>Dublin</settlement>
-                                    <region>Inc Ohio</region>
-                                    <country key="US">USA</country>
-                                </address>
-                            </affiliation>
                         </author>
                         <title level="a" type="main">A CIRCULATION ANALYSIS OF PRINT BOOKS AND E-BOOKS IN AN ACADEMIC RESEARCH LIBRARY</title>
                     </analytic>

@@ -14,7 +14,13 @@ RSpec.describe WorkCocinaMapperService::ToWorkMapper do
           title: CocinaDescriptionSupport.title(title:),
           contributor: [
             CocinaDescriptionSupport.person_contributor(forename: 'Justin',
-                                                        surname: 'Littman'),
+                                                        surname: 'Littman',
+                                                        affiliations: [
+                                                          {
+                                                            organization: 'Library of Congress',
+                                                            department: 'Repository Development Center'
+                                                          }
+                                                        ]),
             CocinaDescriptionSupport.person_contributor(forename: 'Lynn',
                                                         surname: 'Connaway')
           ],
@@ -33,7 +39,13 @@ RSpec.describe WorkCocinaMapperService::ToWorkMapper do
     )
   end
   let(:title) { 'A Circulation Analysis Of Print Books And e-Books In An Academic Research Library' }
-  let(:author1) { Author.new(first_name: 'Justin', last_name: 'Littman') }
+  let(:author1) do
+    Author.new(
+      first_name: 'Justin',
+      last_name: 'Littman',
+      affiliations: [Affiliation.new(organization: 'Library of Congress', department: 'Repository Development Center')]
+    )
+  end
   let(:author2) { Author.new(first_name: 'Lynn', last_name: 'Connaway') }
   let(:abstract) { 'In order for collection development librarians to justify the adoption of electronic books ...' }
 
