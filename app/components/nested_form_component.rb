@@ -15,4 +15,12 @@ class NestedFormComponent < ViewComponent::Base
   def add_label
     "Add #{model_class.model_name.singular}"
   end
+
+  def delete_label
+    "Delete #{model_class.model_name.singular}"
+  end
+
+  def header_label
+    model_class.model_name.plural.titleize
+  end
 end

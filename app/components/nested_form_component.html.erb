@@ -1,19 +1,26 @@
-<div data-controller="form-add">
-    <template data-form-add-target="template">
-        <%= form.fields_for field, model_class.new, child_index: 'NEW_RECORD' do |nested_form| %>
-            <%= tag.div data: { controller: 'form-delete', index: nested_form.options[:child_index], form_add_target: 'row' } do %>
-                <%= render form_component.new(form: nested_form) %>
-                <button class="btn btn-secondary mt-2" data-action="form-delete#delete">Delete</button>
-            <% end %>
-        <% end %>
-    </template>
-    <div data-form-add-target="rowContainer">
-        <%= form.fields_for field do |nested_form| %>
-            <%= tag.div data: { controller: 'form-delete', index: nested_form.options[:child_index], form_add_target: 'row' } do %>
-                <%= render form_component.new(form: nested_form) %>
-                <button class="btn btn-secondary mt-2" data-action="form-delete#delete">Delete</button>
-            <% end %>
-        <% end %>
+<div class="card my-3">
+    <div class="card-header">
+        <%= header_label %>
     </div>
-    <button class="btn btn-secondary mt-2" data-action="form-add#add"><%= add_label %></button>
+    <div class="card-body" data-controller="form-add">
+        <template data-form-add-target="template">
+            <%= form.fields_for field, model_class.new, child_index: 'NEW_RECORD' do |nested_form| %>
+                <%= tag.div data: { controller: 'form-delete', index: nested_form.options[:child_index], form_add_target: 'row' } do %>
+                    <%= render form_component.new(form: nested_form) %>
+                    <button class="btn btn-secondary my-2" data-action="form-delete#delete"><%= delete_label %></button>
+                <% end %>
+            <% end %>
+        </template>
+        <ul class="list-group list-group-flush" data-form-add-target="rowContainer">
+            <%= form.fields_for field do |nested_form| %>
+                <li class="list-group-item">
+                    <%= tag.div data: { controller: 'form-delete', index: nested_form.options[:child_index], form_add_target: 'row' } do %>
+                        <%= render form_component.new(form: nested_form) %>
+                        <button class="btn btn-secondary my-2" data-action="form-delete#delete"><%= delete_label %></button>
+                    <% end %>
+                </li>
+            <% end %>
+        </ul>
+        <button class="btn btn-secondary mt-1 mb-2" data-action="form-add#add"><%= add_label %></button>
+    </div>
 </div>
