@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Model for a keyword
-class Keyword < Base
+class KeywordForm < BaseForm
   attribute :value, :string
   validates :value, presence: true
 

@@ -12,7 +12,7 @@ class WorkCocinaMapperService
     end
 
     def call
-      Work.new(params)
+      WorkForm.new(params)
     end
 
     private
@@ -60,7 +60,7 @@ class WorkCocinaMapperService
     def keywords
       cocina_object.description.subject
                    .select { |subject| subject.type == 'topic' }
-                   .map { |subject| Keyword.new(value: subject.value) }
+                   .map { |subject| KeywordForm.new(value: subject.value) }
     end
   end
 end

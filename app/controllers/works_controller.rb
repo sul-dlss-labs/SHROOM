@@ -10,7 +10,7 @@ class WorksController < ApplicationController
   def create
     # This is just for demo purposes.
     # Don't forget to remove create.html.erb and remove data-turbo=false from new.html.erb.
-    @work = Work.new(work_params)
+    @work = WorkForm.new(work_params)
     return render :new, status: :unprocessable_entity unless @work.valid?
 
     Rails.logger.info("Work: #{@work.to_json}")
@@ -24,14 +24,14 @@ class WorksController < ApplicationController
   private
 
   def build_new_work
-    return Work.new unless params.key?(:file_key)
+    return WorkForm.new unless params.key?(:file_key)
 
     GrobidService.call(path: FileStore.lookup(key: params[:file_key]))
   end
 
   def work_params
     # Perhaps these can be introspected from the model?
-    params.require(:work).permit(
+    params.require(:work_form).permit(
       :title, :abstract, :publisher,
       :published_year, :published_month, :published_day,
       authors_attributes: [
@@ -42,6 +42,6 @@ class WorksController < ApplicationController
   end
 
   def file_key_param
-    @file_key_param ||= params[:work][:file_key]
+    @file_key_param ||= params[:work_form][:file_key]
   end
 end

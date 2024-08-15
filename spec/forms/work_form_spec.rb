@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Work do
+RSpec.describe WorkForm do
   describe 'validations' do
     let(:work) do
       described_class.new(
@@ -84,7 +84,7 @@ RSpec.describe Work do
     end
 
     context 'when author is invalid' do
-      let(:authors) { [Author.new(first_name: 'Justin')] }
+      let(:authors) { [AuthorForm.new(first_name: 'Justin')] }
 
       it 'is invalid' do
         expect(work).not_to be_valid
@@ -96,8 +96,8 @@ RSpec.describe Work do
   describe 'normalization' do
     context 'when authors are blank' do
       let(:work) { described_class.new(authors: [author1, author2]) }
-      let(:author1) { Author.new(first_name: 'Justin', last_name: 'Littman') }
-      let(:author2) { Author.new }
+      let(:author1) { AuthorForm.new(first_name: 'Justin', last_name: 'Littman') }
+      let(:author2) { AuthorForm.new }
 
       before do
         work.valid? # trigger normalization

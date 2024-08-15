@@ -6,7 +6,7 @@ RSpec.describe WorkCocinaMapperService::ToCocinaMapper do
   subject(:cocina_object) { described_class.call(work:) }
 
   let(:work) do
-    Work.new(
+    WorkForm.new(
       title:,
       authors: [author1, author2],
       abstract:,
@@ -15,20 +15,21 @@ RSpec.describe WorkCocinaMapperService::ToCocinaMapper do
       published_day: 1,
       publisher: 'American Library Association',
       keywords: [
-        Keyword.new(value: 'Electronic books'),
-        Keyword.new(value: 'Academic libraries')
+        KeywordForm.new(value: 'Electronic books'),
+        KeywordForm.new(value: 'Academic libraries')
       ]
     )
   end
   let(:title) { 'A Circulation Analysis Of Print Books And e-Books In An Academic Research Library' }
   let(:author1) do
-    Author.new(
+    AuthorForm.new(
       first_name: 'Justin',
       last_name: 'Littman',
-      affiliations: [Affiliation.new(organization: 'Library of Congress', department: 'Repository Development Center')]
+      affiliations: [AffiliationForm.new(organization: 'Library of Congress',
+                                         department: 'Repository Development Center')]
     )
   end
-  let(:author2) { Author.new(first_name: 'Lynn', last_name: 'Connaway') }
+  let(:author2) { AuthorForm.new(first_name: 'Lynn', last_name: 'Connaway') }
   let(:abstract) { 'In order for collection development librarians to justify the adoption of electronic books ...' }
 
   let(:mapper) { described_class.new(work:) }

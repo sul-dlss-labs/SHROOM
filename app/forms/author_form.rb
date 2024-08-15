@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Model for an author
-class Author < Base
+class AuthorForm < BaseForm
   attribute :first_name, :string
   validates :first_name, presence: true
 
@@ -14,7 +14,7 @@ class Author < Base
   end
 
   def affiliations_attributes=(attributes)
-    self.affiliations = attributes.map { |_, affiliation| Affiliation.new(affiliation) }
+    self.affiliations = attributes.map { |_, affiliation| AffiliationForm.new(affiliation) }
   end
 
   def blank?

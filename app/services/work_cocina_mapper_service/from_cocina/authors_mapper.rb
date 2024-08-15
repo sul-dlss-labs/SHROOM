@@ -19,7 +19,7 @@ class WorkCocinaMapperService
         cocina_object.description.contributor.filter_map do |contributor|
           next unless contributor.type == 'person'
 
-          Author.new(
+          AuthorForm.new(
             first_name: contributor.name.first.structuredValue.find { |name| name.type == 'forename' }.value,
             last_name: contributor.name.first.structuredValue.find { |name| name.type == 'surname' }.value,
             affiliations: affiliations_for(contributor)
@@ -47,7 +47,7 @@ class WorkCocinaMapperService
           organization = note.value
           department = nil
         end
-        Affiliation.new(organization:, department:)
+        AffiliationForm.new(organization:, department:)
       end
     end
   end

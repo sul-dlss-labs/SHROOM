@@ -14,7 +14,7 @@ RSpec.describe WorkCocinaMapperService do
                                  })
   end
   let(:title) { 'A Circulation Analysis Of Print Books And e-Books In An Academic Research Library' }
-  let(:work) { Work.new(title:) }
+  let(:work) { WorkForm.new(title:) }
 
   describe '.to_cocina' do
     it 'maps to cocina' do

@@ -19,7 +19,7 @@ RSpec.describe GrobidService do
     end
 
     it 'calls grobid web service and returns a Work' do
-      expect(work).to be_a(Work)
+      expect(work).to be_a(WorkForm)
     end
   end
 

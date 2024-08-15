@@ -1,11 +1,11 @@
-<%= form_with model: @work, data: { turbo: false }, builder: ShroomFormBuilder do |form| %>
+<%= form_with model: @work, url: works_path, data: { turbo: false }, builder: ShroomFormBuilder do |form| %>
     <%= form.hidden_field(:file_key, value: params[:file_key]) if params.key?(:file_key) %>
     <div>
         <%= form.bs_label :title %>
         <%= form.bs_text_field :title %>
         <%= form.bs_invalid_feedback :title %>
 
-        <%= render NestedFormComponent.new(form:, model_class: Author, field: :authors, form_component: Works::AuthorFormComponent) %>
+        <%= render NestedFormComponent.new(form:, model_class: AuthorForm, field: :authors, form_component: Works::AuthorFormComponent) %>
 
         <%= form.bs_label :published_year %>
         <%= form.bs_text_field :published_year %>
@@ -27,7 +27,7 @@
         <%= form.bs_text_area :abstract %>
         <%= form.bs_invalid_feedback :abstract %>
 
-        <%= render NestedFormComponent.new(form:, model_class: Keyword, field: :keywords, form_component: Works::KeywordFormComponent) %>
+        <%= render NestedFormComponent.new(form:, model_class: KeywordForm, field: :keywords, form_component: Works::KeywordFormComponent) %>
 
         <%= form.submit 'Submit', class: 'btn btn-primary mt-3' %>
     </div>

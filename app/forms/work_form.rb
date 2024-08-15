@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Model for a scholarly work
-class Work < Base
+class WorkForm < BaseForm
   attribute :title, :string
   validates :title, presence: true
 
@@ -12,7 +12,7 @@ class Work < Base
   validate :authors_are_valid
 
   def authors_attributes=(attributes)
-    self.authors = attributes.map { |_, author| Author.new(author) }
+    self.authors = attributes.map { |_, author| AuthorForm.new(author) }
   end
 
   def authors_are_valid
@@ -57,6 +57,6 @@ class Work < Base
   end
 
   def keywords_attributes=(attributes)
-    self.keywords = attributes.map { |_, keyword| Keyword.new(keyword) }
+    self.keywords = attributes.map { |_, keyword| KeywordForm.new(keyword) }
   end
 end
