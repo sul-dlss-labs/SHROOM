@@ -31,7 +31,7 @@ class WorksController < ApplicationController
 
   def work_params
     # Perhaps these can be introspected from the model?
-    params.require(:work_form).permit(
+    params.require(:work).permit(
       :title, :abstract, :publisher,
       :published_year, :published_month, :published_day,
       authors_attributes: [
@@ -42,6 +42,6 @@ class WorksController < ApplicationController
   end
 
   def file_key_param
-    @file_key_param ||= params[:work_form][:file_key]
+    @file_key_param ||= params[:work][:file_key]
   end
 end

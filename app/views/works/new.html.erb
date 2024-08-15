@@ -1,4 +1,4 @@
-<%= form_with model: @work, url: works_path, data: { turbo: false }, builder: ShroomFormBuilder do |form| %>
+<%= form_with model: @work, data: { turbo: false }, builder: ShroomFormBuilder do |form| %>
     <%= form.hidden_field(:file_key, value: params[:file_key]) if params.key?(:file_key) %>
     <div>
         <%= form.bs_label :title %>
