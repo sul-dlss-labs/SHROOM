@@ -3,30 +3,30 @@
 # Controller for Works
 class WorksController < ApplicationController
   def new
-    @work = build_new_work
-    Rails.logger.info("Work: #{@work.to_json}")
+    @work_form = build_new_work_form
+    Rails.logger.info("Work: #{@work_form.to_json}")
   end
 
   def create
+    @work_form = WorkForm.new(work_params)
+    return render :new, status: :unprocessable_entity unless @work_form.valid?
+
+    Rails.logger.info("Work: #{@work_form.to_json}")
+    @cocina_object = WorkCocinaMapperService.to_cocina(work: @work_form)
+    @work = Work.create!(title: @work_form.title)
+    work_file.update!(work: @work)
+
     # This is just for demo purposes.
     # Don't forget to remove create.html.erb and remove data-turbo=false from new.html.erb.
-    @work = WorkForm.new(work_params)
-    return render :new, status: :unprocessable_entity unless @work.valid?
-
-    Rails.logger.info("Work: #{@work.to_json}")
-    @cocina_object = WorkCocinaMapperService.to_cocina(work: @work)
-
-    work_file.destroy if work_file.present?
-
     render :create
   end
 
   private
 
-  def build_new_work
+  def build_new_work_form
     return WorkForm.new unless params.key?(:work_file)
 
-    GrobidService.call(path: ActiveStorage::Blob.service.path_for(work_file_blob.key))
+    GrobidService.call(path: work_file.path)
   end
 
   def work_params
@@ -47,9 +47,5 @@ class WorksController < ApplicationController
 
   def work_file_param
     @work_file_param ||= params[:work_file] || params[:work][:work_file]
-  end
-
-  def work_file_blob
-    @work_file_blob ||= work_file.file.blob
   end
 end
