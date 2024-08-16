@@ -16,7 +16,7 @@ class WorksController < ApplicationController
     Rails.logger.info("Work: #{@work.to_json}")
     @cocina_object = WorkCocinaMapperService.to_cocina(work: @work)
 
-    PurgeWorkFileService.purge(work_file:) if work_file.present?
+    work_file.destroy if work_file.present?
 
     render :create
   end
