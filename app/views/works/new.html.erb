@@ -1,5 +1,5 @@
 <%= form_with model: @work, data: { turbo: false }, builder: ShroomFormBuilder do |form| %>
-    <%= form.hidden_field(:file_key, value: params[:file_key]) if params.key?(:file_key) %>
+    <%= form.hidden_field(:work_file, value: params[:work_file]) if params.key?(:work_file) %>
     <div>
         <%= form.bs_label :title %>
         <%= form.bs_text_field :title %>

@@ -5,7 +5,13 @@ class FilesController < ApplicationController
   def new; end
 
   def create
-    key = FileStore.store(path: params[:file].to_path)
-    redirect_to new_work_path(file_key: key)
+    work_file = WorkFile.create!(file_params)
+    redirect_to new_work_path(work_file:)
+  end
+
+  private
+
+  def file_params
+    params.permit(:file)
   end
 end
