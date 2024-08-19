@@ -2,6 +2,10 @@
 
 # Controller for Works
 class WorksController < ApplicationController
+  def index
+    @works = Work.order(id: :desc).page(params[:page])
+  end
+
   def new
     @work_form = build_new_work_form
     Rails.logger.info("Work: #{@work_form.to_json}")
