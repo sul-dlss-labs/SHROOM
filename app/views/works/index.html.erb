@@ -1,11 +1,24 @@
-<h1>New Work</h1>
+<h1>SHROOM</h1>
+<div class="alert alert-light" role="alert">
+    SHROOM is a proof-of-concept application for exploring:
+    <ul>
+        <li>The use of the <%= link_to 'Grobid', 'https://github.com/kermitt2/grobid', target: '_blank', rel: 'noopener' %> machine learning library to extract bibliographic metadata from scholarly articles to minimize manual entry by users.</li>
+        <li>The use of SDR / DSA for the persistence of Cocina model digital objects to avoid synchronization problems between the deposit application and the repository.</li>
+    </ul>
+
+    <p>See <%= link_to 'https://github.com/sul-dlss-labs/SHROOM', 'https://github.com/sul-dlss-labs/SHROOM', target: '_blank', rel: 'noopener' %>
+</div>
+
+<h2>New Work</h2>
 <%= render 'files/new' %>
 
-<h1 class="mt-4">Existing Works</h1>
+<h2 class="mt-4">Existing Works</h2>
 <ul class="list-group">
     <% @works.each do |work| %>
         <li class="list-group-item">
-            <%= work.title %><% if work.druid %> (<%= work.druid %>)<% end %>
+            <%= work.druid ? link_to(work.title, work_path(work)) : work.title %>
+            <span> (<%= work.druid || 'Not deposited or accession not complete' %>)</span>
+            <%= turbo_frame_tag(work, 'edit-button', src: edit_button_work_path(work), target: '_top') if work.druid %>
         </li>
     <% end %>
 </ul>

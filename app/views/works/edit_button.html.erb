@@ -1,0 +1,5 @@
+<%= turbo_frame_tag @work, 'edit-button' do %>
+    <%= link_to edit_work_path(@work), type: 'button', class: 'btn btn-outline-primary ms-3' do %>
+        <i class="bi bi-pencil"></i><span class="visually-hidden">Edit</span>
+    <% end %>
+<% end %>

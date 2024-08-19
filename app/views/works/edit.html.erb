@@ -1,0 +1,3 @@
+<%= form_with model: @work_form, method: 'patch', url: work_path(@work), builder: ShroomFormBuilder do |form| %>
+    <%= render 'form', form: %>
+<% end %>

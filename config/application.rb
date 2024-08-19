@@ -34,5 +34,7 @@ module Shroom
 
     # See https://viewcomponent.org/known_issues.html#issues-resolved-by-the-optional-capture-compatibility-patch
     config.view_component.capture_compatibility_patch_enabled = true
+
+    config.action_dispatch.rescue_responses['Sdr::Repository::NotFoundResponse'] = :not_found
   end
 end

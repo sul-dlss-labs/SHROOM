@@ -1,34 +1,47 @@
 # frozen_string_literal: true
 
 class WorkCocinaMapperService
-  # Map from Work to Cocina model
+  # Map from WorkForm to Cocina model
   class ToCocinaMapper
     def self.call(...)
       new(...).call
     end
 
-    def initialize(work:)
-      @work = work
+    # @param [WorkForm] work_form
+    # @param [String,nil] druid
+    # @param [Integer] version
+    # @param [source_id] source_id
+    def initialize(work_form:, druid: nil, version: nil, source_id: nil)
+      @work_form = work_form
+      @druid = druid
+      @version = version || 1
+      @source_id = source_id || 'shroom:object-0'
     end
 
     def call
-      Cocina::Models.build_request(params)
+      if druid
+        Cocina::Models.build(params)
+      else
+        Cocina::Models.build_request(params)
+      end
     end
 
     private
 
-    attr_reader :work
+    attr_reader :work_form, :version, :druid, :source_id
 
     def params
       {
         type: Cocina::Models::ObjectType.object,
-        label: work.title,
-        description: WorkCocinaMapperService::ToCocina::DescriptionMapper.call(work:),
-        version: 1,
+        label: work_form.title,
+        description: WorkCocinaMapperService::ToCocina::DescriptionMapper.call(work_form:, druid:),
+        version:,
         access: { view: 'world', download: 'world' },
-        identification: { sourceId: 'shroom:object-0' },
-        administrative: { hasAdminPolicy: Settings.apo }
-      }
+        identification: { sourceId: source_id },
+        administrative: { hasAdminPolicy: Settings.apo },
+        externalIdentifier: druid,
+        structural: { contains: [] }
+      }.compact
     end
   end
 end

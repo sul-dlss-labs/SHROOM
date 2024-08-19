@@ -174,6 +174,20 @@ GEM
       capistrano-one_time_key (>= 0.2.0)
       capistrano-shared_configs
       ed25519
+    dor-services-client (14.21.0)
+      activesupport (>= 4.2, < 8)
+      cocina-models (~> 0.99.0)
+      deprecation
+      faraday (~> 2.0)
+      faraday-retry
+      zeitwerk (~> 2.1)
+    dor-workflow-client (7.5.0)
+      activesupport (>= 3.2.1, < 8)
+      deprecation (>= 0.99.0)
+      faraday (~> 2.0)
+      faraday-retry (~> 2.0)
+      nokogiri (~> 1.6)
+      zeitwerk (~> 2.1)
     drb (2.2.1)
     dry-core (1.0.1)
       concurrent-ruby (~> 1.0)
@@ -224,6 +238,8 @@ GEM
       multipart-post (~> 2)
     faraday-net_http (3.1.1)
       net-http
+    faraday-retry (2.2.1)
+      faraday (~> 2.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashdiff (1.1.1)
@@ -507,6 +523,8 @@ DEPENDENCIES
   cssbundling-rails
   debug
   dlss-capistrano
+  dor-services-client
+  dor-workflow-client
   edtf
   erb_lint
   factory_bot_rails

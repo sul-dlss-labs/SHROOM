@@ -14,28 +14,41 @@ class WorkCocinaMapperService
     new.to_work(...)
   end
 
-  # param [Work] work
-  # return [Cocina::Models::DRO,Cocina::Models::RequestDRO]
-  def to_cocina(work:)
-    ToCocinaMapper.call(work:)
+  # @param [WorkForm] work_form
+  # @param [String,nil] druid
+  # @param [Integer,nil] version
+  # @param [String,nil] source_id
+  # @return [Cocina::Models::DRO,Cocina::Models::RequestDRO]
+  def to_cocina(work_form:, druid: nil, version: nil, source_id: nil)
+    ToCocinaMapper.call(work_form:, druid:, version:, source_id:)
   end
 
   # param [Cocina::Models::DRO] cocina_object
   # param [Boolean] validate_lossless validate that data will not be lost in mapping to work
-  # return [Work]
+  # return [WorkForm]
   # raises [UnmappableError]
   def to_work(cocina_object:, validate_lossless: true)
-    work = ToWorkMapper.call(cocina_object:)
-    raise UnmappableError if validate_lossless && !roundtrippable?(mapped_work: work,
+    work_form = ToWorkMapper.call(cocina_object:)
+    raise UnmappableError if validate_lossless && !roundtrippable?(mapped_work: work_form,
                                                                    original_cocina_object: cocina_object)
 
-    work
+    work_form
   end
 
   private
 
   def roundtrippable?(mapped_work:, original_cocina_object:)
-    roundtripped_cocina_object = to_cocina(work: mapped_work)
-    roundtripped_cocina_object == original_cocina_object
+    roundtripped_cocina_object = to_cocina(work_form: mapped_work,
+                                           druid: original_cocina_object.try(:externalIdentifier),
+                                           version: original_cocina_object.version,
+                                           source_id: original_cocina_object.identification&.sourceId)
+    clean_original_cocina_object = original_cocina_object.new(structural: { contains: [] })
+    if roundtripped_cocina_object == clean_original_cocina_object
+      true
+    else
+      Rails.logger.info("Roundtripped Cocina Object: #{roundtripped_cocina_object.to_json}")
+      Rails.logger.info("Original Cocina Object: #{clean_original_cocina_object.to_json}")
+      false
+    end
   end
 end

@@ -18,8 +18,7 @@ module Sdr
 
     # @raise [Error] if there is an error depositing the work
     def call
-      @cocina_object = cocina_object.new(identification: identification_params,
-                                         structural: structural_params)
+      @cocina_object = cocina_object.new(structural: structural_params)
       job_id = deposit
       job_status = await_job_status(job_id:)
 
@@ -37,13 +36,13 @@ module Sdr
       # upload_responses is an Array<DirectUploadResponse>.
       upload_responses = SdrClient::RedesignedClient::UploadFiles.upload(file_metadata:,
                                                                          filepath_map:)
-      new_request_dro = SdrClient::RedesignedClient::UpdateDroWithFileIdentifiers.update(request_dro: cocina_object,
-                                                                                         upload_responses:)
+      new_dro = SdrClient::RedesignedClient::UpdateDroWithFileIdentifiers.update(request_dro: cocina_object,
+                                                                                 upload_responses:)
 
       SdrClient::RedesignedClient::CreateResource.run(accession: true,
                                                       #  assign_doi: options[:assign_doi],
                                                       #  user_versions: options[:user_versions],
-                                                      metadata: new_request_dro)
+                                                      metadata: new_dro)
     end
 
     def await_job_status(job_id:)
@@ -51,10 +50,6 @@ module Sdr
       raise Error, "Deposit failed: #{job_status.errors.join('; ')}" unless job_status.wait_until_complete
 
       job_status
-    end
-
-    def identification_params
-      { sourceId: "shroom:object-#{work.id}" }
     end
 
     # @return [Hash<String,DirectUploadRequest>] file_metadata map of relative filepaths to file metadata

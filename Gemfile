@@ -40,6 +40,8 @@ gem 'bootsnap', require: false
 
 # DLSS/domain-specific dependencies
 gem 'cocina-models', '~> 0.99.0'
+gem 'dor-services-client'
+gem 'dor-workflow-client'
 gem 'sdr-client'
 
 # Additional gems

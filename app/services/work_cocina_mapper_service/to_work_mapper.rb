@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class WorkCocinaMapperService
-  # Maps from Cocina model to Work
+  # Maps from Cocina model to WorkForm
   class ToWorkMapper
     def self.call(...)
       new(...).call

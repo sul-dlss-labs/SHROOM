@@ -3,9 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe WorkCocinaMapperService::ToCocinaMapper do
-  subject(:cocina_object) { described_class.call(work:) }
+  subject(:cocina_object) { described_class.call(work_form:, druid:, version:, source_id:) }
 
-  let(:work) do
+  let(:druid) { nil }
+  let(:version) { 1 }
+  let(:source_id) { nil }
+
+  let(:work_form) do
     WorkForm.new(
       title: title_fixture,
       authors: [author1, author2],
@@ -30,13 +34,24 @@ RSpec.describe WorkCocinaMapperService::ToCocinaMapper do
   end
   let(:author2) { AuthorForm.new(first_name: 'Lynn', last_name: 'Connaway') }
 
-  let(:mapper) { described_class.new(work:) }
-
   describe '#call' do
-    let(:expected) { create_request_dro }
+    context 'when a new work' do
+      let(:expected) { create_request_dro }
 
-    it 'maps to cocina' do
-      expect(cocina_object).to equal_cocina(expected)
+      it 'maps to cocina' do
+        expect(cocina_object).to equal_cocina(expected)
+      end
+    end
+
+    context 'when an existing work' do
+      let(:druid) { druid_fixture }
+      let(:version) { 2 }
+      let(:expected) { create_dro }
+      let(:source_id) { 'shroom:object-4' }
+
+      it 'maps to cocina' do
+        expect(cocina_object).to equal_cocina(expected)
+      end
     end
   end
 end

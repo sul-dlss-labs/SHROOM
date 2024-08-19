@@ -1,39 +1,4 @@
-<%= form_with model: @work_form, data: { turbo: false }, builder: ShroomFormBuilder do |form| %>
+<%= form_with model: @work_form, builder: ShroomFormBuilder do |form| %>
     <%= form.hidden_field(:work_file, value: params[:work_file]) if params.key?(:work_file) %>
-    <div>
-        <%= form.bs_label :title %>
-        <%= form.bs_text_field :title %>
-        <%= form.bs_invalid_feedback :title %>
-
-        <%= render NestedFormComponent.new(form:, model_class: AuthorForm, field: :authors, form_component: Works::AuthorFormComponent) %>
-
-        <div class="row">
-            <div class="col-4">
-                <%= form.bs_label :published_year %>
-                <%= form.bs_text_field :published_year %>
-                <%= form.bs_invalid_feedback :published_year %>
-            </div>
-            <div class="col-2">
-                <%= form.bs_label :published_month %>
-                <%= form.bs_text_field :published_month %>
-                <%= form.bs_invalid_feedback :published_month %>
-            </div>
-            <div class="col-2">
-                <%= form.bs_label :published_day %>
-                <%= form.bs_text_field :published_day %>
-                <%= form.bs_invalid_feedback :published_day %>
-            </div>
-        </div>
-        <%= form.bs_label :publisher %>
-        <%= form.bs_text_field :publisher %>
-        <%= form.bs_invalid_feedback :publisher %>
-
-        <%= form.bs_label :abstract %>
-        <%= form.bs_text_area :abstract %>
-        <%= form.bs_invalid_feedback :abstract %>
-
-        <%= render NestedFormComponent.new(form:, model_class: KeywordForm, field: :keywords, form_component: Works::KeywordFormComponent) %>
-
-        <%= form.submit 'Submit', class: 'btn btn-primary mt-3' %>
-    </div>
+    <%= render 'form', form: %>
 <% end %>

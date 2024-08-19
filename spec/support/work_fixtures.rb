@@ -7,3 +7,7 @@ end
 def abstract_fixture
   'In order for collection development librarians to justify the adoption of electronic books ...'
 end
+
+def druid_fixture
+  'druid:bc123df4567'
+end

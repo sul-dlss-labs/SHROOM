@@ -1,2 +1,5 @@
 sdr_api:
   url: https://sdr-api-qa.stanford.edu
+
+dor_services:
+  url: https://dor-services-qa-lb.stanford.edu

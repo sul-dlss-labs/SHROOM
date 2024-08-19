@@ -14,5 +14,9 @@ Rails.application.routes.draw do
 
   resources :files, only: [ :create ]
 
-  resources :works, only: [ :new, :create, :index ]
+  resources :works, only: [ :new, :create, :index, :edit, :update, :show ] do
+    member do
+      get 'edit_button'
+    end
+  end
 end

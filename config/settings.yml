@@ -6,3 +6,12 @@ grobid:
 sdr_api:
   url: http://localhost:3006
   email: shroom@dlss.sul.stanford.edu
+
+dor_services:
+  url: "http://localhost:3003"
+
+workflow:
+  url: "http://localhost:3001"
+
+purl:
+  url: "https://sul-purl-stage.stanford.edu"
