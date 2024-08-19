@@ -77,3 +77,12 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webmock'
 end
+
+group :deployment do
+  gem 'capistrano'
+  gem 'capistrano-bundler'
+  gem 'capistrano-passenger'
+  gem 'capistrano-rails'
+  # gem 'capistrano-shared_configs'
+  gem 'dlss-capistrano', require: false
+end

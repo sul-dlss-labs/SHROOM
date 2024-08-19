@@ -73,9 +73,13 @@ GEM
       tzinfo (~> 2.0, >= 2.0.5)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
+    airbrussh (1.5.2)
+      sshkit (>= 1.6.1, != 1.7.0)
     ast (2.4.2)
     attr_extras (7.1.0)
     base64 (0.2.0)
+    bcrypt_pbkdf (1.1.1)
+    bcrypt_pbkdf (1.1.1-arm64-darwin)
     better_html (2.1.1)
       actionview (>= 6.0)
       activesupport (>= 6.0)
@@ -90,6 +94,28 @@ GEM
     brakeman (6.1.2)
       racc
     builder (3.3.0)
+    bundler-audit (0.9.1)
+      bundler (>= 1.2.0, < 3)
+      thor (~> 1.0)
+    capistrano (3.19.1)
+      airbrussh (>= 1.0.0)
+      i18n
+      rake (>= 10.0.0)
+      sshkit (>= 1.9.0)
+    capistrano-bundle_audit (0.4.0)
+      bundler-audit (~> 0.5)
+      capistrano (~> 3.0)
+      capistrano-bundler (>= 1.4)
+    capistrano-bundler (2.1.1)
+      capistrano (~> 3.1)
+    capistrano-one_time_key (0.2.0)
+      capistrano (~> 3.0)
+    capistrano-passenger (0.2.1)
+      capistrano (~> 3.0)
+    capistrano-rails (1.6.3)
+      capistrano (~> 3.1)
+      capistrano-bundler (>= 1.1, < 3)
+    capistrano-shared_configs (0.2.2)
     capybara (3.40.0)
       addressable
       matrix
@@ -140,6 +166,13 @@ GEM
     deprecation (1.1.0)
       activesupport
     diff-lcs (1.5.1)
+    dlss-capistrano (5.2.0)
+      bcrypt_pbkdf
+      capistrano (~> 3.0)
+      capistrano-bundle_audit (>= 0.3.0)
+      capistrano-one_time_key (>= 0.2.0)
+      capistrano-shared_configs
+      ed25519
     drb (2.2.1)
     dry-core (1.0.1)
       concurrent-ruby (~> 1.0)
@@ -165,6 +198,7 @@ GEM
       dry-inflector (~> 1.0)
       dry-logic (~> 1.4)
       zeitwerk (~> 2.6)
+    ed25519 (1.3.0)
     edtf (3.1.1)
       activesupport (>= 3.0, < 8.0)
     equivalent-xml (0.6.0)
@@ -239,8 +273,13 @@ GEM
       net-protocol
     net-protocol (0.2.2)
       timeout
+    net-scp (4.0.0)
+      net-ssh (>= 2.6.5, < 8.0.0)
+    net-sftp (4.0.0)
+      net-ssh (>= 5.0.0, < 8.0.0)
     net-smtp (0.5.0)
       net-protocol
+    net-ssh (7.2.3)
     nio4r (2.7.3)
     nokogiri (1.16.7-aarch64-linux)
       racc (~> 1.4)
@@ -388,6 +427,11 @@ GEM
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     smart_properties (1.17.0)
+    sshkit (1.23.0)
+      base64
+      net-scp (>= 1.1.2)
+      net-sftp (>= 2.1.2)
+      net-ssh (>= 2.8.0)
     stimulus-rails (1.3.3)
       railties (>= 6.0.0)
     stringio (3.1.1)
@@ -440,11 +484,16 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   brakeman
+  capistrano
+  capistrano-bundler
+  capistrano-passenger
+  capistrano-rails
   capybara
   cocina-models (~> 0.99.0)
   config
   cssbundling-rails
   debug
+  dlss-capistrano
   edtf
   erb_lint
   factory_bot_rails
