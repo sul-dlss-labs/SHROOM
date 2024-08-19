@@ -16,6 +16,9 @@ class WorksController < ApplicationController
     @work = Work.create!(title: @work_form.title)
     work_file.update!(work: @work)
 
+    job_ib = Sdr::DepositService.call(work: @work, cocina_object: @cocina_object)
+    Rails.logger.info("Deposit job: #{job_ib}")
+
     # This is just for demo purposes.
     # Don't forget to remove create.html.erb and remove data-turbo=false from new.html.erb.
     render :create

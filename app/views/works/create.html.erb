@@ -1,4 +1,4 @@
 <div class="mt-3"><%= link_to 'Upload another article', new_file_path %>
 
-<h1>Work <%= @work.id %>: <%= @work.title %></h1>
+<h1>Work <%= @work.id %> (<%= @work.druid %>): <%= @work.title %></h1>
 <pre class="mt-3"><code><%= CocinaSupport.pretty(cocina_object: @cocina_object.to_h) %></code></pre>

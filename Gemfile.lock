@@ -177,6 +177,11 @@ GEM
       rubocop (>= 1)
       smart_properties
     erubi (1.13.0)
+    factory_bot (6.4.6)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.4.3)
+      factory_bot (~> 6.4)
+      railties (>= 5.0.0)
     faraday (2.10.1)
       faraday-net_http (>= 2.0, < 3.2)
       logger
@@ -442,6 +447,7 @@ DEPENDENCIES
   debug
   edtf
   erb_lint
+  factory_bot_rails
   faraday
   faraday-multipart
   importmap-rails

@@ -1,4 +1,4 @@
-apo: 'druid:zx485kb6348'
+apo: 'druid:hv992ry2431'
 
 grobid:
   host: 'http://localhost:8070'
@@ -7,6 +7,6 @@ file_store:
   path: 'tmp/files'
 
 sdr_api:
-  url: http://sdr-api:3006
+  url: http://localhost:3006
   email: shroom@dlss.sul.stanford.edu
   password: notusedanywhere

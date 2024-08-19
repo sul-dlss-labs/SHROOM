@@ -6,15 +6,15 @@ RSpec.describe WorkCocinaMapperService do
   let(:cocina_object) do
     Cocina::Models.build_request({
                                    type: Cocina::Models::ObjectType.object,
-                                   label: title,
-                                   description: { title: CocinaDescriptionSupport.title(title:) },
+                                   label: title_fixture,
+                                   description: { title: CocinaDescriptionSupport.title(title: title_fixture) },
                                    version: 1,
-                                   identification: { sourceId: 'shroom:object-1' },
-                                   administrative: { hasAdminPolicy: Settings.apo }
+                                   identification: { sourceId: 'shroom:object-0' },
+                                   administrative: { hasAdminPolicy: Settings.apo },
+                                   access: { view: 'world', download: 'world' }
                                  })
   end
-  let(:title) { 'A Circulation Analysis Of Print Books And e-Books In An Academic Research Library' }
-  let(:work) { WorkForm.new(title:) }
+  let(:work) { WorkForm.new(title: title_fixture) }
 
   describe '.to_cocina' do
     it 'maps to cocina' do

@@ -34,7 +34,7 @@ RSpec.describe TeiCocinaMapperService do
           subject: CocinaDescriptionSupport.subjects(values: ['Electronic books', 'Academic libraries'])
         },
         version: 1,
-        identification: { sourceId: 'shroom:object-1' },
+        identification: { sourceId: 'shroom:object-0' },
         administrative: { hasAdminPolicy: Settings.apo }
       }
     )

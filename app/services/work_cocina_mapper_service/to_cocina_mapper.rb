@@ -25,7 +25,8 @@ class WorkCocinaMapperService
         label: work.title,
         description: WorkCocinaMapperService::ToCocina::DescriptionMapper.call(work:),
         version: 1,
-        identification: { sourceId: 'shroom:object-1' },
+        access: { view: 'world', download: 'world' },
+        identification: { sourceId: 'shroom:object-0' },
         administrative: { hasAdminPolicy: Settings.apo }
       }
     end
