@@ -41,7 +41,7 @@ RSpec.describe Sdr::DepositService do
       expect(SdrClient::RedesignedClient::UploadFiles).to have_received(:upload)
         .with(file_metadata:, filepath_map:)
       expect(SdrClient::RedesignedClient::UpdateDroWithFileIdentifiers).to have_received(:update)
-        .with(request_dro: cocina_object, upload_responses:)
+        .with(request_dro: Cocina::Models::RequestDRO, upload_responses:)
       expect(SdrClient::RedesignedClient::CreateResource).to have_received(:run).with(
         accession: true, metadata: new_cocina_object
       )

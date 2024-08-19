@@ -18,6 +18,8 @@ module Sdr
 
     # @raise [Error] if there is an error depositing the work
     def call
+      @cocina_object = cocina_object.new(identification: identification_params,
+                                         structural: structural_params)
       job_id = deposit
       job_status = await_job_status(job_id:)
 
