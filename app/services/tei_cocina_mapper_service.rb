@@ -2,6 +2,8 @@
 
 # Map from TEI XML to Cocina model
 class TeiCocinaMapperService
+  TEI_NAMESPACES = { 'tei' => 'http://www.tei-c.org/ns/1.0' }.freeze
+
   def self.call(...)
     new(...).call
   end
@@ -72,11 +74,11 @@ class TeiCocinaMapperService
     end
 
     def title
-      @title ||= ng_xml.at_xpath('//tei:titleStmt/tei:title', namespaces)&.text
+      @title ||= ng_xml.at_xpath('//tei:title', TEI_NAMESPACES)&.text
     end
 
     def authors
-      author_nodes = ng_xml.xpath('//tei:author', namespaces)
+      author_nodes = ng_xml.xpath('//tei:author', TEI_NAMESPACES)
       author_nodes.filter_map do |author_node|
         author_attrs = name_attrs_for(author_node)
         next if author_attrs.blank?
@@ -86,41 +88,38 @@ class TeiCocinaMapperService
     end
 
     def abstract
-      @abstract ||= ng_xml.at_xpath('//tei:profileDesc/tei:abstract/tei:p', namespaces)&.text
+      @abstract ||= ng_xml.at_xpath('//tei:abstract/tei:p', TEI_NAMESPACES)&.text
     end
 
     def published_date
-      @published_date ||= ng_xml.at_xpath("//tei:publicationStmt/tei:date[@type='published']/@when", namespaces)&.text
+      @published_date ||= ng_xml.at_xpath("//tei:date[@type='published']/@when",
+                                          TEI_NAMESPACES)&.text
     end
 
     def publisher
-      @publisher ||= ng_xml.at_xpath('//tei:publicationStmt/tei:publisher', namespaces)&.text
+      @publisher ||= ng_xml.at_xpath('//tei:publisher', TEI_NAMESPACES)&.text
     end
 
     def keywords
-      @keywords ||= ng_xml.xpath('//tei:keywords/tei:term', namespaces).map(&:text)
+      @keywords ||= ng_xml.xpath('//tei:keywords/tei:term', TEI_NAMESPACES).map(&:text)
     end
-
-    private
 
     attr_reader :ng_xml
 
-    def namespaces
-      { 'tei' => 'http://www.tei-c.org/ns/1.0' }
-    end
+    private
 
     def name_attrs_for(author_node)
-      pers_name_node = author_node.at_xpath('tei:persName', namespaces)
+      pers_name_node = author_node.at_xpath('tei:persName', TEI_NAMESPACES)
       return {} unless pers_name_node
 
       {
-        forename: pers_name_node.at_xpath('tei:forename', namespaces)&.text,
-        surname: pers_name_node.at_xpath('tei:surname', namespaces)&.text
+        forename: pers_name_node.at_xpath('tei:forename', TEI_NAMESPACES)&.text,
+        surname: pers_name_node.at_xpath('tei:surname', TEI_NAMESPACES)&.text
       }.compact
     end
 
     def affiliations_attrs_for(author_node)
-      affiliation_nodes = author_node.xpath('tei:affiliation', namespaces)
+      affiliation_nodes = author_node.xpath('tei:affiliation', TEI_NAMESPACES)
       return {} if affiliation_nodes.blank?
 
       {
@@ -129,11 +128,11 @@ class TeiCocinaMapperService
     end
 
     def affiliation_attrs_for(affiliation_node)
-      organization = affiliation_node.at_xpath('tei:orgName[@type="institution"][last()]', namespaces)&.text
+      organization = affiliation_node.at_xpath('tei:orgName[@type="institution"][last()]', TEI_NAMESPACES)&.text
       return if organization.blank?
 
       {
-        department: affiliation_node.at_xpath('tei:orgName[@type="department"]', namespaces)&.text,
+        department: affiliation_node.at_xpath('tei:orgName[@type="department"]', TEI_NAMESPACES)&.text,
         organization:
       }.compact
     end

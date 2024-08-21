@@ -4,7 +4,7 @@
 class FilesController < ApplicationController
   def create
     work_file = WorkFile.create!(file_params)
-    redirect_to new_work_path(work_file:)
+    redirect_to new_work_path(work_file:, doi: params[:doi])
   end
 
   private

@@ -1,0 +1,32 @@
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+	<biblStruct>
+		<analytic>
+			<title level="a" type="main">Twitter Makes It Worse: Political Journalists, Gendered Echo Chambers, and the Amplification of Gender Bias</title>
+			<author>
+				<persName><forename type="first">Nikki</forename><surname>Usher</surname></persName>
+			</author>
+			<author>
+				<persName><forename type="first">Jesse</forename><surname>Holcomb</surname></persName>
+			</author>
+			<author>
+				<persName><forename type="first">Justin</forename><surname>Littman</surname></persName>
+				<idno type="ORCID">0000-0003-1527-0030</idno>
+			</author>
+			<idno type="DOI">10.1177/1940161218781254</idno>
+			<ptr target="https://doi.org/10.1177/1940161218781254"/>
+		</analytic>
+		<monogr>
+			<title level="j">The International Journal of Press/Politics</title>
+			<title level="j" type="abbrev">The International Journal of Press/Politics</title>
+			<idno type="ISSN">1940-1612</idno>
+			<idno type="ISSNe">1940-1620</idno>
+			<imprint>
+				<biblScope unit="volume">23</biblScope>
+				<biblScope unit="issue">3</biblScope>
+				<biblScope unit="page" from="324" to="344"/>
+				<date type="published" when="2018-06-24"/>
+				<publisher>SAGE Publications</publisher>
+			</imprint>
+		</monogr>
+	</biblStruct>
+</TEI>
