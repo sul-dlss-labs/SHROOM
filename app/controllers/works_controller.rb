@@ -60,9 +60,13 @@ class WorksController < ApplicationController
 
   private
 
+  def grobid_service
+    @grobid_service ||= GrobidService.new
+  end
+
   def build_new_work_form
-    return GrobidService.from_doi(doi: params[:doi]) if params[:doi].present?
-    return GrobidService.from_file(path: work_file.path) if params.key?(:work_file)
+    return grobid_service.from_doi(doi: params[:doi]) if params[:doi].present?
+    return grobid_service.from_file(path: work_file.path) if params.key?(:work_file)
 
     WorkForm.new
   end

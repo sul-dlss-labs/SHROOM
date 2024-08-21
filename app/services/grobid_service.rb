@@ -16,7 +16,7 @@ class GrobidService
   # @return [Work] a Work model with metadata extracted from the PDF
   # @raise [Error] if there is an error extracting metadata from the PDF
   def from_file(path:)
-    tei = fetch_tei_from_file(path:)
+    @tei = fetch_tei_from_file(path:)
     tei_to_work(tei:)
   end
 
@@ -24,14 +24,14 @@ class GrobidService
   # @return [Work] a Work model with metadata extracted from the PDF
   # @raise [Error] if there is an error extracting metadata from the PDF
   def from_doi(doi:)
-    tei = fetch_tei_from_doi(doi:)
-    wrapped_tei = "<TEI xmlns=\"http://www.tei-c.org/ns/1.0\">#{tei}</TEI>"
-    tei_to_work(tei: wrapped_tei)
+    tei_fragment = fetch_tei_from_doi(doi:)
+    @tei = "<TEI xmlns=\"http://www.tei-c.org/ns/1.0\">#{tei_fragment}</TEI>"
+    tei_to_work(tei:)
   end
 
-  private
+  attr_reader :tei
 
-  attr_reader :path
+  private
 
   def fetch_tei_from_file(path:)
     conn = Faraday.new do |c|
