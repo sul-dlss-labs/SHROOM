@@ -46,7 +46,8 @@ class WorkCocinaMapperService
           CocinaDescriptionSupport.person_contributor(
             forename: contributor.first_name,
             surname: contributor.last_name,
-            affiliations: affiliation_params_for(contributor)
+            affiliations: affiliation_params_for(contributor),
+            orcid: contributor.orcid
           )
         end
       end

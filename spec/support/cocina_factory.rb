@@ -16,7 +16,8 @@ def create_request_dro
                                                           organization: 'Library of Congress',
                                                           department: 'Repository Development Center'
                                                         }
-                                                      ]),
+                                                      ],
+                                                      orcid: 'https://orcid.org/0000-0003-1527-0030'),
           CocinaDescriptionSupport.person_contributor(forename: 'Lynn',
                                                       surname: 'Connaway')
         ],
@@ -54,7 +55,8 @@ def create_dro
                                                           organization: 'Library of Congress',
                                                           department: 'Repository Development Center'
                                                         }
-                                                      ]),
+                                                      ],
+                                                      orcid: 'https://orcid.org/0000-0003-1527-0030'),
           CocinaDescriptionSupport.person_contributor(forename: 'Lynn',
                                                       surname: 'Connaway')
         ],

@@ -83,7 +83,7 @@ class TeiCocinaMapperService
         author_attrs = name_attrs_for(author_node)
         next if author_attrs.blank?
 
-        author_attrs.merge(affiliations_attrs_for(author_node))
+        author_attrs.merge(affiliations_attrs_for(author_node)).merge(orcid_attrs_for(author_node))
       end
     end
 
@@ -135,6 +135,13 @@ class TeiCocinaMapperService
         department: affiliation_node.at_xpath('tei:orgName[@type="department"]', TEI_NAMESPACES)&.text,
         organization:
       }.compact
+    end
+
+    def orcid_attrs_for(author_node)
+      orcid_node = author_node.at_xpath('tei:idno[@type="ORCID"]', TEI_NAMESPACES)
+      return {} unless orcid_node
+
+      { orcid: OrcidSupport.normalize(orcid_node.text) }
     end
   end
 end

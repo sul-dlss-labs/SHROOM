@@ -22,7 +22,8 @@ class WorkCocinaMapperService
           AuthorForm.new(
             first_name: contributor.name.first.structuredValue.find { |name| name.type == 'forename' }.value,
             last_name: contributor.name.first.structuredValue.find { |name| name.type == 'surname' }.value,
-            affiliations: affiliations_for(contributor)
+            affiliations: affiliations_for(contributor),
+            orcid: orcid_for(contributor)
           )
         end
       end
@@ -37,6 +38,15 @@ class WorkCocinaMapperService
         affiliation_notes.map do |note|
           affiliation_for(note)
         end
+      end
+
+      def orcid_for(contributor)
+        orcid_identifier = contributor.identifier.find { |identifier| identifier.type == 'ORCID' }
+        return unless orcid_identifier
+
+        orcid_id = orcid_identifier.value
+        prefix = orcid_identifier.source&.uri || OrcidSupport::PREFIX
+        "#{prefix}/#{orcid_id}"
       end
 
       def affiliation_for(note)

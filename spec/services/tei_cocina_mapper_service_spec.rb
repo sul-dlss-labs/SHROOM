@@ -63,8 +63,8 @@ RSpec.describe TeiCocinaMapperService do
               CocinaDescriptionSupport.person_contributor(forename: 'Jesse',
                                                           surname: 'Holcomb'),
               CocinaDescriptionSupport.person_contributor(forename: 'Justin',
-                                                          surname: 'Littman')
-
+                                                          surname: 'Littman',
+                                                          orcid: 'https://orcid.org/0000-0003-1527-0030')
             ],
             event: [
               CocinaDescriptionSupport.event_date(date_type: 'publication',
