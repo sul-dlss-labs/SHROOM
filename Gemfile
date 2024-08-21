@@ -49,6 +49,7 @@ gem 'config'
 gem 'edtf'
 gem 'faraday' # For posting to grobid web service
 gem 'faraday-multipart'
+gem 'honeybadger'
 gem 'kaminari'
 gem 'view_component'
 

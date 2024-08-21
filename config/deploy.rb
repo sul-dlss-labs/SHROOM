@@ -51,7 +51,7 @@ set :rails_env, 'production'
 set :migration_role, :app
 
 # honeybadger_env otherwise defaults to rails_env
-# set :honeybadger_env, fetch(:stage)
+set :honeybadger_env, fetch(:stage)
 
 # update shared_configs before restarting app
 # before 'deploy:restart', 'shared_configs:update'

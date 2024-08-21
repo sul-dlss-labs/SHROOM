@@ -19,7 +19,7 @@ install_plugin Capistrano::SCM::Git
 #   https://github.com/capistrano/rails
 #
 require 'capistrano/bundler'
-# require 'capistrano/honeybadger'
+require 'capistrano/honeybadger'
 require 'capistrano/passenger'
 require 'capistrano/rails'
 require 'dlss/capistrano'

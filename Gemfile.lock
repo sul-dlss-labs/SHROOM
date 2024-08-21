@@ -243,6 +243,7 @@ GEM
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashdiff (1.1.1)
+    honeybadger (5.15.6)
     i18n (1.14.5)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
@@ -530,6 +531,7 @@ DEPENDENCIES
   factory_bot_rails
   faraday
   faraday-multipart
+  honeybadger
   importmap-rails
   jbuilder
   kaminari
