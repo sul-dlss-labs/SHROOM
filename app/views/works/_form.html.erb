@@ -32,5 +32,8 @@
 
     <%= render NestedFormComponent.new(form:, model_class: KeywordForm, field: :keywords, form_component: Works::KeywordFormComponent) %>
 
-    <%= form.submit 'Submit', class: 'btn btn-primary mt-3' %>
+    <div class="d-inline-flex mt-3">
+        <%= form.submit 'Submit', class: 'btn btn-primary' %>
+        <%= link_to 'Cancel', '/', type: 'button', class: 'btn btn-secondary ms-2' %>
+    </div>
 </div>

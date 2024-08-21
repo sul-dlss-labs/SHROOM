@@ -1,2 +1,9 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to('Home', '/') %></li>
+    <li class="breadcrumb-item active" aria-current="page"><%= @work.title %></li>
+  </ol>
+</nav>
+
 <h1>Work <%= @work.id %> (<%= @work.druid %>): <%= @work.title %></h1>
 <pre class="mt-3"><code><%= CocinaSupport.pretty(cocina_object: @cocina_object.to_h) %></code></pre>

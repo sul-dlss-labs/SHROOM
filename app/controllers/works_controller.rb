@@ -23,9 +23,9 @@ class WorksController < ApplicationController
   def create
     @work_form = WorkForm.new(work_params)
     if @work_form.valid?
-      cocina_object = WorkCocinaMapperService.to_cocina(work_form: @work_form)
       @work = Work.create!(title: @work_form.title)
       work_file.update!(work: @work)
+      cocina_object = WorkCocinaMapperService.to_cocina(work_form: @work_form, source_id: "shroom:object-#{@work.id}")
 
       Sdr::DepositService.call(work: @work, cocina_object:)
 
