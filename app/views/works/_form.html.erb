@@ -22,15 +22,25 @@
             <%= form.bs_invalid_feedback :published_day %>
         </div>
     </div>
-    <%= form.bs_label :publisher %>
-    <%= form.bs_text_field :publisher %>
-    <%= form.bs_invalid_feedback :publisher %>
+    <% if !work_form.preprint? %>
+        <%= form.bs_label :publisher %>
+        <%= form.bs_text_field :publisher %>
+        <%= form.bs_invalid_feedback :publisher %>
+    <% end %>
 
-    <%= form.bs_label :abstract %>
+    <%= form.bs_label :abstract, class: 'mt-2' %>
     <%= form.bs_text_area :abstract %>
     <%= form.bs_invalid_feedback :abstract %>
 
     <%= render NestedFormComponent.new(form:, model_class: KeywordForm, field: :keywords, form_component: Works::KeywordFormComponent) %>
+
+    <% if work_form.preprint? %>
+        <%= form.bs_label :related_resource_citation %>
+        <%= form.bs_text_area :related_resource_citation %>
+        <%= form.bs_help_text 'This is the citation for the published or forthcoming article.' %>
+        <%= form.bs_invalid_feedback :related_resource_citation %>
+        <%= form.hidden_field :preprint, value: true %>
+    <% end %>
 
     <div class="d-inline-flex mt-3">
         <%= form.submit 'Submit', class: 'btn btn-primary' %>

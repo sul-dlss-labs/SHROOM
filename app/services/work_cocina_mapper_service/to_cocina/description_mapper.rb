@@ -37,7 +37,8 @@ class WorkCocinaMapperService
           note: note_params.presence,
           event: event_params.presence,
           subject: subject_params.presence,
-          purl: Sdr::Purl.from_druid(druid:)
+          purl: Sdr::Purl.from_druid(druid:),
+          relatedResource: related_resource_params
         }.compact
       end
 
@@ -82,6 +83,12 @@ class WorkCocinaMapperService
 
       def subject_params
         CocinaDescriptionSupport.subjects(values: work_form.keywords.map(&:value))
+      end
+
+      def related_resource_params
+        return if work_form.related_resource_citation.blank?
+
+        [CocinaDescriptionSupport.related_resource_note(citation: work_form.related_resource_citation)]
       end
     end
   end

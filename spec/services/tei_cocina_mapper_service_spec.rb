@@ -3,6 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe TeiCocinaMapperService do
+  subject(:cocina_object) { described_class.call(tei_ng_xml:, related_resource_citation:) }
+
+  let(:related_resource_citation) { nil }
+
   context 'with a PDF' do
     let(:tei_ng_xml) { Nokogiri::XML(File.read('spec/fixtures/tei/preprint.xml')) }
 
@@ -43,7 +47,50 @@ RSpec.describe TeiCocinaMapperService do
     let(:title) { 'A Circulation Analysis Of Print Books And e-Books In An Academic Research Library' }
 
     it 'maps to cocina' do
-      expect(described_class.call(tei_ng_xml:)).to equal_cocina(expected)
+      expect(cocina_object).to equal_cocina(expected)
+    end
+  end
+
+  context 'with a preprint PDF' do
+    let(:tei_ng_xml) { Nokogiri::XML(File.read('spec/fixtures/tei/preprint.xml')) }
+
+    let(:related_resource_citation) { citation_fixture }
+
+    let(:expected) do
+      Cocina::Models.build_request(
+        {
+          type: Cocina::Models::ObjectType.object,
+          label: title,
+          description: {
+            title: CocinaDescriptionSupport.title(title:),
+            contributor: [
+              CocinaDescriptionSupport.person_contributor(forename: 'Justin',
+                                                          surname: 'Littman',
+                                                          affiliations: [{
+                                                            organization: 'Library of Congress',
+                                                            department: 'Repository Development Center'
+                                                          }]),
+              CocinaDescriptionSupport.person_contributor(forename: 'Lynn',
+                                                          surname: 'Connaway')
+            ],
+            note: [
+              CocinaDescriptionSupport.note(type: 'abstract',
+                                            value: 'In order for collection development librarians to justify the adoption of electronic books ...') # rubocop:disable Layout/LineLength
+            ],
+            event: [],
+            subject: CocinaDescriptionSupport.subjects(values: ['Electronic books', 'Academic libraries']),
+            relatedResource: [CocinaDescriptionSupport.related_resource_note(citation: citation_fixture)]
+          },
+          version: 1,
+          identification: { sourceId: 'shroom:object-0' },
+          administrative: { hasAdminPolicy: Settings.apo }
+        }
+      )
+    end
+    let(:title) { title_fixture }
+
+    it 'maps to cocina' do
+      expect(cocina_object).to equal_cocina(expected)
     end
   end
 
@@ -83,7 +130,7 @@ RSpec.describe TeiCocinaMapperService do
     end
 
     it 'maps to cocina' do
-      expect(described_class.call(tei_ng_xml:)).to equal_cocina(expected)
+      expect(cocina_object).to equal_cocina(expected)
     end
   end
 end

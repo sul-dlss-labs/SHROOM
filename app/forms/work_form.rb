@@ -27,6 +27,7 @@ class WorkForm < BaseForm
 
   attribute :abstract, :string
 
+  # For a preprint, the published date is the date the preprint was published not the actual publication date.
   attribute :published_year, :integer
   validates :published_year, numericality: { only_integer: true, in: 1900..Date.current.year }, allow_nil: true
 
@@ -49,6 +50,7 @@ class WorkForm < BaseForm
                'requires a year and month')
   end
 
+  # Preprints don't have publishers
   attribute :publisher, :string
 
   attribute :keywords, array: true, default: -> { [] }
@@ -58,5 +60,15 @@ class WorkForm < BaseForm
 
   def keywords_attributes=(attributes)
     self.keywords = attributes.map { |_, keyword| KeywordForm.new(keyword) }
+  end
+
+  # Only preprints a single related resource.
+  attribute :related_resource_citation, :string
+  validates :related_resource_citation, presence: true, if: :preprint?
+
+  attribute :preprint, :boolean, default: false
+
+  def preprint?
+    preprint || related_resource_citation.present?
   end
 end

@@ -21,7 +21,8 @@ RSpec.describe WorkCocinaMapperService::ToCocinaMapper do
       keywords: [
         KeywordForm.new(value: 'Electronic books'),
         KeywordForm.new(value: 'Academic libraries')
-      ]
+      ],
+      related_resource_citation: citation_fixture
     )
   end
   let(:author1) do

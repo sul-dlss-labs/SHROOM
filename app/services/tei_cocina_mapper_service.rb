@@ -9,8 +9,10 @@ class TeiCocinaMapperService
   end
 
   # @param [Nokogiri::XML::Document] tei_ng_xml
-  def initialize(tei_ng_xml:)
+  # @param [String,nil] related_resource_citation citation for the article this is a preprint of
+  def initialize(tei_ng_xml:, related_resource_citation: nil)
     @tei_doc = TeiDocument.new(ng_xml: tei_ng_xml)
+    @related_resource_citation = related_resource_citation
   end
 
   # @return [Cocina::Models::RequestDRO]
@@ -20,7 +22,7 @@ class TeiCocinaMapperService
 
   private
 
-  attr_reader :tei_doc
+  attr_reader :tei_doc, :related_resource_citation
 
   def params
     {
@@ -39,7 +41,8 @@ class TeiCocinaMapperService
       contributor: tei_doc.authors.map { |author_attrs| CocinaDescriptionSupport.person_contributor(**author_attrs) },
       note: note_params,
       event: event_params,
-      subject: subject_params
+      subject: subject_params,
+      relatedResource: related_resource_params
     }.compact
   end
 
@@ -50,6 +53,8 @@ class TeiCocinaMapperService
   end
 
   def event_params
+    return [] if preprint? # If a preprint, these are likely to be for the related resource.
+
     [].tap do |params|
       if tei_doc.published_date.present?
         params << CocinaDescriptionSupport.event_date(date_type: 'publication',
@@ -65,6 +70,16 @@ class TeiCocinaMapperService
     return if tei_doc.keywords.blank?
 
     CocinaDescriptionSupport.subjects(values: tei_doc.keywords)
+  end
+
+  def related_resource_params
+    return if related_resource_citation.blank?
+
+    [CocinaDescriptionSupport.related_resource_note(citation: related_resource_citation)]
+  end
+
+  def preprint?
+    related_resource_citation.present?
   end
 
   # Wrapper around a TEI XML document

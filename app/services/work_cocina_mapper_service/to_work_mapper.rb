@@ -29,7 +29,8 @@ class WorkCocinaMapperService
         published_month: published_date&.month,
         published_day: published_date&.day,
         publisher:,
-        keywords:
+        keywords:,
+        related_resource_citation:
       }
     end
 
@@ -61,6 +62,12 @@ class WorkCocinaMapperService
       cocina_object.description.subject
                    .select { |subject| subject.type == 'topic' }
                    .map { |subject| KeywordForm.new(value: subject.value) }
+    end
+
+    def related_resource_citation
+      cocina_object.description.relatedResource
+                   .find { |related_resource| related_resource.note.first.type == 'preferred citation' }
+                   &.note&.first&.value
     end
   end
 end

@@ -4,7 +4,9 @@ require 'rails_helper'
 
 RSpec.describe GrobidService do
   describe '.from_file' do
-    subject(:work) { described_class.from_file(path: 'spec/fixtures/files/preprint.pdf') }
+    subject(:work) { described_class.from_file(path: 'spec/fixtures/files/preprint.pdf', preprint:) }
+
+    let(:preprint) { false }
 
     context 'when successful response' do
       before do
@@ -37,6 +39,37 @@ RSpec.describe GrobidService do
 
       it 'raises a GrobidService::Error' do
         expect { work }.to raise_error(described_class::Error)
+      end
+    end
+
+    context 'when preprint' do
+      let(:preprint) { true }
+
+      before do
+        stub_request(:post, 'http://localhost:8070/api/processHeaderDocument')
+          .with(
+            headers: {
+              'Accept' => 'application/xml'
+            }
+          )
+          .to_return(status: 200, body: File.read('spec/fixtures/tei/preprint.xml'), headers: {
+                       'Content-Type' => 'application/xml'
+                     })
+
+        stub_request(:post, 'http://localhost:8070/api/processHeaderDocument')
+          .with(
+            headers: {
+              'Accept' => 'application/x-bibtex'
+            }
+          )
+          .to_return(status: 200, body: File.read('spec/fixtures/tei/bibtex.txt'), headers: {
+                       'Content-Type' => 'application/x-bibtex'
+                     })
+      end
+
+      it 'calls grobid web service and returns a Work' do
+        expect(work).to be_a(WorkForm)
+        expect(work.related_resource_citation).to eq(citation_fixture)
       end
     end
   end

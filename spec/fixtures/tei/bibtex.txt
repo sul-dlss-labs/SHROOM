@@ -1,0 +1,5 @@
+@misc{-1,
+   author = {Littman, Justin and Connaway, Lynn},
+   title = {A CIRCULATION ANALYSIS OF PRINT BOOKS AND E-BOOKS IN AN ACADEMIC RESEARCH LIBRARY},
+   abstract = {In order for collection development librarians to justify the adoption of electronic books (e-books), they need to determine if e-books satisfy the information needs of patrons. One method to determine this is to measure e-book usage. This study compared the usage of 7,880 titles that were available in both print and e-book format at the Duke University Libraries. Although the results of this study cannot be generalized, it does provide information on the use of e-books in one academic research library and implications for e-book collection development.}
+}

@@ -27,7 +27,8 @@ def create_request_dro
                                               date_value: '2004-10-01'),
           CocinaDescriptionSupport.event_contributor(contributor_name_value: 'American Library Association')
         ],
-        subject: CocinaDescriptionSupport.subjects(values: ['Electronic books', 'Academic libraries'])
+        subject: CocinaDescriptionSupport.subjects(values: ['Electronic books', 'Academic libraries']),
+        relatedResource: [CocinaDescriptionSupport.related_resource_note(citation: citation_fixture)]
       },
       version: 1,
       identification: { sourceId: 'shroom:object-0' },
@@ -38,6 +39,7 @@ def create_request_dro
   )
 end
 
+# rubocop:disable Metrics/AbcSize
 def create_dro
   Cocina::Models.build(
     {
@@ -66,7 +68,8 @@ def create_dro
                                               date_value: '2004-10-01'),
           CocinaDescriptionSupport.event_contributor(contributor_name_value: 'American Library Association')
         ],
-        subject: CocinaDescriptionSupport.subjects(values: ['Electronic books', 'Academic libraries'])
+        subject: CocinaDescriptionSupport.subjects(values: ['Electronic books', 'Academic libraries']),
+        relatedResource: [CocinaDescriptionSupport.related_resource_note(citation: citation_fixture)]
       },
       version: 2,
       identification: { sourceId: 'shroom:object-4' },
@@ -125,3 +128,4 @@ def create_dro_with_structural
                  })
 end
 # rubocop:enable Metrics/MethodLength
+# rubocop:enable Metrics/AbcSize

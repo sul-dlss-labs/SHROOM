@@ -64,11 +64,20 @@ class WorksController < ApplicationController
     @grobid_service ||= GrobidService.new
   end
 
+  # rubocop:disable Metrics/AbcSize
   def build_new_work_form
-    return grobid_service.from_doi(doi: params[:doi]) if params[:doi].present?
-    return grobid_service.from_file(path: work_file.path) if params.key?(:work_file)
+    if params[:doi].present?
+      grobid_service.from_doi(doi: params[:doi], preprint: preprint?)
+    elsif params.key?(:work_file)
+      grobid_service.from_file(path: work_file.path, preprint: preprint?)
+    else
+      WorkForm.new(preprint: preprint?)
+    end
+  end
+  # rubocop:enable Metrics/AbcSize
 
-    WorkForm.new
+  def preprint?
+    params[:preprint] == 'true'
   end
 
   def work_params
@@ -76,6 +85,7 @@ class WorksController < ApplicationController
     params.require(:work).permit(
       :title, :abstract, :publisher,
       :published_year, :published_month, :published_day,
+      :related_resource_citation, :preprint,
       authors_attributes: [
         :first_name, :last_name, :orcid, { affiliations_attributes: %i[organization department] }
       ],

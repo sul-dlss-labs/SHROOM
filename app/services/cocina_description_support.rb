@@ -115,4 +115,12 @@ class CocinaDescriptionSupport
 
     { type: 'ORCID', value:, source: { uri: source } }
   end
+
+  def self.related_resource_note(citation:)
+    {
+      note: [
+        { type: 'preferred citation', value: citation }
+      ]
+    }
+  end
 end

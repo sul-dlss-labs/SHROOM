@@ -45,12 +45,16 @@ gem 'dor-workflow-client'
 gem 'sdr-client'
 
 # Additional gems
+gem 'bibtex-ruby' # For formatting related resource
+gem 'citeproc-ruby' # For formatting related resource
 gem 'config'
+gem 'csl-styles' # For formatting related resource
 gem 'edtf'
 gem 'faraday' # For posting to grobid web service
 gem 'faraday-multipart'
 gem 'honeybadger'
 gem 'kaminari'
+gem 'observer' # For citeproc-ruby
 gem 'view_component'
 
 group :development, :test do

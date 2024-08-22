@@ -12,46 +12,53 @@ class GrobidService
     new.from_doi(...)
   end
 
-  # @param path [String] the path to the PDF file
+  # @param [String] path the path to the PDF file
+  # @param [Boolean] preprint whether the work is a preprint
   # @return [Work] a Work model with metadata extracted from the PDF
   # @raise [Error] if there is an error extracting metadata from the PDF
-  def from_file(path:)
+  def from_file(path:, preprint: false)
     @tei = fetch_tei_from_file(path:)
-    tei_to_work(tei:)
+    @bibtex = fetch_tei_from_file(path:, tei: false) if preprint
+    tei_to_work(tei:, bibtex:)
   end
 
-  # @param doi [String] doi of the work
+  # @param [String] doi of the work
+  # @param [Boolean] preprint whether the work is a preprint
   # @return [Work] a Work model with metadata extracted from the PDF
   # @raise [Error] if there is an error extracting metadata from the PDF
-  def from_doi(doi:)
+  def from_doi(doi:, preprint: false)
     tei_fragment = fetch_tei_from_doi(doi:)
     @tei = "<TEI xmlns=\"http://www.tei-c.org/ns/1.0\">#{tei_fragment}</TEI>"
-    tei_to_work(tei:)
+    @bibtex = fetch_tei_from_doi(doi:, tei: false) if preprint
+    tei_to_work(tei:, bibtex:)
   end
 
-  attr_reader :tei
+  attr_reader :tei, :bibtex
 
   private
 
-  def fetch_tei_from_file(path:)
+  def fetch_tei_from_file(path:, tei: true)
     conn = Faraday.new do |c|
       c.request :multipart
       c.response :raise_error
     end
     payload = { input: Faraday::Multipart::FilePart.new(path, 'application/pdf'), consolidateHeader: 1 }
-    headers = { 'Accept' => 'application/xml' }
+    headers = { 'Accept' => tei ? 'application/xml' : 'application/x-bibtex' }
     response = conn.post("#{Settings.grobid.host}/api/processHeaderDocument", payload, headers)
     response.body
   rescue Faraday::Error => e
     raise Error, "Error extracting metadata from PDF: #{e.message}"
   end
 
-  def fetch_tei_from_doi(doi:)
+  def fetch_tei_from_doi(doi:, tei: true)
     conn = Faraday.new do |c|
       c.response :raise_error
     end
     payload = { citations: doi, consolidateCitations: 1 }
-    headers = { 'Accept' => 'application/xml', 'Content-Type' => 'application/x-www-form-urlencoded' }
+    headers = {
+      'Accept' => tei ? 'application/xml' : 'application/x-bibtex',
+      'Content-Type' => 'application/x-www-form-urlencoded'
+    }
     response = conn.post("#{Settings.grobid.host}/api/processCitation", URI.encode_www_form(payload), headers)
     response.body
   rescue Faraday::Error => e
@@ -65,10 +72,26 @@ class GrobidService
     end
   end
 
-  def tei_to_work(tei:)
+  def tei_to_work(tei:, bibtex:)
     Rails.logger.info("TEI: #{tei}")
-    cocina_object = TeiCocinaMapperService.call(tei_ng_xml: Nokogiri::XML(tei))
+    Rails.logger.info("Bibtex: #{bibtex}") if bibtex
+    cocina_object = TeiCocinaMapperService.call(tei_ng_xml: Nokogiri::XML(tei),
+                                                related_resource_citation: citation_for(bibtex:))
     Rails.logger.info("Cocina object: #{CocinaSupport.pretty(cocina_object:)}")
     WorkCocinaMapperService.to_work(cocina_object:, validate_lossless: false)
+  end
+
+  def citation_for(bibtex:)
+    return nil unless bibtex
+
+    cp = CiteProc::Processor.new style: 'apa', format: 'text'
+    cp.import BibTeX.parse(bibtex).to_citeproc
+    id = cp.items.keys.first
+    cp.render(:bibliography, id:).first
+  end
+
+  def citation_processor
+    CiteProc::Ruby::Renderer.new(format: 'html')
+    @citation_processor ||= CiteProc::Processor.new style: 'apa', format: 'text'
   end
 end

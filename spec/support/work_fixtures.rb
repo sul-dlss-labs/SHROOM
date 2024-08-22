@@ -11,3 +11,7 @@ end
 def druid_fixture
   'druid:bc123df4567'
 end
+
+def citation_fixture
+  'Littman, J., & Connaway, L. A CIRCULATION ANALYSIS OF PRINT BOOKS AND E-BOOKS IN AN ACADEMIC RESEARCH LIBRARY.'
+end
