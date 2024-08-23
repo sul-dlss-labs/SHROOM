@@ -1,0 +1,12 @@
+<% if work_file %>
+    <div class="row">
+        <div class="col-6">
+            <%= form %>
+        </div>
+        <div class="col-6">
+            <%= tag.embed src: url_for(work_file.file), type: 'application/pdf', width: '100%', height: '100%' %>
+        </div>
+    </div>
+<% else %>
+    <%= form %>
+<% end %>

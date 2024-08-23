@@ -5,40 +5,44 @@
   </ol>
 </nav>
 
-<%= form_with model: @work_form, builder: ShroomFormBuilder do |form| %>
-    <%= form.hidden_field(:work_file, value: params[:work_file]) if params.key?(:work_file) %>
-    <%= render 'form', form:, work_form: @work_form %>
-<% end %>
+<%= render FormLayoutComponent.new(work_file: @work_file) do |component| %>
+    <% component.with_form do %>
+        <%= form_with model: @work_form, builder: ShroomFormBuilder do |form| %>
+            <%= form.hidden_field(:work_file, value: params[:work_file]) if params.key?(:work_file) %>
+            <%= render 'form', form:, work_form: @work_form %>
+        <% end %>
 
-<% if @grobid_service %>
-    <hr>
+        <% if @grobid_service %>
+            <hr>
 
-    <div class="accordion mb-4" id="grobid">
-    <div class="accordion-item">
-        <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#teiBody" aria-expanded="false" aria-controls="teiBody">
-            TEI (from Grobid)
-        </button>
-        </h2>
-        <div id="teiBody" class="accordion-collapse collapse" data-bs-parent="#grobid">
-        <div class="accordion-body">
-            <pre class="mt-3"><code><%= @grobid_service.tei %></code></pre>
-        </div>
-        </div>
-    </div>
-    <% if @grobid_service.bibtex %>
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bibtexBody" aria-expanded="false" aria-controls="bibtextBody">
-                    Bibtex(from Grobid)
+            <div class="accordion mb-4" id="grobid">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#teiBody" aria-expanded="false" aria-controls="teiBody">
+                    TEI (from Grobid)
                 </button>
-            </h2>
-            <div id="bibtexBody" class="accordion-collapse collapse" data-bs-parent="#grobid">
-            <div class="accordion-body">
-                <pre class="mt-3"><code><%= @grobid_service.bibtex %></code></pre>
+                </h2>
+                <div id="teiBody" class="accordion-collapse collapse" data-bs-parent="#grobid">
+                <div class="accordion-body">
+                    <pre class="mt-3"><code><%= @grobid_service.tei %></code></pre>
+                </div>
+                </div>
             </div>
+            <% if @grobid_service.bibtex %>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bibtexBody" aria-expanded="false" aria-controls="bibtextBody">
+                            Bibtex(from Grobid)
+                        </button>
+                    </h2>
+                    <div id="bibtexBody" class="accordion-collapse collapse" data-bs-parent="#grobid">
+                    <div class="accordion-body">
+                        <pre class="mt-3"><code><%= @grobid_service.bibtex %></code></pre>
+                    </div>
+                    </div>
+                </div>
+            <% end %>
             </div>
-        </div>
+        <% end %>
     <% end %>
-    </div>
 <% end %>

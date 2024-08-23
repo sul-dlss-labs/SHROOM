@@ -16,6 +16,7 @@ class WorksController < ApplicationController
 
   def edit
     @work_form = WorkCocinaMapperService.to_work(cocina_object: @cocina_object)
+    @work_file = @work.work_files.first
   rescue WorkCocinaMapperService::UnmappableError
     render :unmappable, status: :unprocessable_entity
   end
