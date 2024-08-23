@@ -16,4 +16,6 @@ cap poc deploy
 
 Note that SHROOM doesn't currently use shared configs or Vault. Instead settings are in `config/settings/production.yml` and `config/credentials/production.yml.enc`.
 
+Seed a collection: `bin/rake development:seed_collection`
+
 Completing accessioning for a work: `bin/rake "development:accession[druid:ft277ns6842]"`

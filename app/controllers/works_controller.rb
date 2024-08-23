@@ -4,8 +4,12 @@
 class WorksController < ApplicationController
   before_action :find_work, only: %i[show edit edit_button update]
   before_action :find_cocina_object, only: %i[show edit update]
+  before_action :find_collections, only: %i[new edit create update index]
   def index
     @works = Work.order(id: :desc).page(params[:page])
+    return if params[:collection_druid].blank?
+
+    @works = @works.where(collection: Collection.find_by(druid: params[:collection_druid]))
   end
 
   def show; end
@@ -24,7 +28,7 @@ class WorksController < ApplicationController
   def create
     @work_form = WorkForm.new(work_params)
     if @work_form.valid?
-      @work = Work.create!(title: @work_form.title)
+      @work = Work.create!(title: @work_form.title, collection: Collection.find_by(druid: @work_form.collection_druid))
       work_file.update!(work: @work)
       cocina_object = WorkCocinaMapperService.to_cocina(work_form: @work_form, source_id: "shroom:object-#{@work.id}")
 
@@ -51,7 +55,7 @@ class WorksController < ApplicationController
                                                             source_id: @cocina_object.identification.sourceId)
 
       Sdr::UpdateService.call(cocina_object: new_cocina_object, existing_cocina_object: @cocina_object, work: @work)
-      @work.update!(title: @work_form.title)
+      @work.update!(title: @work_form.title, collection: Collection.find_by(druid: @work_form.collection_druid))
 
       redirect_to @work
     else
@@ -86,7 +90,7 @@ class WorksController < ApplicationController
     params.require(:work).permit(
       :title, :abstract, :publisher,
       :published_year, :published_month, :published_day,
-      :related_resource_citation, :preprint,
+      :related_resource_citation, :preprint, :collection_druid,
       authors_attributes: [
         :first_name, :last_name, :orcid, { affiliations_attributes: %i[organization department] }
       ],
@@ -108,5 +112,9 @@ class WorksController < ApplicationController
 
   def find_cocina_object
     @cocina_object = Sdr::Repository.find(druid: @work.druid)
+  end
+
+  def find_collections
+    @collections = Collection.all
   end
 end

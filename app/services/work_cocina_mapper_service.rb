@@ -42,7 +42,10 @@ class WorkCocinaMapperService
                                            druid: original_cocina_object.try(:externalIdentifier),
                                            version: original_cocina_object.version,
                                            source_id: original_cocina_object.identification&.sourceId)
-    clean_original_cocina_object = original_cocina_object.new(structural: { contains: [] })
+    clean_original_cocina_object = original_cocina_object.new(
+      structural: { contains: [],
+                    isMemberOf: original_cocina_object.structural.isMemberOf }
+    )
     if roundtripped_cocina_object == clean_original_cocina_object
       true
     else

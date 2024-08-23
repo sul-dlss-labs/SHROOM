@@ -34,7 +34,7 @@ def create_request_dro
       identification: { sourceId: 'shroom:object-0' },
       administrative: { hasAdminPolicy: Settings.apo },
       access: { view: 'world', download: 'world' },
-      structural: { contains: [] }
+      structural: { contains: [], isMemberOf: [collection_druid_fixture] }
     }
   )
 end
@@ -75,7 +75,7 @@ def create_dro
       identification: { sourceId: 'shroom:object-4' },
       administrative: { hasAdminPolicy: Settings.apo },
       access: { view: 'world', download: 'world' },
-      structural: { contains: [] }
+      structural: { contains: [], isMemberOf: [collection_druid_fixture] }
     }
   )
 end
@@ -124,7 +124,8 @@ def create_dro_with_structural
                          ]
                        }
                      }
-                   ]
+                   ],
+                   isMemberOf: [collection_druid_fixture]
                  })
 end
 # rubocop:enable Metrics/MethodLength

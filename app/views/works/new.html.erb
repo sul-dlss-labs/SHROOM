@@ -9,7 +9,7 @@
     <% component.with_form do %>
         <%= form_with model: @work_form, builder: ShroomFormBuilder do |form| %>
             <%= form.hidden_field(:work_file, value: params[:work_file]) if params.key?(:work_file) %>
-            <%= render 'form', form:, work_form: @work_form %>
+            <%= render 'form', form:, work_form: @work_form, collections: @collections %>
         <% end %>
 
         <% if @grobid_service %>

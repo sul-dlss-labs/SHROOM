@@ -37,6 +37,10 @@ Metrics/ClassLength:
 Metrics/MethodLength:
   Max: 15 # default 10
 
+Metrics/ParameterLists:
+  Exclude:
+  - app/forms/shroom_form_builder.rb
+
 Rails/SkipsModelValidations:
   Enabled: false
   

@@ -30,7 +30,8 @@ class WorkCocinaMapperService
         published_day: published_date&.day,
         publisher:,
         keywords:,
-        related_resource_citation:
+        related_resource_citation:,
+        collection_druid:
       }
     end
 
@@ -68,6 +69,10 @@ class WorkCocinaMapperService
       cocina_object.description.relatedResource
                    .find { |related_resource| related_resource.note.first.type == 'preferred citation' }
                    &.note&.first&.value
+    end
+
+    def collection_druid
+      cocina_object.structural&.isMemberOf&.first
     end
   end
 end

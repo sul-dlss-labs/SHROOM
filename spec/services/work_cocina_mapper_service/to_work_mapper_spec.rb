@@ -32,7 +32,8 @@ RSpec.describe WorkCocinaMapperService::ToWorkMapper do
           KeywordForm.new(value: 'Electronic books'),
           KeywordForm.new(value: 'Academic libraries')
         ],
-        related_resource_citation: citation_fixture
+        related_resource_citation: citation_fixture,
+        collection_druid: collection_druid_fixture
       )
     end
 

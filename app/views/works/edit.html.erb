@@ -9,7 +9,7 @@
 <%= render FormLayoutComponent.new(work_file: @work_file) do |component| %>
     <% component.with_form do %>
         <%= form_with model: @work_form, method: 'patch', url: work_path(@work), builder: ShroomFormBuilder do |form| %>
-            <%= render 'form', form:, work_form: @work_form %>
+            <%= render 'form', form:, work_form: @work_form, collections: @collections %>
         <% end %>
     <% end %>
 <% end %>

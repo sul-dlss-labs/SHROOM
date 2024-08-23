@@ -77,7 +77,8 @@ module Sdr
 
     def structural_params
       {
-        contains: work_files.map { |file| file_set_params_for(file) }
+        contains: work_files.map { |file| file_set_params_for(file) },
+        isMemberOf: cocina_object.structural.isMemberOf
       }
     end
 

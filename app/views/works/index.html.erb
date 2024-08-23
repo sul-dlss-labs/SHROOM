@@ -13,15 +13,33 @@
 <%= render 'files/new' %>
 
 <h2 class="mt-4">Existing Works</h2>
-<ul class="list-group">
-    <% @works.each do |work| %>
-        <li class="list-group-item">
-            <%= work.druid ? link_to(work.title, work_path(work)) : work.title %>
-            <span> (<%= work.druid || 'Not deposited or accession not complete' %>)</span>
-            <%= turbo_frame_tag(work, 'edit-button', src: edit_button_work_path(work), target: '_top') if work.druid %>
-        </li>
-    <% end %>
-</ul>
+<%= form_with method: :get do |form| %>
+    <div class="d-flex">
+        <%= form.select :collection_druid, [['Filter by collection', '']] + @collections.map { |c| [c.title, c.druid] }, { selected: params[:collection_druid] }, { class: 'form-select', style: 'width: 300px;' } %>
+        <%= form.submit 'Go', class: 'btn btn-primary btn-sm' %>
+    </div>
+<% end %>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Collection</th>
+            <th scope="col">Druid</th>
+            <th scope="col"><span class="visually-hidden">Action</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @works.each do |work| %>
+            <tr>
+                <th scope="row"><%= work.druid ? link_to(work.title, work_path(work)) : work.title %></th>
+                <td><%= work.collection&.title %></td>
+                <td><%= work.druid || 'Not deposited or accession not complete' %></td>
+                <td><%= turbo_frame_tag(work, 'edit-button', src: edit_button_work_path(work), target: '_top') if work.druid %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
 
 <nav class="mt-3">
   <ul class="pagination">

@@ -40,8 +40,16 @@ class WorkCocinaMapperService
         identification: { sourceId: source_id },
         administrative: { hasAdminPolicy: Settings.apo },
         externalIdentifier: druid,
-        structural: { contains: [] }
+        structural: structural_params
       }.compact
+    end
+
+    def structural_params
+      {
+        contains: []
+      }.tap do |params|
+        params[:isMemberOf] = [work_form.collection_druid] if work_form.collection_druid
+      end
     end
   end
 end

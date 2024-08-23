@@ -27,6 +27,11 @@ class ShroomFormBuilder < ActionView::Helpers::FormBuilder
     label(method, text, options, &)
   end
 
+  def bs_collection_select(method, collection, value_method, text_method, options = {}, html_options = {})
+    append_class(html_options, 'form-select')
+    collection_select(method, collection, value_method, text_method, options, html_options)
+  end
+
   def bs_invalid_feedback(method, options = {})
     append_class(options, 'invalid-feedback')
     @template.content_tag(:div, object.errors[method].join(', '), options)

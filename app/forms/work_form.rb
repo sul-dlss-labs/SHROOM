@@ -68,6 +68,8 @@ class WorkForm < BaseForm
 
   attribute :preprint, :boolean, default: false
 
+  attribute :collection_druid, :string
+
   def preprint?
     preprint || related_resource_citation.present?
   end
