@@ -37,6 +37,7 @@ class WorkCocinaMapperService
           note: note_params.presence,
           event: event_params.presence,
           subject: subject_params.presence,
+          identifier: identifier_params,
           purl: Sdr::Purl.from_druid(druid:),
           relatedResource: related_resource_params
         }.compact
@@ -85,10 +86,25 @@ class WorkCocinaMapperService
         CocinaDescriptionSupport.subjects(values: work_form.keywords.map(&:value))
       end
 
-      def related_resource_params
-        return if work_form.related_resource_citation.blank?
+      def identifier_params
+        return if work_form.doi.blank?
 
-        [CocinaDescriptionSupport.related_resource_note(citation: work_form.related_resource_citation)]
+        [CocinaDescriptionSupport.doi_identifier(doi: work_form.doi)]
+      end
+
+      def related_resource_params
+        resource_params = {}.tap do |params|
+          if work_form.related_resource_citation.present?
+            params[:note] =
+              [CocinaDescriptionSupport.related_resource_note(citation: work_form.related_resource_citation)]
+          end
+          if work_form.related_resource_doi.present?
+            params[:identifier] = [CocinaDescriptionSupport.doi_identifier(doi: work_form.related_resource_doi)]
+          end
+        end
+        return if resource_params.empty?
+
+        [resource_params]
       end
     end
   end

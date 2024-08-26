@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # rubocop:disable Metrics/MethodLength
+# rubocop: disable Metrics/AbcSize
 def create_request_dro
   Cocina::Models.build_request(
     {
@@ -28,7 +29,13 @@ def create_request_dro
           CocinaDescriptionSupport.event_contributor(contributor_name_value: 'American Library Association')
         ],
         subject: CocinaDescriptionSupport.subjects(values: ['Electronic books', 'Academic libraries']),
-        relatedResource: [CocinaDescriptionSupport.related_resource_note(citation: citation_fixture)]
+        identifier: [CocinaDescriptionSupport.doi_identifier(doi: doi_fixture)],
+        relatedResource: [
+          {
+            identifier: [CocinaDescriptionSupport.doi_identifier(doi: doi_fixture)],
+            note: [CocinaDescriptionSupport.related_resource_note(citation: citation_fixture)]
+          }
+        ]
       },
       version: 1,
       identification: { sourceId: 'shroom:object-0' },
@@ -39,7 +46,6 @@ def create_request_dro
   )
 end
 
-# rubocop:disable Metrics/AbcSize
 def create_dro
   Cocina::Models.build(
     {
@@ -69,7 +75,13 @@ def create_dro
           CocinaDescriptionSupport.event_contributor(contributor_name_value: 'American Library Association')
         ],
         subject: CocinaDescriptionSupport.subjects(values: ['Electronic books', 'Academic libraries']),
-        relatedResource: [CocinaDescriptionSupport.related_resource_note(citation: citation_fixture)]
+        identifier: [CocinaDescriptionSupport.doi_identifier(doi: doi_fixture)],
+        relatedResource: [
+          {
+            identifier: [CocinaDescriptionSupport.doi_identifier(doi: doi_fixture)],
+            note: [CocinaDescriptionSupport.related_resource_note(citation: citation_fixture)]
+          }
+        ]
       },
       version: 2,
       identification: { sourceId: 'shroom:object-4' },

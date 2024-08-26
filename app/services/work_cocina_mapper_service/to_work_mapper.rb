@@ -30,7 +30,9 @@ class WorkCocinaMapperService
         published_day: published_date&.day,
         publisher:,
         keywords:,
+        doi:,
         related_resource_citation:,
+        related_resource_doi:,
         collection_druid:
       }
     end
@@ -66,9 +68,29 @@ class WorkCocinaMapperService
     end
 
     def related_resource_citation
-      cocina_object.description.relatedResource
-                   .find { |related_resource| related_resource.note.first.type == 'preferred citation' }
-                   &.note&.first&.value
+      note = related_resource&.note&.find { |n| n.type == 'preferred citation' }
+      return unless note
+
+      note.value
+    end
+
+    def doi
+      doi_for(cocina_object.description)
+    end
+
+    def related_resource_doi
+      doi_for(related_resource)
+    end
+
+    def doi_for(resource)
+      identifier = resource&.identifier&.find { |id| id.type == 'DOI' }
+      return unless identifier
+
+      identifier.value
+    end
+
+    def related_resource
+      @related_resource ||= cocina_object.description.relatedResource.first
     end
 
     def collection_druid

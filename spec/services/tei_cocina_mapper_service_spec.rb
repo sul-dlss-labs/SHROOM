@@ -36,7 +36,9 @@ RSpec.describe TeiCocinaMapperService do
                                                   date_value: '2004-10-01'),
               CocinaDescriptionSupport.event_contributor(contributor_name_value: 'American Library Association')
             ],
-            subject: CocinaDescriptionSupport.subjects(values: ['Electronic books', 'Academic libraries'])
+            subject: CocinaDescriptionSupport.subjects(values: ['Electronic books', 'Academic libraries']),
+            identifier: [CocinaDescriptionSupport.doi_identifier(doi: doi_fixture)]
+
           },
           version: 1,
           identification: { sourceId: 'shroom:object-0' },
@@ -79,7 +81,12 @@ RSpec.describe TeiCocinaMapperService do
             ],
             event: [],
             subject: CocinaDescriptionSupport.subjects(values: ['Electronic books', 'Academic libraries']),
-            relatedResource: [CocinaDescriptionSupport.related_resource_note(citation: citation_fixture)]
+            relatedResource: [
+              {
+                identifier: [CocinaDescriptionSupport.doi_identifier(doi: doi_fixture)],
+                note: [CocinaDescriptionSupport.related_resource_note(citation: citation_fixture)]
+              }
+            ]
           },
           version: 1,
           identification: { sourceId: 'shroom:object-0' },
@@ -117,6 +124,9 @@ RSpec.describe TeiCocinaMapperService do
               CocinaDescriptionSupport.event_date(date_type: 'publication',
                                                   date_value: '2018-06-24'),
               CocinaDescriptionSupport.event_contributor(contributor_name_value: 'SAGE Publications')
+            ],
+            identifier: [
+              CocinaDescriptionSupport.doi_identifier(doi: '10.1177/1940161218781254')
             ]
           },
           version: 1,

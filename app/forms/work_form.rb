@@ -53,6 +53,9 @@ class WorkForm < BaseForm
   # Preprints don't have publishers
   attribute :publisher, :string
 
+  attribute :doi, :string
+  validates :doi, format: { with: DoiSupport::REGEX }, allow_blank: true, unless: :preprint?
+
   attribute :keywords, array: true, default: -> { [] }
   before_validation do
     keywords.compact_blank!
@@ -62,9 +65,12 @@ class WorkForm < BaseForm
     self.keywords = attributes.map { |_, keyword| KeywordForm.new(keyword) }
   end
 
-  # Only preprints a single related resource.
+  # Preprints have a single related resource.
   attribute :related_resource_citation, :string
   validates :related_resource_citation, presence: true, if: :preprint?
+
+  attribute :related_resource_doi, :string
+  validates :related_resource_doi, format: { with: DoiSupport::REGEX }, allow_blank: true, if: :preprint?
 
   attribute :preprint, :boolean, default: false
 

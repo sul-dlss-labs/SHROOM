@@ -91,6 +91,7 @@ class WorksController < ApplicationController
       :title, :abstract, :publisher,
       :published_year, :published_month, :published_day,
       :related_resource_citation, :preprint, :collection_druid,
+      :doi, :related_resource_doi,
       authors_attributes: [
         :first_name, :last_name, :orcid, { affiliations_attributes: %i[organization department] }
       ],

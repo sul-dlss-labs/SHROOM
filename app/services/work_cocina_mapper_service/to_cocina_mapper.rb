@@ -48,7 +48,7 @@ class WorkCocinaMapperService
       {
         contains: []
       }.tap do |params|
-        params[:isMemberOf] = [work_form.collection_druid] if work_form.collection_druid
+        params[:isMemberOf] = [work_form.collection_druid] if work_form.collection_druid.present?
       end
     end
   end

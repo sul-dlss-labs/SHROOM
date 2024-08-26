@@ -42,6 +42,7 @@ class TeiCocinaMapperService
       note: note_params,
       event: event_params,
       subject: subject_params,
+      identifier: identifier_params,
       relatedResource: related_resource_params
     }.compact
   end
@@ -72,10 +73,22 @@ class TeiCocinaMapperService
     CocinaDescriptionSupport.subjects(values: tei_doc.keywords)
   end
 
-  def related_resource_params
-    return if related_resource_citation.blank?
+  def identifier_params
+    return if preprint? || tei_doc.doi.blank?
 
-    [CocinaDescriptionSupport.related_resource_note(citation: related_resource_citation)]
+    [CocinaDescriptionSupport.doi_identifier(doi: tei_doc.doi)]
+  end
+
+  def related_resource_params
+    return unless preprint?
+
+    [
+      {
+        note: [CocinaDescriptionSupport.related_resource_note(citation: related_resource_citation)]
+      }.tap do |params|
+        params[:identifier] = [CocinaDescriptionSupport.doi_identifier(doi: tei_doc.doi)] if tei_doc.doi.present?
+      end
+    ]
   end
 
   def preprint?
@@ -117,6 +130,10 @@ class TeiCocinaMapperService
 
     def keywords
       @keywords ||= ng_xml.xpath('//tei:keywords/tei:term', TEI_NAMESPACES).map(&:text)
+    end
+
+    def doi
+      @doi ||= ng_xml.at_xpath('//tei:idno[@type="DOI"]', TEI_NAMESPACES)&.text
     end
 
     attr_reader :ng_xml

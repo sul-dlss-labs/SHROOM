@@ -18,11 +18,13 @@ RSpec.describe WorkCocinaMapperService::ToCocinaMapper do
       published_month: 10,
       published_day: 1,
       publisher: 'American Library Association',
+      doi: doi_fixture,
       keywords: [
         KeywordForm.new(value: 'Electronic books'),
         KeywordForm.new(value: 'Academic libraries')
       ],
       related_resource_citation: citation_fixture,
+      related_resource_doi: doi_fixture,
       collection_druid: collection_druid_fixture
     )
   end

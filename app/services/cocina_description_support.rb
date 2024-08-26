@@ -117,10 +117,16 @@ class CocinaDescriptionSupport
   end
 
   def self.related_resource_note(citation:)
+    { type: 'preferred citation', value: citation }
+  end
+
+  def self.doi_identifier(doi:)
+    return unless doi
+
     {
-      note: [
-        { type: 'preferred citation', value: citation }
-      ]
+      value: doi,
+      type: 'DOI',
+      source: { code: 'doi' }
     }
   end
 end
