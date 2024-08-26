@@ -2,6 +2,8 @@ apo: 'druid:hv992ry2431'
 
 grobid:
   host: 'http://localhost:8070'
+  # True to lookup additional metadata by DOI
+  consolidate: true
 
 sdr_api:
   url: http://localhost:3006

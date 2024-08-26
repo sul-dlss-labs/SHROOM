@@ -17,10 +17,14 @@ services:
   
   grobid:
     image: lfoppiano/grobid:latest-crf
+    # image: lfoppiano/grobid:latest-full
     ulimits:
       core: 0
     ports:
       - 8070:8070
+    # For latest full on M1 Macs
+    # environment:
+    #   EXPERIMENTAL_DOCKER_DESKTOP_FORCE_QEMU: 1
 
   sdr-api:
     image: suldlss/sdr-api:latest

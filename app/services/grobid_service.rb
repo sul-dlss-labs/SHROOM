@@ -42,7 +42,8 @@ class GrobidService
       c.request :multipart
       c.response :raise_error
     end
-    payload = { input: Faraday::Multipart::FilePart.new(path, 'application/pdf'), consolidateHeader: 1 }
+    payload = { input: Faraday::Multipart::FilePart.new(path, 'application/pdf'),
+                consolidateHeader: consolidate? ? 1 : 0 }
     headers = { 'Accept' => tei ? 'application/xml' : 'application/x-bibtex' }
     response = conn.post("#{Settings.grobid.host}/api/processHeaderDocument", payload, headers)
     response.body
@@ -93,5 +94,9 @@ class GrobidService
   def citation_processor
     CiteProc::Ruby::Renderer.new(format: 'html')
     @citation_processor ||= CiteProc::Processor.new style: 'apa', format: 'text'
+  end
+
+  def consolidate?
+    Settings.grobid.consolidate
   end
 end
