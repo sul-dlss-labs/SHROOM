@@ -16,6 +16,8 @@ class WorksController < ApplicationController
 
   def new
     @work_form = build_new_work_form
+  rescue GrobidService::Error
+    redirect_to works_path, alert: 'Sorry! Unable to process the PDF.'
   end
 
   def edit

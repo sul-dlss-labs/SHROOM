@@ -19,6 +19,11 @@
 
   <body>
     <div class="container-fluid py-4 px-4">
+      <% if flash.alert %>
+        <div class="alert alert-warning" role="alert">
+          <%= flash.alert %>
+        </div>
+      <% end %>
       <%= yield %>
     </div>
   </body>
