@@ -9,7 +9,7 @@ SHROOM is a proof-of-concept Rails application to explore:
 ## Local development
 To start a local database, as well as required SDR applications: `docker compose up`.
 
-### Helpful tasks
+### Helpful development tasks
 Seed a collection: `bin/rake development:seed_collection`
 
 Completing accessioning for a work: `bin/rake "development:accession[druid:ft277ns6842]"`
@@ -26,6 +26,5 @@ cap poc deploy
 
 Note that SHROOM doesn't currently use shared configs or Vault. Instead settings are in `config/settings/production.yml` and `config/credentials/production.yml.enc`.
 
-
-## Grobid models
-By default, the Grobid container 
+## Helpful task
+Export the metadata for a collection to CSV: `bin/rake "export_csv[druid:jk956kb4381]"`

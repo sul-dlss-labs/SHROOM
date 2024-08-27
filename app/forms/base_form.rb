@@ -5,6 +5,7 @@ class BaseForm
   include ActiveModel::Model
   include ActiveModel::Attributes
   include ActiveModel::Validations::Callbacks
+  include ActiveModel::Serialization
 
   def self.model_name
     # Remove the "Form" suffix from the class name.

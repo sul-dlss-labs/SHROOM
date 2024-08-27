@@ -173,6 +173,7 @@ GEM
       csl (~> 2.0)
     cssbundling-rails (1.4.1)
       railties (>= 6.0.0)
+    csv (3.3.0)
     date (3.3.4)
     debug (1.9.2)
       irb (~> 1.10)
@@ -553,6 +554,7 @@ DEPENDENCIES
   config
   csl-styles
   cssbundling-rails
+  csv
   debug
   dlss-capistrano
   dor-services-client
