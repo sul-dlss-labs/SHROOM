@@ -9,10 +9,12 @@ SHROOM is a proof-of-concept Rails application to explore:
 ## Local development
 To start a local database, as well as required SDR applications: `docker compose up`.
 
-### Helpful rake tasks
+### Helpful tasks
 Seed a collection: `bin/rake development:seed_collection`
 
 Completing accessioning for a work: `bin/rake "development:accession[druid:ft277ns6842]"`
+
+Cleaning up orphaned work files: `bin/rails runner "WorkFile.where(work:nil).where('created_at < ?', 1.week.ago).destroy_all"`
 
 ### Grobid
 By default the Grobid container is configured to use the faster, less accurate Wapiti CRF models. See `compose.yaml` for how to switch to the DeLFT deep learning models.

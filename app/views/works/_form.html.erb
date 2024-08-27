@@ -26,7 +26,7 @@
         </div>
     </div>
     <% if !work_form.preprint? %>
-        <%= form.bs_label :doi, 'DOI' %>
+        <%= form.bs_label :doi, 'DOI', class: 'mt-2' %>
         <%= form.bs_text_field :doi %>
         <div class="form-text">For example, 10.5860/lrts.48n4.8259.</div>
         <%= form.bs_invalid_feedback :doi %>

@@ -17,3 +17,6 @@ workflow:
 
 purl:
   url: "https://sul-purl-stage.stanford.edu"
+
+redis:
+  url: redis://localhost:6379/

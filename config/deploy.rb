@@ -38,14 +38,14 @@ set :linked_dirs, %w[log tmp/pids tmp/cache tmp/sockets vendor/bundle public/sys
 # set :keep_releases, 5
 
 # Namespace crontab entries by application and stage
-# set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
-# set :whenever_roles, [:scheduler]
+set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
+set :whenever_roles, [:scheduler]
 
 set :passenger_roles, :web
 set :rails_env, 'production'
 
-# set :sidekiq_systemd_role, :worker
-# set :sidekiq_systemd_use_hooks, true
+set :sidekiq_systemd_role, :worker
+set :sidekiq_systemd_use_hooks, true
 
 # Run db migrations on app servers, not db server
 set :migration_role, :app

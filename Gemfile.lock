@@ -131,6 +131,7 @@ GEM
       xpath (~> 3.2)
     childprocess (5.1.0)
       logger (~> 1.5)
+    chronic (0.10.2)
     citeproc (1.0.10)
       namae (~> 1.0)
     citeproc-ruby (2.0.0)
@@ -404,6 +405,8 @@ GEM
     rb_sys (0.9.100)
     rdoc (6.7.0)
       psych (>= 4.0.0)
+    redis-client (0.22.2)
+      connection_pool
     regexp_parser (2.9.2)
     reline (0.5.9)
       io-console (~> 0.5)
@@ -473,6 +476,12 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    sidekiq (7.3.1)
+      concurrent-ruby (< 2)
+      connection_pool (>= 2.3.0)
+      logger
+      rack (>= 2.2.4)
+      redis-client (>= 0.22.2)
     smart_properties (1.17.0)
     sshkit (1.23.0)
       base64
@@ -516,6 +525,8 @@ GEM
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    whenever (1.0.0)
+      chronic (>= 0.6.3)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.6.17)
@@ -570,12 +581,14 @@ DEPENDENCIES
   rubocop-rspec_rails
   sdr-client
   selenium-webdriver
+  sidekiq
   stimulus-rails
   turbo-rails
   tzinfo-data
   view_component
   web-console
   webmock
+  whenever
 
 BUNDLED WITH
    2.5.11

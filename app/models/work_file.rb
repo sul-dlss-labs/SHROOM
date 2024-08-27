@@ -5,7 +5,6 @@ class WorkFile < ApplicationRecord
   belongs_to :work, optional: true
 
   has_one_attached :file
-  before_destroy { file.purge_later }
 
   delegate :blob, to: :file
   delegate :checksum, :content_type, :byte_size, to: :blob
