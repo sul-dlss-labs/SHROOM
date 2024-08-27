@@ -1,0 +1,13 @@
+<%= render NestedFormComponent.new(form:, model_class: KeywordForm, field: :keywords, form_component: Works::KeywordFormComponent) do |component| %>
+    <% component.with_body_section do %>
+        <% if form.object.keywords.empty? %>
+            <div class="mb-2" data-controller="keywords" data-keywords-form-add-outlet="#card-body-keywords">
+                <label for="keywords-input" class="form-label">Add list of keywords</label>
+                <textarea class="form-control" id="keywords-input" aria-describedby="keywords-input-help" rows=3 data-keywords-target="input"></textarea>
+                <div id="keywords-input-help" class="form-text">Enter a comma separated list of keywords.</div>
+                <button class="btn btn-secondary mt-1" data-action="keywords#add">Add all keywords</button>
+            </div>
+            <hr>
+        <% end %>
+    <% end %>
+<% end %>

@@ -2,6 +2,8 @@
 
 # Encapsulates a nested form, including adding and removing nested models.
 class NestedFormComponent < ViewComponent::Base
+  renders_one :body_section
+
   def initialize(form:, model_class:, field:, form_component:)
     @form = form
     @model_class = model_class
@@ -11,6 +13,14 @@ class NestedFormComponent < ViewComponent::Base
   end
 
   attr_reader :form, :model_class, :field, :form_component
+
+  def body_id
+    "card-body-#{field}"
+  end
+
+  def template_id
+    "#{field}-item-NEW_RECORD"
+  end
 
   def add_label
     "Add #{model_class.model_name.singular}"

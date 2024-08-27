@@ -40,7 +40,7 @@
     <%= form.bs_text_area :abstract, rows: 6 %>
     <%= form.bs_invalid_feedback :abstract %>
 
-    <%= render NestedFormComponent.new(form:, model_class: KeywordForm, field: :keywords, form_component: Works::KeywordFormComponent) %>
+    <%= render Works::KeywordsFormComponent.new(form:) %>
 
     <% if work_form.preprint? %>
         <%= form.bs_label :related_resource_citation %>
