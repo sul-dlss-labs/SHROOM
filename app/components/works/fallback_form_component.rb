@@ -13,7 +13,7 @@ module Works
     attr_reader :work_form, :work_file_id, :preprint
 
     def render?
-      work_form.title.blank?
+      work_form.title.blank? && work_file_id
     end
   end
 end

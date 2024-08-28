@@ -32,7 +32,7 @@ class CocinaDescriptionSupport
   # @param role [Symbol] the role of the person from ROLES
   # @param affiliations [Array<Hash>] the affiliations of the person that can be passed to affiliation()
   # @param orcid [String] the ORCID of the person (as a URL)
-  def self.person_contributor(forename:, surname:, role: :AUTHOR, affiliations: [], orcid: nil)
+  def self.person_contributor(surname:, forename: '', role: :AUTHOR, affiliations: [], orcid: nil)
     {
       name: [
         {

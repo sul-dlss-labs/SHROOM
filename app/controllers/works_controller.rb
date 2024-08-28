@@ -2,9 +2,11 @@
 
 # Controller for Works
 class WorksController < ApplicationController
-  before_action :find_work, only: %i[show edit edit_button update]
+  before_action :find_work, only: %i[show edit_button]
+  before_action :find_work_and_work_file, only: %i[edit update]
   before_action :find_cocina_object_and_sync, only: %i[show edit update]
   before_action :find_collections, only: %i[new edit create update index]
+  before_action :find_work_file, only: %i[new create]
   def index
     @works = Work.order(id: :desc).page(params[:page])
     return if params[:collection_druid].blank?
@@ -15,7 +17,6 @@ class WorksController < ApplicationController
   def show; end
 
   def new
-    @work_file = find_work_file
     @work_form = build_new_work_form(work_file: @work_file)
   rescue GrobidService::Error
     redirect_to works_path, alert: 'Sorry! Unable to process the PDF.'
@@ -23,7 +24,6 @@ class WorksController < ApplicationController
 
   def edit
     @work_form = WorkCocinaMapperService.to_work(cocina_object: @cocina_object)
-    @work_file = @work.work_files.first
   rescue WorkCocinaMapperService::UnmappableError
     render :unmappable, status: :unprocessable_entity
   end
@@ -32,8 +32,7 @@ class WorksController < ApplicationController
     @work_form = WorkForm.new(work_params)
     if @work_form.valid?
       @work = Work.create!(title: @work_form.title, collection: Collection.find_by(druid: @work_form.collection_druid))
-      work_file = find_work_file
-      work_file.update!(work: @work)
+      @work_file.update!(work: @work)
       cocina_object = WorkCocinaMapperService.to_cocina(work_form: @work_form, source_id: "shroom:object-#{@work.id}")
 
       Sdr::DepositService.call(work: @work, cocina_object:)
@@ -106,9 +105,12 @@ class WorksController < ApplicationController
   end
 
   def find_work_file
-    return unless work_file_param
+    @work_file = work_file_param ? WorkFile.find(work_file_param) : nil
+  end
 
-    WorkFile.find(work_file_param)
+  def find_work_and_work_file
+    find_work
+    @work_file = @work.work_files.first
   end
 
   def work_file_param
