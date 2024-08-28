@@ -22,7 +22,8 @@ module Sdr
     # @raise [Error] if there is an error updating the work
     def call
       # Currently cannot update files, so just using existing structural.
-      @cocina_object = cocina_object.new(structural: existing_cocina_object.structural)
+      new_structural = cocina_object.structural.new(contains: existing_cocina_object.structural.contains)
+      @cocina_object = cocina_object.new(structural: new_structural)
       job_id = update
       await_job_status(job_id:)
       job_id
