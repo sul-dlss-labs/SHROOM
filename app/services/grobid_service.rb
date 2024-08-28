@@ -8,8 +8,8 @@ class GrobidService
     new.from_file(...)
   end
 
-  def self.from_doi(...)
-    new.from_doi(...)
+  def self.from_citation(...)
+    new.from_citation(...)
   end
 
   # @param [String] path the path to the PDF file
@@ -22,14 +22,14 @@ class GrobidService
     tei_to_work(tei:, bibtex:)
   end
 
-  # @param [String] doi of the work
+  # @param [String] citation for the work
   # @param [Boolean] preprint whether the work is a preprint
   # @return [Work] a Work model with metadata extracted from the PDF
   # @raise [Error] if there is an error extracting metadata from the PDF
-  def from_doi(doi:, preprint: false)
-    tei_fragment = fetch_tei_from_doi(doi:)
+  def from_citation(citation:, preprint: false)
+    tei_fragment = fetch_tei_from_citation(citation:)
     @tei = "<TEI xmlns=\"http://www.tei-c.org/ns/1.0\">#{tei_fragment}</TEI>"
-    @bibtex = fetch_tei_from_doi(doi:, tei: false) if preprint
+    @bibtex = fetch_tei_from_citation(citation:, tei: false) if preprint
     tei_to_work(tei:, bibtex:)
   end
 
@@ -51,11 +51,11 @@ class GrobidService
     raise Error, "Error extracting metadata from PDF: #{e.message}"
   end
 
-  def fetch_tei_from_doi(doi:, tei: true)
+  def fetch_tei_from_citation(citation:, tei: true)
     conn = Faraday.new do |c|
       c.response :raise_error
     end
-    payload = { citations: doi, consolidateCitations: 1 }
+    payload = { citations: citation, consolidateCitations: 1 }
     headers = {
       'Accept' => tei ? 'application/xml' : 'application/x-bibtex',
       'Content-Type' => 'application/x-www-form-urlencoded'
@@ -63,7 +63,7 @@ class GrobidService
     response = conn.post("#{Settings.grobid.host}/api/processCitation", URI.encode_www_form(payload), headers)
     response.body
   rescue Faraday::Error => e
-    raise Error, "Error getting metadata by DOI: #{e.message}"
+    raise Error, "Error getting metadata by citation: #{e.message}"
   end
 
   def conn

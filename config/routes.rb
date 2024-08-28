@@ -18,7 +18,10 @@ Rails.application.routes.draw do
 
   resources :files, only: [ :create ]
 
-  resources :works, only: [ :new, :create, :index, :edit, :update, :show ] do
+  resources :works, only: [ :create, :index, :edit, :update, :show ] do
+    collection do
+      match 'new', via: %i[get post], as: :new
+    end
     member do
       get 'edit_button'
     end

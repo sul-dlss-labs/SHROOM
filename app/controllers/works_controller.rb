@@ -15,7 +15,8 @@ class WorksController < ApplicationController
   def show; end
 
   def new
-    @work_form = build_new_work_form
+    @work_file = find_work_file
+    @work_form = build_new_work_form(work_file: @work_file)
   rescue GrobidService::Error
     redirect_to works_path, alert: 'Sorry! Unable to process the PDF.'
   end
@@ -31,6 +32,7 @@ class WorksController < ApplicationController
     @work_form = WorkForm.new(work_params)
     if @work_form.valid?
       @work = Work.create!(title: @work_form.title, collection: Collection.find_by(druid: @work_form.collection_druid))
+      work_file = find_work_file
       work_file.update!(work: @work)
       cocina_object = WorkCocinaMapperService.to_cocina(work_form: @work_form, source_id: "shroom:object-#{@work.id}")
 
@@ -72,9 +74,11 @@ class WorksController < ApplicationController
   end
 
   # rubocop:disable Metrics/AbcSize
-  def build_new_work_form
-    if params[:doi].present?
-      grobid_service.from_doi(doi: params[:doi], preprint: preprint?)
+  def build_new_work_form(work_file:)
+    if params[:citation].present?
+      grobid_service.from_citation(citation: params[:citation], preprint: preprint?)
+    elsif params[:doi].present?
+      grobid_service.from_citation(citation: params[:doi], preprint: preprint?)
     elsif params.key?(:work_file)
       grobid_service.from_file(path: work_file.path, preprint: preprint?)
     else
@@ -101,12 +105,14 @@ class WorksController < ApplicationController
     )
   end
 
-  def work_file
-    @work_file ||= WorkFile.find(work_file_param)
+  def find_work_file
+    return unless work_file_param
+
+    WorkFile.find(work_file_param)
   end
 
   def work_file_param
-    @work_file_param ||= params[:work_file] || params[:work][:work_file]
+    @work_file_param ||= params[:work_file] || params.dig(:work, :work_file)
   end
 
   def find_work

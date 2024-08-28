@@ -1,0 +1,16 @@
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+    <div class="h4 alert-heading">That didn't go according to plan ...</div>
+    <p>Provide a DOI or a citation here or manually complete the form below.</p>
+    <%= form_with url: new_works_path, builder: ShroomFormBuilder, data: {turbo: false} do |form| %>
+        <%= form.hidden_field :work_file, value: work_file_id %>
+        <%= form.hidden_field :preprint, value: preprint %>
+        <%= form.bs_label :doi, 'DOI:', class: 'mt-2' %>
+        <%= form.bs_text_field :doi, class: 'form-control', pattern: 'https://doi.org/10.\d+/.+' %>
+        <%= form.bs_help_text 'For example: https://doi.org/10.1177/1940161218781254' %>
+        <%= form.bs_label :citation, class: 'mt-2' %>
+        <%= form.bs_text_area :citation, rows: 4 %>
+
+        <%= form.submit 'Submit', class: 'btn btn-primary mt-3', data: { turbo_submits_with: 'Working...' } %>
+    <% end %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>

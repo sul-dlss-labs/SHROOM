@@ -74,8 +74,8 @@ RSpec.describe GrobidService do
     end
   end
 
-  describe '.from_doi' do
-    subject(:work) { described_class.from_doi(doi: 'https://doi.org/10.1177/1940161218781254') }
+  describe '.from_citation' do
+    subject(:work) { described_class.from_citation(citation: 'https://doi.org/10.1177/1940161218781254') }
 
     context 'when successful response' do
       before do
