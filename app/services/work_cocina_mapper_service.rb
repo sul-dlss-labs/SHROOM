@@ -51,6 +51,9 @@ class WorkCocinaMapperService
     else
       Rails.logger.info("Roundtripped Cocina Object: #{roundtripped_cocina_object.to_json}")
       Rails.logger.info("Original Cocina Object: #{clean_original_cocina_object.to_json}")
+      Honeybadger.notify('Work not roundtrippable',
+                         context: { roundtripped: roundtripped_cocina_object.to_h,
+                                    original: clean_original_cocina_object.to_h })
       false
     end
   end
