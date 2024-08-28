@@ -23,11 +23,11 @@ class WorkCocinaMapperService
     def params
       {
         title: cocina_object.description.title.first.value,
-        authors: WorkCocinaMapperService::FromCocina::AuthorsMapper.call(cocina_object:),
+        authors: WorkCocinaMapperService::ToWork::AuthorsMapper.call(cocina_object:),
         abstract: cocina_object.description.note.find { |note| note.type == 'abstract' }&.value,
         published_year: published_date&.year,
-        published_month: published_date&.month,
-        published_day: published_date&.day,
+        published_month: EdtfSupport.month_for(edtf: published_date),
+        published_day: EdtfSupport.day_for(edtf: published_date),
         publisher:,
         keywords:,
         doi:,
@@ -46,7 +46,7 @@ class WorkCocinaMapperService
           && event.date.first&.encoding&.code == 'edtf' \
           && event.date.first&.type == 'publication'
         end
-        Date.edtf(published_event&.date&.first&.value)
+        EdtfSupport.parse_with_precision(date: published_event&.date&.first&.value)
       end
     end
 

@@ -42,5 +42,24 @@ RSpec.describe WorkCocinaMapperService::ToWorkMapper do
     it 'maps to work' do
       expect(work).to equal_work expected
     end
+
+    context 'when published year only' do
+      let(:cocina_object) { create_request_dro.new(description:) }
+      let(:description) do
+        {
+          title: CocinaDescriptionSupport.title(title: title_fixture),
+          event: [
+            CocinaDescriptionSupport.event_date(date_type: 'publication',
+                                                date_value: '2004')
+          ]
+        }
+      end
+
+      it 'maps to work' do
+        expect(work.published_year).to eq 2004
+        expect(work.published_month).to be_nil
+        expect(work.published_day).to be_nil
+      end
+    end
   end
 end

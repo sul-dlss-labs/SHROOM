@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class WorkCocinaMapperService
-  module FromCocina
+  module ToWork
     # Map from Cocina model to Authors
     class AuthorsMapper
       def self.call(...)
