@@ -6,7 +6,7 @@ FactoryBot.define do
   end
 
   trait :with_druid do
-    druid { 'druid:bc123df4567' }
+    druid { druid_fixture }
   end
 
   trait :with_work_file do

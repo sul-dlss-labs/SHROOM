@@ -20,6 +20,10 @@ def collection_druid_fixture
   'druid:bb644cs7530'
 end
 
+def collection_title_fixture
+  'Scholarly article dataset'
+end
+
 def doi_fixture
   '10.5860/lrts.48n4.8259'
 end

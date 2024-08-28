@@ -7,7 +7,7 @@ module Sdr
     class NotFoundResponse < Error; end
 
     # @param [String] druid the druid of the object
-    # @return [Cocina::Models::DRO] the returned model
+    # @return [Cocina::Models::DRO,Cocina::Models::Collection] the returned model
     # @raise [Error] if there is an error retrieving the object
     # @raise [NotFoundResponse] if the object is not found
     def self.find(druid:)

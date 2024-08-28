@@ -3,7 +3,7 @@
 # Controller for Works
 class WorksController < ApplicationController
   before_action :find_work, only: %i[show edit edit_button update]
-  before_action :find_cocina_object, only: %i[show edit update]
+  before_action :find_cocina_object_and_sync, only: %i[show edit update]
   before_action :find_collections, only: %i[new edit create update index]
   def index
     @works = Work.order(id: :desc).page(params[:page])
@@ -59,7 +59,7 @@ class WorksController < ApplicationController
                                                             source_id: @cocina_object.identification.sourceId)
 
       Sdr::UpdateService.call(cocina_object: new_cocina_object, existing_cocina_object: @cocina_object, work: @work)
-      @work.update!(title: @work_form.title, collection: Collection.find_by(druid: @work_form.collection_druid))
+      WorkSyncService.call(work: @work, cocina_object: new_cocina_object)
 
       redirect_to @work
     else
@@ -119,8 +119,9 @@ class WorksController < ApplicationController
     @work = Work.find(params[:id])
   end
 
-  def find_cocina_object
+  def find_cocina_object_and_sync
     @cocina_object = Sdr::Repository.find(druid: @work.druid)
+    WorkSyncService.call(work: @work, cocina_object: @cocina_object)
   end
 
   def find_collections

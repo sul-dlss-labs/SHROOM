@@ -140,5 +140,24 @@ def create_dro_with_structural
                    isMemberOf: [collection_druid_fixture]
                  })
 end
+
+def create_collection
+  Cocina::Models.build(
+    {
+      externalIdentifier: collection_druid_fixture,
+      type: Cocina::Models::ObjectType.collection,
+      label: collection_title_fixture,
+      description: {
+        purl: Sdr::Purl.from_druid(druid: collection_druid_fixture),
+        title: CocinaDescriptionSupport.title(title: collection_title_fixture)
+
+      },
+      version: 2,
+      identification: { sourceId: 'shroom:object-4' },
+      administrative: { hasAdminPolicy: Settings.apo },
+      access: { view: 'world' }
+    }
+  )
+end
 # rubocop:enable Metrics/MethodLength
 # rubocop:enable Metrics/AbcSize

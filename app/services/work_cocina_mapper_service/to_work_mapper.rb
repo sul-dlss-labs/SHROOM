@@ -22,7 +22,7 @@ class WorkCocinaMapperService
     # rubocop:disable Metrics/AbcSize
     def params
       {
-        title: cocina_object.description.title.first.value,
+        title: CocinaSupport.title_for(cocina_object:),
         authors: WorkCocinaMapperService::ToWork::AuthorsMapper.call(cocina_object:),
         abstract: cocina_object.description.note.find { |note| note.type == 'abstract' }&.value,
         published_year: published_date&.year,
@@ -33,7 +33,7 @@ class WorkCocinaMapperService
         doi:,
         related_resource_citation:,
         related_resource_doi:,
-        collection_druid:
+        collection_druid: CocinaSupport.collection_druid_for(cocina_object:)
       }
     end
 
@@ -91,10 +91,6 @@ class WorkCocinaMapperService
 
     def related_resource
       @related_resource ||= cocina_object.description.relatedResource.first
-    end
-
-    def collection_druid
-      cocina_object.structural&.isMemberOf&.first
     end
   end
 end
