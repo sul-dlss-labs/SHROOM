@@ -145,9 +145,13 @@ class TeiCocinaMapperService
       return {} unless pers_name_node
 
       {
-        forename: pers_name_node.at_xpath('tei:forename', TEI_NAMESPACES)&.text,
-        surname: pers_name_node.at_xpath('tei:surname', TEI_NAMESPACES)&.text
+        forename: join_nodes(pers_name_node.xpath('tei:forename', TEI_NAMESPACES)),
+        surname: join_nodes(pers_name_node.xpath('tei:surname', TEI_NAMESPACES))
       }.compact
+    end
+
+    def join_nodes(nodes)
+      nodes.map(&:text).join(' ')
     end
 
     def affiliations_attrs_for(author_node)

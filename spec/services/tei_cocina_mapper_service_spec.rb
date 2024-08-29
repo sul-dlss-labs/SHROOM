@@ -24,7 +24,7 @@ RSpec.describe TeiCocinaMapperService do
                                                             organization: 'Library of Congress',
                                                             department: 'Repository Development Center'
                                                           }]),
-              CocinaDescriptionSupport.person_contributor(forename: 'Lynn',
+              CocinaDescriptionSupport.person_contributor(forename: 'Lynn Silipigni',
                                                           surname: 'Connaway')
             ],
             note: [
@@ -72,7 +72,7 @@ RSpec.describe TeiCocinaMapperService do
                                                             organization: 'Library of Congress',
                                                             department: 'Repository Development Center'
                                                           }]),
-              CocinaDescriptionSupport.person_contributor(forename: 'Lynn',
+              CocinaDescriptionSupport.person_contributor(forename: 'Lynn Silipigni',
                                                           surname: 'Connaway')
             ],
             note: [
