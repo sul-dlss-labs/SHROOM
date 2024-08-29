@@ -26,5 +26,14 @@ cap poc deploy
 
 Note that SHROOM doesn't currently use shared configs or Vault. Instead settings are in `config/settings/production.yml` and `config/credentials/production.yml.enc`.
 
+### Running Grobid on server
+```
+docker run -d --rm --init --ulimit core=0 -p 8070:8070 lfoppiano/grobid:latest-crf
+```
+or
+```
+docker run -d --rm --init --ulimit core=0 -p 8070:8070 lfoppiano/grobid:latest-full
+```
+
 ## Helpful task
 Export the metadata for a collection to CSV: `bin/rake "export_csv[druid:jk956kb4381]"`

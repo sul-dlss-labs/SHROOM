@@ -39,6 +39,7 @@ class WorksController < ApplicationController
 
       redirect_to @work
     else
+      flash[:error] = 'Validation failed. See below for details.'
       render :new, status: :unprocessable_entity
     end
   end
@@ -62,6 +63,7 @@ class WorksController < ApplicationController
 
       redirect_to @work
     else
+      flash[:error] = 'Validation failed. See below for details.'
       render :new, status: :unprocessable_entity
     end
   end

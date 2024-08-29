@@ -24,6 +24,11 @@
           <%= flash.alert %>
         </div>
       <% end %>
+      <% if flash[:error] %>
+        <div class="alert alert-danger" role="alert">
+          <i class="bi bi-exclamation-circle me-2"></i><%= flash[:error] %>
+        </div>
+      <% end %>
       <%= yield %>
     </div>
   </body>
