@@ -4,6 +4,8 @@
     </div>
     <%= tag.div id: body_id, class: 'card-body', data: { controller: 'form-add' } do %>
         <%= body_section %>
+        <%= form.bs_invalid_feedback field, class: 'd-block' %>
+
         <template data-form-add-target="template">
             <%= form.fields_for field, model_class.new, child_index: 'NEW_RECORD' do |nested_form| %>
                 <%= tag.li id: template_id, class: 'list-group-item' do %>
@@ -24,6 +26,7 @@
                 </li>
             <% end %>
         </ul>
+
         <button class="btn btn-secondary mt-1 mb-2" data-action="form-add#add"><%= add_label %></button>
     <% end %>
 </div>

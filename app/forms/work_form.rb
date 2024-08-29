@@ -10,6 +10,7 @@ class WorkForm < BaseForm
     authors.compact_blank!
   end
   validate :authors_are_valid
+  validates :authors, presence: { message: 'requires at least one author' }
 
   def authors_attributes=(attributes)
     self.authors = attributes.map { |_, author| AuthorForm.new(author) }
