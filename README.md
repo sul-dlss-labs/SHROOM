@@ -49,8 +49,10 @@ Export the metadata for a collection to line-oriented JSON: `bin/rake "export:js
             "first_name": STRING (REQUIRED - includes middle name, initials, etc.),
             "last_name": STRING (REQUIRED),
             "affiliations": [
-                "department": STRING,
-                "organization": STRING (REQUIRED)
+                {
+                    "department": STRING,
+                    "organization": STRING (REQUIRED)
+                }
             ],
             "orcid": STRING (for example, https://orcid.org/0000-0003-1527-0030)
         }
@@ -66,4 +68,15 @@ Export the metadata for a collection to line-oriented JSON: `bin/rake "export:js
     "published": BOOLEAN,
     "collection_druid": STRING (for example, druid:jk956kb4381)
 }
+```
+
+## Evaluation
+To compare groundtruth metadata from a JSONL file against metadata produced by a metadata extraction service (e.g., GrobidService):
+```
+bin/rails r "EvaluationRunner.call(limit: 2)"
+PASS: druid:hc954ws1639
+FAIL: druid:nv906wk0020 (6970.pdf)
+  Authors do not match:
+    expected: Victor Lee, Christine Bywater, Robert Wachtel Pronovost, Kaifeng Cheng, Daniel Guimaraes
+    actual:   Victor R Lee, Christine Bywater, Robert Wachtel, Kaifeng Cheng, Daniel Guimaraes
 ```

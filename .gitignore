@@ -44,4 +44,5 @@ config/environments/*.local.yml
 /config/credentials/development.key
 
 export.csv
+export.jsonl
 workflow_service.log

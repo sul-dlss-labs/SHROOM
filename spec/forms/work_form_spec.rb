@@ -48,4 +48,37 @@ RSpec.describe WorkForm do
       end
     end
   end
+
+  describe 'json serialization' do
+    let(:author1) do
+      AuthorForm.new(
+        first_name: 'Justin',
+        last_name: 'Littman',
+        affiliations: [AffiliationForm.new(organization: 'Library of Congress',
+                                           department: 'Repository Development Center')],
+        orcid: 'https://orcid.org/0000-0003-1527-0030'
+      )
+    end
+
+    let(:author2) { AuthorForm.new(first_name: 'Lynn', last_name: 'Connaway') }
+
+    let(:work_form) do
+      described_class.new(
+        title: title_fixture,
+        authors: [author1, author2],
+        abstract: abstract_fixture,
+        keywords: [
+          KeywordForm.new(value: 'Electronic books'),
+          KeywordForm.new(value: 'Academic libraries')
+        ],
+        related_resource_citation: citation_fixture,
+        related_resource_doi: doi_fixture,
+        collection_druid: collection_druid_fixture
+      )
+    end
+
+    it 'serializes and deserializes to json' do
+      expect(described_class.new.from_json(work_form.to_json)).to equal_work work_form
+    end
+  end
 end

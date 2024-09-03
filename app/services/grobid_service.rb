@@ -4,12 +4,17 @@
 class GrobidService
   class Error < StandardError; end
 
-  def self.from_file(...)
-    new.from_file(...)
+  def self.from_file(path:, logger: Rails.logger, published: false)
+    new(logger:).from_file(path:, published:)
   end
 
-  def self.from_citation(...)
-    new.from_citation(...)
+  def self.from_citation(citation:, logger: Rails.logger, published: false)
+    new(logger:).from_citation(citation:, published:)
+  end
+
+  # @param [Logger] logger
+  def initialize(logger: Rails.logger)
+    @logger = logger
   end
 
   # @param [String] path the path to the PDF file

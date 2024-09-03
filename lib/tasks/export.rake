@@ -20,7 +20,7 @@ namespace :export do
     File.open('export.jsonl', 'w') do |file|
       collection.works.each do |work|
         cocina_object = Sdr::Repository.find(druid: work.druid)
-        work_form = WorkCocinaMapperService.to_work(cocina_object:)
+        work_form = WorkCocinaMapperService.to_work(cocina_object:, validate_lossless: false)
         hash = work_form.as_json
         hash['druid'] = work.druid
         hash['work_id'] = work.id
