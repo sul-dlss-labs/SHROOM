@@ -14,7 +14,7 @@ class GrobidService
 
   # @param [String] path the path to the PDF file
   # @param [Boolean] published whether the work is a published article
-  # @return [Work] a Work model with metadata extracted from the PDF
+  # @return [WorkForm] a Work model with metadata extracted from the PDF
   # @raise [Error] if there is an error extracting metadata from the PDF
   def from_file(path:, published: false)
     @tei = fetch_tei_from_file(path:)
@@ -24,7 +24,7 @@ class GrobidService
 
   # @param [String] citation for the work
   # @param [Boolean] published whether the work is a published article
-  # @return [Work] a Work model with metadata extracted from the PDF
+  # @return [WorkForm] a Work model with metadata extracted from the PDF
   # @raise [Error] if there is an error extracting metadata from the PDF
   def from_citation(citation:, published: false)
     tei_fragment = fetch_tei_from_citation(citation:)
@@ -33,7 +33,7 @@ class GrobidService
     tei_to_work(tei:, bibtex:)
   end
 
-  attr_reader :tei, :bibtex
+  attr_reader :tei, :bibtex, :logger
 
   private
 
@@ -74,11 +74,11 @@ class GrobidService
   end
 
   def tei_to_work(tei:, bibtex:)
-    Rails.logger.info("TEI: #{tei}")
-    Rails.logger.info("Bibtex: #{bibtex}") if bibtex
+    logger.info("TEI: #{tei}")
+    logger.info("Bibtex: #{bibtex}") if bibtex
     cocina_object = TeiCocinaMapperService.call(tei_ng_xml: Nokogiri::XML(tei),
                                                 related_resource_citation: citation_for(bibtex:))
-    Rails.logger.info("Cocina object: #{CocinaSupport.pretty(cocina_object:)}")
+    logger.info("Cocina object: #{CocinaSupport.pretty(cocina_object:)}")
     WorkCocinaMapperService.to_work(cocina_object:, validate_lossless: false)
   end
 
