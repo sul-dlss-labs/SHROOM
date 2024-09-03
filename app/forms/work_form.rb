@@ -51,4 +51,14 @@ class WorkForm < BaseForm
   def published?
     published || related_resource_citation.present?
   end
+
+  def attributes=(attrs)
+    if attrs['authors']
+      self.authors = attrs.delete('authors').map do |author_attrs|
+        AuthorForm.new.from_json(author_attrs.to_json)
+      end
+    end
+    self.keywords = attrs.delete('keywords').map { |keyword_attrs| KeywordForm.new(keyword_attrs) } if attrs['keywords']
+    super
+  end
 end

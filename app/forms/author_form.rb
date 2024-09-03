@@ -20,6 +20,15 @@ class AuthorForm < BaseForm
     self.affiliations = attributes.map { |_, affiliation| AffiliationForm.new(affiliation) }
   end
 
+  def attributes=(attrs)
+    if attrs['affiliations']
+      self.affiliations = attrs.delete('affiliations').map do |affiliation_attrs|
+        AffiliationForm.new(affiliation_attrs)
+      end
+    end
+    super
+  end
+
   def blank?
     first_name.blank? && last_name.blank?
   end

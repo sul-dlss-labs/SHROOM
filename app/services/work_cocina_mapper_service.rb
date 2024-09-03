@@ -30,14 +30,15 @@ class WorkCocinaMapperService
   def to_work(cocina_object:, validate_lossless: true, logger: Rails.logger)
     work_form = ToWorkMapper.call(cocina_object:)
     raise UnmappableError if validate_lossless && !roundtrippable?(mapped_work: work_form,
-                                                                   original_cocina_object: cocina_object)
+                                                                   original_cocina_object: cocina_object,
+                                                                   logger:)
 
     work_form
   end
 
   private
 
-  def roundtrippable?(mapped_work:, original_cocina_object:)
+  def roundtrippable?(mapped_work:, original_cocina_object:, logger:)
     roundtripped_cocina_object = to_cocina(work_form: mapped_work,
                                            druid: original_cocina_object.try(:externalIdentifier),
                                            version: original_cocina_object.version,
