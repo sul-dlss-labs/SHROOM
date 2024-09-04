@@ -14,11 +14,6 @@ RSpec.describe WorkCocinaMapperService::ToCocinaMapper do
       title: title_fixture,
       authors: [author1, author2],
       abstract: abstract_fixture,
-      published_year: 2004,
-      published_month: 10,
-      published_day: 1,
-      publisher: 'American Library Association',
-      doi: doi_fixture,
       keywords: [
         KeywordForm.new(value: 'Electronic books'),
         KeywordForm.new(value: 'Academic libraries')

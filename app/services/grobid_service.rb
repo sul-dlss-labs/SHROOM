@@ -13,23 +13,23 @@ class GrobidService
   end
 
   # @param [String] path the path to the PDF file
-  # @param [Boolean] preprint whether the work is a preprint
+  # @param [Boolean] published whether the work is a published article
   # @return [Work] a Work model with metadata extracted from the PDF
   # @raise [Error] if there is an error extracting metadata from the PDF
-  def from_file(path:, preprint: false)
+  def from_file(path:, published: false)
     @tei = fetch_tei_from_file(path:)
-    @bibtex = fetch_tei_from_file(path:, tei: false) if preprint
+    @bibtex = fetch_tei_from_file(path:, tei: false) if published
     tei_to_work(tei:, bibtex:)
   end
 
   # @param [String] citation for the work
-  # @param [Boolean] preprint whether the work is a preprint
+  # @param [Boolean] published whether the work is a published article
   # @return [Work] a Work model with metadata extracted from the PDF
   # @raise [Error] if there is an error extracting metadata from the PDF
-  def from_citation(citation:, preprint: false)
+  def from_citation(citation:, published: false)
     tei_fragment = fetch_tei_from_citation(citation:)
     @tei = "<TEI xmlns=\"http://www.tei-c.org/ns/1.0\">#{tei_fragment}</TEI>"
-    @bibtex = fetch_tei_from_citation(citation:, tei: false) if preprint
+    @bibtex = fetch_tei_from_citation(citation:, tei: false) if published
     tei_to_work(tei:, bibtex:)
   end
 

@@ -8,41 +8,13 @@
 
     <%= render NestedFormComponent.new(form:, model_class: AuthorForm, field: :authors, form_component: Works::AuthorFormComponent) %>
 
-    <div class="row">
-        <div class="col-4">
-            <%= form.bs_label :published_year %>
-            <%= form.bs_text_field :published_year %>
-            <%= form.bs_invalid_feedback :published_year %>
-        </div>
-        <div class="col-3">
-            <%= form.bs_label :published_month %>
-            <%= form.bs_text_field :published_month %>
-            <%= form.bs_invalid_feedback :published_month %>
-        </div>
-        <div class="col-3">
-            <%= form.bs_label :published_day %>
-            <%= form.bs_text_field :published_day %>
-            <%= form.bs_invalid_feedback :published_day %>
-        </div>
-    </div>
-    <% if !work_form.preprint? %>
-        <%= form.bs_label :doi, 'DOI', class: 'mt-2' %>
-        <%= form.bs_text_field :doi %>
-        <div class="form-text">For example, 10.5860/lrts.48n4.8259.</div>
-        <%= form.bs_invalid_feedback :doi %>
-
-        <%= form.bs_label :publisher, class: 'mt-2' %>
-        <%= form.bs_text_field :publisher %>
-        <%= form.bs_invalid_feedback :publisher %>
-    <% end %>
-
     <%= form.bs_label :abstract, class: 'mt-2' %>
     <%= form.bs_text_area :abstract, rows: 6 %>
     <%= form.bs_invalid_feedback :abstract %>
 
     <%= render Works::KeywordsFormComponent.new(form:) %>
 
-    <% if work_form.preprint? %>
+    <% if work_form.published? %>
         <%= form.bs_label :related_resource_citation %>
         <%= form.bs_text_area :related_resource_citation, rows: 4 %>
         <%= form.bs_help_text 'This is the citation for the published or forthcoming article.' %>
@@ -53,7 +25,7 @@
         <%= form.bs_invalid_feedback :related_resource_doi %>
         <div class="form-text">This is the DOI for the published or forthcoming article. For example, 10.5860/lrts.48n4.8259.</div>
 
-        <%= form.hidden_field :preprint, value: true %>
+        <%= form.hidden_field :published, value: true %>
     <% end %>
 
     <div class="d-inline-flex mt-3">

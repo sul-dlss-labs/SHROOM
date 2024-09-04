@@ -19,47 +19,17 @@ class WorkCocinaMapperService
 
     attr_reader :cocina_object
 
-    # rubocop:disable Metrics/AbcSize
     def params
       {
         title: CocinaSupport.title_for(cocina_object:),
         authors: WorkCocinaMapperService::ToWork::AuthorsMapper.call(cocina_object:),
         abstract: cocina_object.description.note.find { |note| note.type == 'abstract' }&.value,
-        published_year: published_date&.year,
-        published_month: EdtfSupport.month_for(edtf: published_date),
-        published_day: EdtfSupport.day_for(edtf: published_date),
-        publisher:,
         keywords:,
-        doi:,
         related_resource_citation:,
         related_resource_doi:,
         collection_druid: CocinaSupport.collection_druid_for(cocina_object:)
       }
     end
-
-    # rubocop:disable Metrics/CyclomaticComplexity
-    # rubocop:disable Metrics/PerceivedComplexity
-    def published_date
-      @published_date ||= begin
-        published_event = cocina_object.description.event.find do |event|
-          event.type == 'deposit' \
-          && event.date.first&.encoding&.code == 'edtf' \
-          && event.date.first&.type == 'publication'
-        end
-        EdtfSupport.parse_with_precision(date: published_event&.date&.first&.value)
-      end
-    end
-
-    def publisher
-      publisher_event = cocina_object.description.event.find do |event|
-        event.type == 'publication' \
-        && event.contributor&.first&.role&.first&.value == 'publisher'
-      end
-      publisher_event&.contributor&.first&.name&.first&.value
-    end
-    # rubocop:enable Metrics/AbcSize
-    # rubocop:enable Metrics/CyclomaticComplexity
-    # rubocop:enable Metrics/PerceivedComplexity
 
     def keywords
       cocina_object.description.subject
@@ -72,10 +42,6 @@ class WorkCocinaMapperService
       return unless note
 
       note.value
-    end
-
-    def doi
-      doi_for(cocina_object.description)
     end
 
     def related_resource_doi

@@ -5,7 +5,7 @@
   </ol>
 </nav>
 
-<%= render Works::FallbackFormComponent.new(work_form: @work_form, work_file_id: params[:work_file], preprint: params[:preprint]) %>
+<%= render Works::FallbackFormComponent.new(work_form: @work_form, work_file_id: params[:work_file], published: params[:published]) %>
 
 <%= render FormLayoutComponent.new(work_file: @work_file) do |component| %>
     <% component.with_form do %>

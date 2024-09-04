@@ -37,3 +37,31 @@ docker run -d --rm --init --ulimit core=0 -p 8070:8070 lfoppiano/grobid:latest-f
 
 ## Helpful task
 Export the metadata for a collection to CSV: `bin/rake "export_csv[druid:jk956kb4381]"`
+
+## Data model for an article
+```
+{
+    "title": STRING,
+    "authors": [
+        {
+            "first_name": STRING (REQUIRED - includes middle name, initials, etc.),
+            "last_name": STRING (REQUIRED),
+            "affiliations": [
+                "department": STRING,
+                "organization": STRING (REQUIRED)
+            ],
+            "orcid": STRING (for example, https://orcid.org/0000-0003-1527-0030)
+        }
+    ],
+    "abstract": STRING,
+    "keywords": [
+        {
+            value: STRING
+        }
+    ],
+    "related_resource_citation": STRING,
+    "related_resource_doi": STRING (for example, 10.5860/lrts.48n4.8259),
+    "published": BOOLEAN,
+    "collection_druid": STRING (for example, druid:jk956kb4381)
+}
+```

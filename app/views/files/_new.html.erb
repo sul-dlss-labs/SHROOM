@@ -1,11 +1,11 @@
 <%= form_with url: files_path, builder: ShroomFormBuilder, data: { controller: 'submits-with', action: 'submits-with#showStatus' } do |form| %>
     <div class="form-check">
-        <%= form.bs_radio_button :preprint, 'false', required: true %>
-        <%= form.bs_radio_label :preprint_false, 'This is an article or manuscript (published or unpublished).' %>
+        <%= form.bs_radio_button :published, 'true', required: true %>
+        <%= form.bs_radio_label :published_true, 'This is a preprint or copy of an article / manuscript that is forthcoming or has been published elsewhere.' %>
     </div>
     <div class="form-check">
-        <%= form.bs_radio_button :preprint, 'true', required: true %>
-        <%= form.bs_radio_label :preprint_true, 'This is a preprint of an article (forthcoming or published).' %>
+        <%= form.bs_radio_button :published, 'false', required: true %>
+        <%= form.bs_radio_label :published_false, 'This is an article / manuscript that will only be published in SDR or has not been submitted and / or accepted for publication.' %>
     </div>
     <%= form.bs_label :file, 'Upload article:', class: 'mt-2' %>
     <%= form.file_field :file, required: true, accept: 'application/pdf', class: 'form-control', direct_upload: true %>

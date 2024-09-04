@@ -77,28 +77,27 @@ class WorksController < ApplicationController
   # rubocop:disable Metrics/AbcSize
   def build_new_work_form(work_file:)
     if params[:citation].present?
-      grobid_service.from_citation(citation: params[:citation], preprint: preprint?)
+      grobid_service.from_citation(citation: params[:citation], published: published?)
     elsif params[:doi].present?
-      grobid_service.from_citation(citation: params[:doi], preprint: preprint?)
+      grobid_service.from_citation(citation: params[:doi], published: published?)
     elsif params.key?(:work_file)
-      grobid_service.from_file(path: work_file.path, preprint: preprint?)
+      grobid_service.from_file(path: work_file.path, published: published?)
     else
-      WorkForm.new(preprint: preprint?)
+      WorkForm.new(published: published?)
     end
   end
   # rubocop:enable Metrics/AbcSize
 
-  def preprint?
-    params[:preprint] == 'true'
+  def published?
+    params[:published] == 'true'
   end
 
   def work_params
     # Perhaps these can be introspected from the model?
     params.require(:work).permit(
       :title, :abstract, :publisher,
-      :published_year, :published_month, :published_day,
-      :related_resource_citation, :preprint, :collection_druid,
-      :doi, :related_resource_doi,
+      :related_resource_citation, :published, :collection_druid,
+      :related_resource_doi,
       authors_attributes: [
         :first_name, :last_name, :orcid, { affiliations_attributes: %i[organization department] }
       ],

@@ -23,13 +23,7 @@ def create_request_dro
                                                       surname: 'Connaway')
         ],
         note: [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture)],
-        event: [
-          CocinaDescriptionSupport.event_date(date_type: 'publication',
-                                              date_value: '2004-10-01'),
-          CocinaDescriptionSupport.event_contributor(contributor_name_value: 'American Library Association')
-        ],
         subject: CocinaDescriptionSupport.subjects(values: ['Electronic books', 'Academic libraries']),
-        identifier: [CocinaDescriptionSupport.doi_identifier(doi: doi_fixture)],
         relatedResource: [
           {
             identifier: [CocinaDescriptionSupport.doi_identifier(doi: doi_fixture)],
@@ -69,13 +63,7 @@ def create_dro
                                                       surname: 'Connaway')
         ],
         note: [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture)],
-        event: [
-          CocinaDescriptionSupport.event_date(date_type: 'publication',
-                                              date_value: '2004-10-01'),
-          CocinaDescriptionSupport.event_contributor(contributor_name_value: 'American Library Association')
-        ],
         subject: CocinaDescriptionSupport.subjects(values: ['Electronic books', 'Academic libraries']),
-        identifier: [CocinaDescriptionSupport.doi_identifier(doi: doi_fixture)],
         relatedResource: [
           {
             identifier: [CocinaDescriptionSupport.doi_identifier(doi: doi_fixture)],

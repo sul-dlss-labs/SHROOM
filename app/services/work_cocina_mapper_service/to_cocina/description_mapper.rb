@@ -35,9 +35,7 @@ class WorkCocinaMapperService
           title: CocinaDescriptionSupport.title(title: work_form.title),
           contributor: contributors_params.presence,
           note: note_params.presence,
-          event: event_params.presence,
           subject: subject_params.presence,
-          identifier: identifier_params,
           purl: Sdr::Purl.from_druid(druid:),
           relatedResource: related_resource_params
         }.compact
@@ -69,27 +67,8 @@ class WorkCocinaMapperService
         end
       end
 
-      # rubocop:disable Metrics/AbcSize
-      def event_params
-        [].tap do |params|
-          date_value = EdtfSupport.to_edtf(year: work_form.published_year, month: work_form.published_month,
-                                           day: work_form.published_day)
-          params << CocinaDescriptionSupport.event_date(date_value:, date_type: 'publication') if date_value.present?
-          if work_form.publisher.present?
-            params << CocinaDescriptionSupport.event_contributor(contributor_name_value: work_form.publisher)
-          end
-        end
-      end
-      # rubocop:enable Metrics/AbcSize
-
       def subject_params
         CocinaDescriptionSupport.subjects(values: work_form.keywords.map(&:value))
-      end
-
-      def identifier_params
-        return if work_form.doi.blank?
-
-        [CocinaDescriptionSupport.doi_identifier(doi: work_form.doi)]
       end
 
       def related_resource_params

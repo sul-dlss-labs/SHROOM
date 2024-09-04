@@ -4,9 +4,9 @@ require 'rails_helper'
 
 RSpec.describe GrobidService do
   describe '.from_file' do
-    subject(:work) { described_class.from_file(path: 'spec/fixtures/files/preprint.pdf', preprint:) }
+    subject(:work) { described_class.from_file(path: 'spec/fixtures/files/preprint.pdf', published:) }
 
-    let(:preprint) { false }
+    let(:published) { false }
 
     context 'when successful response' do
       before do
@@ -43,7 +43,7 @@ RSpec.describe GrobidService do
     end
 
     context 'when preprint' do
-      let(:preprint) { true }
+      let(:published) { true }
 
       before do
         stub_request(:post, 'http://localhost:8070/api/processHeaderDocument')

@@ -9,7 +9,7 @@ class TeiCocinaMapperService
   end
 
   # @param [Nokogiri::XML::Document] tei_ng_xml
-  # @param [String,nil] related_resource_citation citation for the article this is a preprint of
+  # @param [String,nil] related_resource_citation citation for the article this is a published of
   def initialize(tei_ng_xml:, related_resource_citation: nil)
     @tei_doc = TeiDocument.new(ng_xml: tei_ng_xml)
     @related_resource_citation = related_resource_citation
@@ -40,9 +40,7 @@ class TeiCocinaMapperService
       title: CocinaDescriptionSupport.title(title: tei_doc.title),
       contributor: tei_doc.authors.map { |author_attrs| CocinaDescriptionSupport.person_contributor(**author_attrs) },
       note: note_params,
-      event: event_params,
       subject: subject_params,
-      identifier: identifier_params,
       relatedResource: related_resource_params
     }.compact
   end
@@ -53,34 +51,14 @@ class TeiCocinaMapperService
     [CocinaDescriptionSupport.note(type: 'abstract', value: tei_doc.abstract)]
   end
 
-  def event_params
-    return [] if preprint? # If a preprint, these are likely to be for the related resource.
-
-    [].tap do |params|
-      if tei_doc.published_date.present?
-        params << CocinaDescriptionSupport.event_date(date_type: 'publication',
-                                                      date_value: tei_doc.published_date)
-      end
-      if tei_doc.publisher.present?
-        params << CocinaDescriptionSupport.event_contributor(contributor_name_value: tei_doc.publisher)
-      end
-    end
-  end
-
   def subject_params
     return if tei_doc.keywords.blank?
 
     CocinaDescriptionSupport.subjects(values: tei_doc.keywords)
   end
 
-  def identifier_params
-    return if preprint? || tei_doc.doi.blank?
-
-    [CocinaDescriptionSupport.doi_identifier(doi: tei_doc.doi)]
-  end
-
   def related_resource_params
-    return unless preprint?
+    return unless published?
 
     [
       {
@@ -91,7 +69,7 @@ class TeiCocinaMapperService
     ]
   end
 
-  def preprint?
+  def published?
     related_resource_citation.present?
   end
 

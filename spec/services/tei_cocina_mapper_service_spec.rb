@@ -31,13 +31,7 @@ RSpec.describe TeiCocinaMapperService do
               CocinaDescriptionSupport.note(type: 'abstract',
                                             value: 'In order for collection development librarians to justify the adoption of electronic books ...') # rubocop:disable Layout/LineLength
             ],
-            event: [
-              CocinaDescriptionSupport.event_date(date_type: 'publication',
-                                                  date_value: '2004-10-01'),
-              CocinaDescriptionSupport.event_contributor(contributor_name_value: 'American Library Association')
-            ],
-            subject: CocinaDescriptionSupport.subjects(values: ['Electronic books', 'Academic libraries']),
-            identifier: [CocinaDescriptionSupport.doi_identifier(doi: doi_fixture)]
+            subject: CocinaDescriptionSupport.subjects(values: ['Electronic books', 'Academic libraries'])
 
           },
           version: 1,
@@ -119,14 +113,6 @@ RSpec.describe TeiCocinaMapperService do
               CocinaDescriptionSupport.person_contributor(forename: 'Justin',
                                                           surname: 'Littman',
                                                           orcid: 'https://orcid.org/0000-0003-1527-0030')
-            ],
-            event: [
-              CocinaDescriptionSupport.event_date(date_type: 'publication',
-                                                  date_value: '2018-06-24'),
-              CocinaDescriptionSupport.event_contributor(contributor_name_value: 'SAGE Publications')
-            ],
-            identifier: [
-              CocinaDescriptionSupport.doi_identifier(doi: '10.1177/1940161218781254')
             ]
           },
           version: 1,

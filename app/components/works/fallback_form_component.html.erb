@@ -3,7 +3,7 @@
     <p>Provide a DOI or a citation here or manually complete the form below.</p>
     <%= form_with url: new_works_path, builder: ShroomFormBuilder, data: { controller: 'submits-with', action: 'submits-with#showStatus', turbo: false } do |form| %>
         <%= form.hidden_field :work_file, value: work_file_id %>
-        <%= form.hidden_field :preprint, value: preprint %>
+        <%= form.hidden_field :published, value: published %>
         <%= form.bs_label :doi, 'DOI:', class: 'mt-2' %>
         <%= form.bs_text_field :doi, class: 'form-control', pattern: 'https://doi.org/10.\d+/.+' %>
         <%= form.bs_help_text 'For example: https://doi.org/10.1177/1940161218781254' %>
