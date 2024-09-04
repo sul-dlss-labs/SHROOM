@@ -62,7 +62,7 @@ class CsvService
 
   def work_form_for(work)
     cocina_object = Sdr::Repository.find(druid: work.druid)
-    WorkCocinaMapperService.to_work(cocina_object:)
+    WorkCocinaMapperService.to_work(cocina_object:, validate_lossless: false)
   end
 
   # rubocop:disable Metrics/AbcSize
