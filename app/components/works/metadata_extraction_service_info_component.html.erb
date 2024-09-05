@@ -1,0 +1,18 @@
+<hr>
+
+<div class="accordion mb-4" id="metadataService">
+    <% info_fields.each do |field| %>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+            <%= tag.button class: "accordion-button collapsed", type: "button", data: {bs_toggle: "collapse", bs_target:"##{field}Body"}, 'aria-expanded': "false", 'aria-controls': "#{field}Body" do %>
+                 <%= field.to_s.titleize %>
+            <% end %>
+            </h2>
+            <%= tag.div id:"#{field}Body", class: "accordion-collapse collapse", data: {bs_parent: "#metadataService"} do %>
+                <div class="accordion-body">
+                    <pre class="mt-3"><code><%= body_for(field) %></code></pre>
+                </div>
+            <% end %>
+        </div>
+    <% end %>
+</div>

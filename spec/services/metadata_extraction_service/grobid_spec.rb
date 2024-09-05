@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe GrobidService do
+RSpec.describe MetadataExtractionService::Grobid do
   describe '.from_file' do
     subject(:work) { described_class.from_file(path: 'spec/fixtures/files/preprint.pdf', published:) }
 
@@ -38,7 +38,7 @@ RSpec.describe GrobidService do
       end
 
       it 'raises a GrobidService::Error' do
-        expect { work }.to raise_error(described_class::Error)
+        expect { work }.to raise_error(MetadataExtractionService::Error)
       end
     end
 

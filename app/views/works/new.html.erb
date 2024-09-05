@@ -14,6 +14,6 @@
             <%= render 'form', form:, work_form: @work_form, collections: @collections %>
         <% end %>
 
-        <%= render Works::GrobidServiceInfoComponent.new(grobid_service: @grobid_service) %>
+        <%= render Works::MetadataExtractionServiceInfoComponent.new(service: @metadata_extraction_service) %>
     <% end %>
 <% end %>

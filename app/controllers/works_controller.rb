@@ -18,7 +18,7 @@ class WorksController < ApplicationController
 
   def new
     @work_form = build_new_work_form(work_file: @work_file)
-  rescue GrobidService::Error
+  rescue MetadataExtractionService::Error
     redirect_to works_path, alert: 'Sorry! Unable to process the PDF.'
   end
 
@@ -70,18 +70,18 @@ class WorksController < ApplicationController
 
   private
 
-  def grobid_service
-    @grobid_service ||= GrobidService.new
+  def metadata_extraction_service
+    @metadata_extraction_service ||= MetadataExtractionService.new
   end
 
   # rubocop:disable Metrics/AbcSize
   def build_new_work_form(work_file:)
     if params[:citation].present?
-      grobid_service.from_citation(citation: params[:citation], published: published?)
+      metadata_extraction_service.from_citation(citation: params[:citation], published: published?)
     elsif params[:doi].present?
-      grobid_service.from_citation(citation: params[:doi], published: published?)
+      metadata_extraction_service.from_citation(citation: params[:doi], published: published?)
     elsif params.key?(:work_file)
-      grobid_service.from_file(path: work_file.path, published: published?)
+      metadata_extraction_service.from_file(path: work_file.path, published: published?)
     else
       WorkForm.new(published: published?)
     end
