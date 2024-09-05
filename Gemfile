@@ -53,6 +53,8 @@ gem 'csv'
 gem 'edtf'
 gem 'faraday' # For posting to grobid web service
 gem 'faraday-multipart'
+gem 'gemini-ai'
+gem 'hexapdf'
 gem 'honeybadger'
 gem 'kaminari'
 gem 'observer' # For citeproc-ruby

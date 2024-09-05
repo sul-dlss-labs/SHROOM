@@ -71,7 +71,7 @@ Export the metadata for a collection to line-oriented JSON: `bin/rake "export:js
 ```
 
 ## Evaluation
-To compare groundtruth metadata from a JSONL file against metadata produced by a metadata extraction service (e.g., GrobidService):
+To compare groundtruth metadata from a JSONL file against metadata produced by a metadata extraction service (e.g., MetadataExtractionService::Grobid):
 ```
 bin/rails r "EvaluationRunner.call(limit: 2)"
 PASS: druid:hc954ws1639

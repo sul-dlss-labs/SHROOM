@@ -9,7 +9,7 @@ class EvaluationRunner
   end
 
   def initialize(groundtruth_json_filepath: 'export.jsonl', dataset_path: 'dataset',
-                 metadata_extraction_service: GrobidService, limit: nil, output: $stdout)
+                 metadata_extraction_service: MetadataExtractionService, limit: nil, output: $stdout)
     @groundtruth_json_filepath = groundtruth_json_filepath
     @dataset_path = dataset_path
     @metadata_extraction_service = metadata_extraction_service
@@ -21,9 +21,10 @@ class EvaluationRunner
     runner_works.each do |runner_work|
       work_file_path = File.join(dataset_path, runner_work.filename)
       expected_work_form = runner_work.work_form
-      actual_work_form = metadata_extraction_service.from_file(path: work_file_path,
-                                                               published: expected_work_form.published?,
-                                                               logger: null_logger)
+      actual_work_form = metadata_extraction_service
+                         .new(logger: null_logger)
+                         .from_file(path: work_file_path,
+                                    published: expected_work_form.published?)
       errors = EvaluatorService.call(expected: expected_work_form, actual: actual_work_form)
       output_errors(errors:, runner_work:)
     end
