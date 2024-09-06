@@ -39,7 +39,6 @@ class WorkForm < BaseForm
 
   # Published articles have a single related resource.
   attribute :related_resource_citation, :string
-  validates :related_resource_citation, presence: true, if: :published?
 
   attribute :related_resource_doi, :string
   validates :related_resource_doi, format: { with: DoiSupport::REGEX }, allow_blank: true, if: :published?
