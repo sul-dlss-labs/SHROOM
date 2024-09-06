@@ -23,13 +23,16 @@ class MetadataExtractionService
     # @param [Boolean] published whether the work is a published article
     # @return [WorkForm] a Work model with metadata extracted from the PDF
     # @raise [Error] if there is an error extracting metadata from the PDF
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength
     def from_file(path:, published: false)
-      file_data = PdfSupport.first_pages(path:)
+      file_data = PdfSupport.subset_pages(path:)
       request = FromFileRequestGenerator.new(file_data:, published:).call
       work_attrs = execute_request(request:)
       work_attrs['authors'].each do |author_attrs|
-        author_request = AuthorRequestGenerator.new(file_data:,
-                                                    author: "#{author_attrs['first_name']} #{author_attrs['last_name']}").call
+        author_request = AuthorRequestGenerator
+                         .new(file_data:,
+                              author: "#{author_attrs['first_name']} #{author_attrs['last_name']}").call
         author_attrs.merge!(execute_request(request: author_request))
       end
       if published
@@ -40,6 +43,8 @@ class MetadataExtractionService
       end
       to_work_form(work_attrs:, published:)
     end
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength
 
     # @param [String] citation for the work
     # @param [Boolean] published whether the work is a published article
@@ -305,6 +310,7 @@ class MetadataExtractionService
           - The organization may be a university, college, or government agency.
           - Do not include a school in the organization.
           - Omit an organization when it is a place.
+          - Remove duplicate affiliations.
         TEXT
       end
     end
@@ -346,7 +352,7 @@ class MetadataExtractionService
         <<~TEXT
           You are a document entity extraction specialist. Given a document, your task is to extract the text value of entities from the document.
 
-          "If there is a citation for the article titled "#{title}", return it. If there is no citation, return "".
+          If there is a citation for the article titled "#{title}", return it. If there is no citation, return "".
 
           - The JSON schema must be followed during the extraction. Do not generate additional entities.
           - The citation may be identified by phrases such as "Cite as" or "see".
