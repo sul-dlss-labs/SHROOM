@@ -4,4 +4,4 @@ sdr_api:
 dor_services:
   url: https://dor-services-qa-lb.stanford.edu
 
-default_collection: druid:rh956cs5174
+default_collection: druid:jj439xh9582
