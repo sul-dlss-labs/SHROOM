@@ -247,7 +247,7 @@ class MetadataExtractionService
           - The JSON schema must be followed during the extraction. Do not generate additional entities.
           - The values must only include text strings found in the document.
           - The document may be missing some entities, for example, "abstract". Omit a field when the entity is missing.
-          - "first_name" should include middle names, initials, etc.
+          - "first_name" should include middle names, initials, etc. Initials should be followed by a period.
           - Remove line breaks from the "abstract", except between paragraphs.
           #{related_resource_prompt_text if published}
         TEXT
@@ -301,6 +301,7 @@ class MetadataExtractionService
 
           - The JSON schema must be followed during the extraction. Do not generate additional entities.
           - The values must only include text strings found in the document.
+          - The affiliation may be linked to the author by a footnote or a superscript number that follows the author's name.
           - The organization may be a university, college, or government agency.
           - Do not include a school in the organization.
           - Omit an organization when it is a place.
@@ -345,11 +346,10 @@ class MetadataExtractionService
         <<~TEXT
           You are a document entity extraction specialist. Given a document, your task is to extract the text value of entities from the document.
 
-          "Extract a citation for the article titled "#{title}".
+          "If there is a citation for the article titled "#{title}", return it. If there is no citation, return "".
 
           - The JSON schema must be followed during the extraction. Do not generate additional entities.
-          - The document may contain a citation. It may be identified by phrases such as "Cite as" or "see".
-          - If the document does not contain a citation, generate one in the APA format.
+          - The citation may be identified by phrases such as "Cite as" or "see".
         TEXT
       end
     end
