@@ -50,11 +50,9 @@ Export the metadata for a collection to line-oriented JSON: `bin/rake "export:js
             "last_name": STRING (REQUIRED),
             "affiliations": [
                 {
-                    "department": STRING,
                     "organization": STRING (REQUIRED)
                 }
-            ],
-            "orcid": STRING (for example, https://orcid.org/0000-0003-1527-0030)
+            ]
         }
     ],
     "abstract": STRING,

@@ -150,9 +150,6 @@ class MetadataExtractionService
                     items: {
                       type: 'object',
                       properties: {
-                        department: {
-                          type: 'string'
-                        },
                         organization: {
                           type: 'string'
                         }
@@ -219,8 +216,6 @@ class MetadataExtractionService
           - The values must only include text strings found in the document.
           - The document may be missing some entities, for example, "abstract". Omit a field when the entity is missing.
           - "first_name" should include middle names, initials, etc.
-          - For "affiliation", when "department" is the same as "organization", omit "department".
-          - "orcid" should be in the format of a URL, for example, https://orcid.org/0000-0003-1527-0030.
           - Remove line breaks from the "abstract", except between paragraphs.
           #{related_resource_prompt_text if published}
         TEXT

@@ -14,11 +14,9 @@ def create_request_dro
                                                       surname: 'Littman',
                                                       affiliations: [
                                                         {
-                                                          organization: 'Library of Congress',
-                                                          department: 'Repository Development Center'
+                                                          organization: 'Library of Congress'
                                                         }
-                                                      ],
-                                                      orcid: 'https://orcid.org/0000-0003-1527-0030'),
+                                                      ]),
           CocinaDescriptionSupport.person_contributor(forename: 'Lynn',
                                                       surname: 'Connaway')
         ],
@@ -53,12 +51,8 @@ def create_dro
           CocinaDescriptionSupport.person_contributor(forename: 'Justin',
                                                       surname: 'Littman',
                                                       affiliations: [
-                                                        {
-                                                          organization: 'Library of Congress',
-                                                          department: 'Repository Development Center'
-                                                        }
-                                                      ],
-                                                      orcid: 'https://orcid.org/0000-0003-1527-0030'),
+                                                        { organization: 'Library of Congress' }
+                                                      ]),
           CocinaDescriptionSupport.person_contributor(forename: 'Lynn',
                                                       surname: 'Connaway')
         ],

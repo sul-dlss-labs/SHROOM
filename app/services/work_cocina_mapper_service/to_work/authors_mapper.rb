@@ -22,8 +22,7 @@ class WorkCocinaMapperService
           AuthorForm.new(
             first_name: contributor.name.first.structuredValue.find { |name| name.type == 'forename' }.value,
             last_name: contributor.name.first.structuredValue.find { |name| name.type == 'surname' }.value,
-            affiliations: affiliations_for(contributor),
-            orcid: orcid_for(contributor)
+            affiliations: affiliations_for(contributor)
           )
         end
       end
@@ -40,24 +39,8 @@ class WorkCocinaMapperService
         end
       end
 
-      def orcid_for(contributor)
-        orcid_identifier = contributor.identifier.find { |identifier| identifier.type == 'ORCID' }
-        return unless orcid_identifier
-
-        orcid_id = orcid_identifier.value
-        prefix = orcid_identifier.source&.uri || OrcidSupport::PREFIX
-        "#{prefix}/#{orcid_id}"
-      end
-
       def affiliation_for(note)
-        if note.structuredValue.present?
-          organization = note.structuredValue[0]&.value
-          department = note.structuredValue[1]&.value
-        else
-          organization = note.value
-          department = nil
-        end
-        AffiliationForm.new(organization:, department:)
+        AffiliationForm.new(organization: note.value)
       end
     end
   end

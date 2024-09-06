@@ -31,8 +31,7 @@ class CocinaDescriptionSupport
   # @param surname [String] the surname of the person
   # @param role [Symbol] the role of the person from ROLES
   # @param affiliations [Array<Hash>] the affiliations of the person that can be passed to affiliation()
-  # @param orcid [String] the ORCID of the person (as a URL)
-  def self.person_contributor(surname:, forename: '', role: :AUTHOR, affiliations: [], orcid: nil)
+  def self.person_contributor(surname:, forename: '', role: :AUTHOR, affiliations: [])
     {
       name: [
         {
@@ -44,8 +43,7 @@ class CocinaDescriptionSupport
       ],
       type: 'person',
       role: [ROLES.fetch(role)],
-      note: affiliations.map { |affiliation_attrs| affiliation(**affiliation_attrs) }.presence,
-      identifier: orcid.present? ? [orcid_identifier(orcid:)] : nil
+      note: affiliations.map { |affiliation_attrs| affiliation(**affiliation_attrs) }.presence
     }.compact
   end
 
@@ -95,25 +93,8 @@ class CocinaDescriptionSupport
     end
   end
 
-  def self.affiliation(organization:, department: nil)
-    { type: 'affiliation' }.tap do |params|
-      if department.present?
-        params[:structuredValue] = [
-          { value: organization },
-          { value: department }
-        ]
-      else
-        params[:value] = organization
-      end
-    end
-  end
-
-  def self.orcid_identifier(orcid:)
-    return unless orcid
-
-    source, value = OrcidSupport.split(orcid)
-
-    { type: 'ORCID', value:, source: { uri: source } }
+  def self.affiliation(organization:)
+    { type: 'affiliation', value: organization }
   end
 
   def self.related_resource_note(citation:)

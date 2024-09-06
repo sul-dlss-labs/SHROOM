@@ -13,9 +13,6 @@ class AuthorForm < BaseForm
     affiliations.compact_blank!
   end
 
-  attribute :orcid, :string
-  validates :orcid, format: { with: OrcidSupport::REGEX }, allow_blank: true
-
   def affiliations_attributes=(attributes)
     self.affiliations = attributes.map { |_, affiliation| AffiliationForm.new(affiliation) }
   end

@@ -64,12 +64,8 @@ class EvaluatorService
 
   def evaluate_author(actual_author:, expected_author:)
     for_label = "author #{expected_author.first_name} #{expected_author.last_name}"
-    evaluate_field(field: :orcid, expected_item: expected_author, actual_item: actual_author,
-                   for_label:)
     evaluate_sets(field: :affiliations,
-                  map_func: lambda { |affiliation|
-                              [affiliation.department, affiliation.organization].compact.join(', ')
-                            },
+                  map_func: ->(affiliation) { affiliation.organization },
                   expected_item: expected_author, actual_item: actual_author, for_label:)
   end
 

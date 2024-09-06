@@ -4,9 +4,5 @@
 <%= form.bs_label :last_name, class: 'mt-2' %>
 <%= form.bs_text_field :last_name %>
 <%= form.bs_invalid_feedback :last_name %>
-<%= form.bs_label :orcid, class: 'mt-2' %>
-<%= form.bs_text_field :orcid %>
-<%= form.bs_invalid_feedback :orcid %>
-<div class="form-text">For example, https://orcid.org/0000-0003-1527-0030.</div>
 
 <%= render NestedFormComponent.new(form:, model_class: AffiliationForm, field: :affiliations, form_component: Works::AffiliationFormComponent) %>

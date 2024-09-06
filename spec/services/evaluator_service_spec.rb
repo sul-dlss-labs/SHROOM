@@ -27,9 +27,7 @@ RSpec.describe EvaluatorService do
     {
       first_name: 'Justin',
       last_name: 'Littman',
-      affiliations: [{ organization: 'Library of Congress',
-                       department: 'Repository Development Center' }],
-      orcid: 'https://orcid.org/0000-0003-1527-0030'
+      affiliations: [{ organization: 'Library of Congress' }]
     }
   end
   let(:author2) { { first_name: 'Lynn', last_name: 'Connaway' } }
@@ -103,17 +101,6 @@ RSpec.describe EvaluatorService do
     it 'returns an error' do
       expect(errors.length).to eq 1
       expect(errors.first.error).to eq 'Authors do not match'
-    end
-  end
-
-  context 'when orcid mismatch' do
-    before do
-      actual.authors.first.orcid = 'https://orcid.org/0000-0000-0000-0000'
-    end
-
-    it 'returns an error' do
-      expect(errors.length).to eq 1
-      expect(errors.first.error).to eq 'Orcid does not match for author Justin Littman'
     end
   end
 

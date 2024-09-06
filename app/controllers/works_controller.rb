@@ -99,7 +99,7 @@ class WorksController < ApplicationController
       :related_resource_citation, :published, :collection_druid,
       :related_resource_doi,
       authors_attributes: [
-        :first_name, :last_name, :orcid, { affiliations_attributes: %i[organization department] }
+        :first_name, :last_name, { affiliations_attributes: %i[organization] }
       ],
       keywords_attributes: %i[value]
     )

@@ -3,11 +3,7 @@
 # Model for an affiliation
 class AffiliationForm < BaseForm
   attribute :organization, :string
-  validates :first_name, presence: true
+  validates :organization, presence: true
 
-  attribute :department, :string
-
-  def blank?
-    organization.blank? && department.blank?
-  end
+  delegate :blank?, to: :organization
 end

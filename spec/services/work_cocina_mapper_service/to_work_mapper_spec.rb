@@ -11,9 +11,7 @@ RSpec.describe WorkCocinaMapperService::ToWorkMapper do
     AuthorForm.new(
       first_name: 'Justin',
       last_name: 'Littman',
-      affiliations: [AffiliationForm.new(organization: 'Library of Congress',
-                                         department: 'Repository Development Center')],
-      orcid: 'https://orcid.org/0000-0003-1527-0030'
+      affiliations: [AffiliationForm.new(organization: 'Library of Congress')]
     )
   end
   let(:author2) { AuthorForm.new(first_name: 'Lynn', last_name: 'Connaway') }
