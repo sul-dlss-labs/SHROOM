@@ -1,6 +1,6 @@
 <div>
     <%= form.bs_label :collection_druid, 'Collection' %>
-    <%= form.bs_collection_select :collection_druid, collections, :druid, :title, { include_blank: true } %>
+    <%= form.bs_collection_select :collection_druid, collections, :druid, :title, { include_blank: true, selected: Settings.default_collection } %>
 
     <%= form.bs_label :title, class: 'mt-2' %>
     <%= form.bs_text_field :title %>
