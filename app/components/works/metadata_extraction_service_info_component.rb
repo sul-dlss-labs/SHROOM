@@ -18,7 +18,7 @@ module Works
 
     def body_for(field)
       body = service.send(field)
-      return body unless body.is_a?(Hash)
+      return body unless body.is_a?(Hash) || body.is_a?(Array)
 
       JSON.pretty_generate(body)
     end
