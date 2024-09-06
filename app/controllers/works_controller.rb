@@ -18,7 +18,8 @@ class WorksController < ApplicationController
 
   def new
     @work_form = build_new_work_form(work_file: @work_file)
-  rescue MetadataExtractionService::Error
+  rescue MetadataExtractionService::Error => e
+    Honeybadger.notify(e)
     redirect_to works_path, alert: 'Sorry! Unable to process the PDF.'
   end
 
