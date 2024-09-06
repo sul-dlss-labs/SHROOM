@@ -10,7 +10,7 @@
 <%= render FormLayoutComponent.new(work_file: @work_file) do |component| %>
     <% component.with_form do %>
         <%= form_with model: @work_form, builder: ShroomFormBuilder, data: { controller: 'submits-with', action: 'submits-with#showStatus' } do |form| %>
-            <%= form.hidden_field(:work_file, value: params[:work_file]) if params.key?(:work_file) %>
+            <%= form.hidden_field(:work_file, value: @work_file_param) if @work_file_param %>
             <%= render 'form', form:, work_form: @work_form, collections: @collections %>
         <% end %>
 
