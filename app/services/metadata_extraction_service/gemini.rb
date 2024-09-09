@@ -300,17 +300,10 @@ class MetadataExtractionService
 
       def prompt_text
         <<~TEXT
-          You are a document entity extraction specialist. Given a document, your task is to extract the text value of entities from the document.
+          "#{author}" is an author of the article. According to this article, what organizations or universities are they affiliated with?
 
-          "#{author}" is an author of the document. Extract the affiliations for this author.
-
-          - The JSON schema must be followed during the extraction. Do not generate additional entities.
-          - The values must only include text strings found in the document.
-          - The affiliation may be linked to the author by a footnote or a superscript number that follows the author's name.
-          - The organization may be a university, college, or government agency.
-          - Do not include a school in the organization.
-          - Omit an organization when it is a place.
-          - Remove duplicate affiliations.
+          - The author may have multiple affiliations. Include all affiliations.
+          - For each organization, only give the university or institution, not the department, division, school, center, institute, or location.
         TEXT
       end
     end
