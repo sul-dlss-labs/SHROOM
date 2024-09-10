@@ -33,7 +33,11 @@ class MetadataExtractionService
         author_request = AuthorRequestGenerator
                          .new(file_data:,
                               author: "#{author_attrs['first_name']} #{author_attrs['last_name']}").call
-        author_attrs.merge!(execute_request(request: author_request))
+        addl_author_attrs = execute_request(request: author_request)
+        addl_author_attrs['affiliations'] = addl_author_attrs['affiliations'].uniq do |affiliation|
+          affiliation['organization']
+        end
+        author_attrs.merge!(addl_author_attrs)
       end
       if published
         citation_request = CitationRequestGenerator.new(title: work_attrs['title'], file_data:).call
