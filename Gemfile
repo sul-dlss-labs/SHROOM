@@ -57,8 +57,12 @@ gem 'gemini-ai'
 gem 'hexapdf'
 gem 'honeybadger'
 gem 'kaminari'
+gem 'neighbor' # For ROR searching
 gem 'observer' # For citeproc-ruby
+gem 'parallel'
 gem 'sidekiq'
+gem 'torch-rb' # For ROR searching
+gem 'transformers-rb' # For ROR searching
 gem 'view_component'
 gem 'whenever', require: false
 

@@ -53,7 +53,7 @@ class WorkCocinaMapperService
 
       def affiliation_params_for(contributor)
         contributor.affiliations.map do |affiliation|
-          { organization: affiliation.organization }.compact
+          { organization: affiliation.organization, ror_id: affiliation.ror_id }.compact
         end
       end
 

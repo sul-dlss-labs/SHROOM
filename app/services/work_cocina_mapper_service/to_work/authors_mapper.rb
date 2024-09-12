@@ -40,7 +40,8 @@ class WorkCocinaMapperService
       end
 
       def affiliation_for(note)
-        AffiliationForm.new(organization: note.value)
+        ror_identifier = note.identifier.find { |identifier| identifier.type == 'ROR' }
+        AffiliationForm.new(organization: note.value, ror_id: ror_identifier&.uri)
       end
     end
   end

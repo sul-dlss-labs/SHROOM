@@ -18,6 +18,10 @@ class WorksController < ApplicationController
 
   def new
     @work_form = build_new_work_form(work_file: @work_file)
+    time = Benchmark.realtime do
+      RorEmbeddings::AffiliationOptions.call(work_form: @work_form)
+    end
+    Rails.logger.info("AffiliationOptions took #{time} seconds")
   rescue MetadataExtractionService::Error => e
     Honeybadger.notify(e)
     redirect_to works_path, alert: 'Sorry! Unable to process the PDF.'
@@ -25,10 +29,12 @@ class WorksController < ApplicationController
 
   def edit
     @work_form = WorkCocinaMapperService.to_work(cocina_object: @cocina_object)
+    RorEmbeddings::AffiliationOptions.call(work_form: @work_form)
   rescue WorkCocinaMapperService::UnmappableError
     render :unmappable, status: :unprocessable_entity
   end
 
+  # rubocop:disable Metrics/AbcSize
   def create
     @work_form = WorkForm.new(work_params)
     if @work_form.valid?
@@ -40,10 +46,12 @@ class WorksController < ApplicationController
 
       redirect_to @work
     else
+      RorEmbeddings::AffiliationOptions.call(work_form: @work_form)
       flash.now[:error] = 'Validation failed. See below for details.'
       render :new, status: :unprocessable_entity
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def edit_button
     return render :edit_button, layout: false if Sdr::VersionService.openable?(druid: @work.druid)
@@ -51,6 +59,7 @@ class WorksController < ApplicationController
     head :no_content
   end
 
+  # rubocop:disable Metrics/AbcSize
   def update
     @work_form = WorkForm.new(work_params)
     if @work_form.valid?
@@ -64,10 +73,12 @@ class WorksController < ApplicationController
 
       redirect_to @work
     else
+      RorEmbeddings::AffiliationOptions.call(work_form: @work_form)
       flash.now[:error] = 'Validation failed. See below for details.'
       render :new, status: :unprocessable_entity
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   private
 
@@ -100,7 +111,7 @@ class WorksController < ApplicationController
       :related_resource_citation, :published, :collection_druid,
       :related_resource_doi,
       authors_attributes: [
-        :first_name, :last_name, { affiliations_attributes: %i[organization] }
+        :first_name, :last_name, { affiliations_attributes: %i[organization ror_id] }
       ],
       keywords_attributes: %i[value]
     )

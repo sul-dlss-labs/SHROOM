@@ -28,12 +28,13 @@ class MetadataExtractionService
     def from_file(path:, published: false)
       file_data = PdfSupport.subset_pages(path:)
       request = FromFileRequestGenerator.new(file_data:, published:).call
-      work_attrs = execute_request(request:)
-      work_attrs['authors'].each do |author_attrs|
+      work_attrs = execute_request(request:, key: "from-file-#{path}}")
+      Parallel.each(work_attrs['authors'], in_threads: 6) do |author_attrs|
+        author = "#{author_attrs['first_name']} #{author_attrs['last_name']}"
         author_request = AuthorRequestGenerator
                          .new(file_data:,
-                              author: "#{author_attrs['first_name']} #{author_attrs['last_name']}").call
-        addl_author_attrs = execute_request(request: author_request)
+                              author:).call
+        addl_author_attrs = execute_request(request: author_request, key: "author-#{author}-#{path}")
         addl_author_attrs['affiliations'] = addl_author_attrs['affiliations'].uniq do |affiliation|
           affiliation['organization']
         end
@@ -41,7 +42,7 @@ class MetadataExtractionService
       end
       if published
         citation_request = CitationRequestGenerator.new(title: work_attrs['title'], file_data:).call
-        citation_attrs = execute_request(request: citation_request)
+        citation_attrs = execute_request(request: citation_request, key: "citation-#{path}")
         citation_attrs['citation'].delete!('*') # remove any asterisks from the citation
         work_attrs.merge!(citation_attrs)
       end
@@ -80,17 +81,21 @@ class MetadataExtractionService
       )
     end
 
-    def execute_request(request:)
+    # rubocop:disable Metrics/AbcSize
+    def execute_request(request:, key:)
       @prompts << request.dig(:contents, :parts).find { |part| part.key?(:text) }[:text]
       @schemas << request.dig(:generationConfig, :response_schema)
-      response = client.generate_content(request)
-      content_json = response.dig('candidates', 0, 'content', 'parts', 0, 'text')
+      content_json = Rails.cache.fetch(key, expires_in: 12.hours) do
+        response = client.generate_content(request)
+        response.dig('candidates', 0, 'content', 'parts', 0, 'text')
+      end
       content = JSON.parse(content_json)
       @contents << content.deep_dup
       content
     rescue Faraday::Error, JSON::ParserError => e
       raise MetadataExtractionService::Error, "Error extracting metadata from PDF: #{e.message}"
     end
+    # rubocop:enable Metrics/AbcSize
 
     def to_work_form(work_attrs:, published:, citation: nil)
       work_attrs['related_resource_doi'] = work_attrs.delete('doi')
@@ -304,10 +309,9 @@ class MetadataExtractionService
 
       def prompt_text
         <<~TEXT
-          "#{author}" is an author of the article. According to this article, what organizations or universities are they affiliated with?
+          #{author} is one of the authors of this article. According to this article, what organization or organizations is #{author} affiliated with?
 
-          - The author may have multiple affiliations. Include all affiliations.
-          - For each organization, only give the university or institution, not the department, division, school, center, institute, or location.
+          Return only strings found in the article.
         TEXT
       end
     end

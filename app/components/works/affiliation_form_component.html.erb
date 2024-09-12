@@ -1,3 +1,22 @@
+
 <%= form.bs_label :organization %>
-<%= form.bs_text_field :organization %>
-<%= form.bs_invalid_feedback :organization %>
+<div data-controller="affiliation">
+    <div class="form-check">
+        <%= form.bs_radio_button :option, '', checked: form.object.affiliation_options.empty?, data: {action: "affiliation#toggleInputs"}  %>
+        <%= form.bs_radio_label :option, class: 'd-block' do %>
+            <%= form.bs_text_field :organization, data: {affiliation_target: 'input'} %>
+            <%= form.bs_invalid_feedback :organization %>
+        <% end %>
+    </div>
+
+    <% form.object.affiliation_options.each do |ror_id, ror_label, location| %>
+        <div class="form-check">
+            <%= form.bs_radio_button :option, ror_id, data: {action: "affiliation#toggleInputs"} %>
+            <%= form.bs_radio_label :option do %>
+                <%= ror_label %>, <%= location %> (<%= link_to(ror_id, target: '_blank', rel: 'noopener') %>)
+            <% end %>
+            <%= form.hidden_field :organization, value: ror_label, disabled: ror_id != form.object.option, data: {affiliation_target: 'input'} %>
+            <%= form.hidden_field :ror_id, value: ror_id, disabled: ror_id != form.object.option, data: {affiliation_target: 'input'} %>
+        </div>
+    <% end %>
+</div>

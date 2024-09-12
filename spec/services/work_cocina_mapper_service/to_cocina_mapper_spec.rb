@@ -27,7 +27,7 @@ RSpec.describe WorkCocinaMapperService::ToCocinaMapper do
     AuthorForm.new(
       first_name: 'Justin',
       last_name: 'Littman',
-      affiliations: [AffiliationForm.new(organization: 'Library of Congress')]
+      affiliations: [AffiliationForm.new(organization: 'Library of Congress', ror_id: 'https://ror.org/04p405e02')]
     )
   end
   let(:author2) { AuthorForm.new(first_name: 'Lynn', last_name: 'Connaway') }

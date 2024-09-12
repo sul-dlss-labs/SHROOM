@@ -14,7 +14,8 @@ def create_request_dro
                                                       surname: 'Littman',
                                                       affiliations: [
                                                         {
-                                                          organization: 'Library of Congress'
+                                                          organization: 'Library of Congress',
+                                                          ror_id: 'https://ror.org/04p405e02'
                                                         }
                                                       ]),
           CocinaDescriptionSupport.person_contributor(forename: 'Lynn',
@@ -51,7 +52,7 @@ def create_dro
           CocinaDescriptionSupport.person_contributor(forename: 'Justin',
                                                       surname: 'Littman',
                                                       affiliations: [
-                                                        { organization: 'Library of Congress' }
+                                                        { organization: 'Library of Congress', ror_id: 'https://ror.org/04p405e02' }
                                                       ]),
           CocinaDescriptionSupport.person_contributor(forename: 'Lynn',
                                                       surname: 'Connaway')

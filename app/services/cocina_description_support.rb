@@ -93,8 +93,21 @@ class CocinaDescriptionSupport
     end
   end
 
-  def self.affiliation(organization:)
-    { type: 'affiliation', value: organization }
+  def self.affiliation(organization:, ror_id: nil)
+    {
+      type: 'affiliation',
+      value: organization
+    }.tap do |affiliation|
+      if ror_id
+        affiliation[:identifier] = [{
+          uri: ror_id,
+          type: 'ROR',
+          source: {
+            code: 'ror'
+          }
+        }]
+      end
+    end
   end
 
   def self.related_resource_note(citation:)

@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_23_152928) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_10_161120) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "vector"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -48,6 +49,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_23_152928) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["druid"], name: "index_collections_on_druid", unique: true
+  end
+
+  create_table "rors", force: :cascade do |t|
+    t.string "ror_id", null: false
+    t.string "label", null: false
+    t.string "location"
+    t.sparsevec "embedding", limit: 30522
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ror_id"], name: "index_rors_on_ror_id", unique: true
   end
 
   create_table "work_files", force: :cascade do |t|

@@ -12,6 +12,7 @@ class AuthorForm < BaseForm
   before_validation do
     affiliations.compact_blank!
   end
+  validate :affiliations_are_valid
 
   def affiliations_attributes=(attributes)
     self.affiliations = attributes.map { |_, affiliation| AffiliationForm.new(affiliation) }
@@ -25,6 +26,21 @@ class AuthorForm < BaseForm
     end
     super
   end
+
+  # rubocop:disable Metrics/AbcSize
+  def affiliations_are_valid
+    affiliations.each do |affiliation|
+      affiliation.valid?
+      if affiliations.count { |check_affiliation| check_affiliation.organization == affiliation.organization } > 1
+        affiliation.errors.add(:organization, 'duplicate affiliation')
+      end
+
+      affiliation.errors.each do |error|
+        errors.add("affiliations.#{affiliations.index(affiliation)}.#{error.attribute}", error.message)
+      end
+    end
+  end
+  # rubocop:enable Metrics/AbcSize
 
   def blank?
     first_name.blank? && last_name.blank?
