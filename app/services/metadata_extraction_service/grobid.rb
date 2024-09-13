@@ -7,10 +7,6 @@ class MetadataExtractionService
       new(logger:).from_file(path:, published:)
     end
 
-    def self.from_citation(citation:, logger: Rails.logger, published: false)
-      new(logger:).from_citation(citation:, published:)
-    end
-
     # @param [Logger] logger
     def initialize(logger: Rails.logger)
       @logger = logger
@@ -23,17 +19,6 @@ class MetadataExtractionService
     def from_file(path:, published: false)
       @tei = fetch_tei_from_file(path:)
       @bibtex = fetch_tei_from_file(path:, tei: false) if published
-      tei_to_work(tei:, bibtex:)
-    end
-
-    # @param [String] citation for the work
-    # @param [Boolean] published whether the work is a published article
-    # @return [WorkForm] a Work model with metadata extracted from the PDF
-    # @raise [Error] if there is an error extracting metadata from the PDF
-    def from_citation(citation:, published: false)
-      tei_fragment = fetch_tei_from_citation(citation:)
-      @tei = "<TEI xmlns=\"http://www.tei-c.org/ns/1.0\">#{tei_fragment}</TEI>"
-      @bibtex = fetch_tei_from_citation(citation:, tei: false) if published
       tei_to_work(tei:, bibtex:)
     end
 

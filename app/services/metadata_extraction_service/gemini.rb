@@ -7,10 +7,6 @@ class MetadataExtractionService
       new(logger:).from_file(path:, published:)
     end
 
-    def self.from_citation(citation:, logger: Rails.logger, published: false)
-      new(logger:).from_citation(citation:, published:)
-    end
-
     # @param [Logger] logger
     def initialize(logger: Rails.logger)
       @logger = logger
@@ -50,16 +46,6 @@ class MetadataExtractionService
     end
     # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/MethodLength
-
-    # @param [String] citation for the work
-    # @param [Boolean] published whether the work is a published article
-    # @return [WorkForm] a Work model with metadata extracted from the PDF
-    # @raise [Error] if there is an error extracting metadata from the PDF
-    def from_citation(citation:, published: false)
-      request = FromCitationRequestGenerator.new(citation:, published:).call
-      work_attrs = execute_request(request:)
-      to_work_form(work_attrs:, published:, citation:)
-    end
 
     def info_fields
       %i[prompts schemas contents]
@@ -358,57 +344,6 @@ class MetadataExtractionService
           - The JSON schema must be followed during the extraction. Do not generate additional entities.
           - The citation may be identified by phrases such as "Cite as" or "see".
         TEXT
-      end
-    end
-
-    # Generates a request to the Gemini service from a citation
-    class FromCitationRequestGenerator < RequestGenerator
-      def initialize(citation:, published:)
-        @citation = citation
-        @published = published
-        super()
-      end
-
-      def contents
-        {
-          role: 'user',
-          parts: [
-            { text: prompt_text }
-          ]
-        }
-      end
-
-      attr_reader :citation
-
-      def prompt_text
-        <<~TEXT
-          You are a document entity extraction specialist. Given a citation for a document, your task is to extract the text value of entities from the citation.
-
-          - The JSON schema must be followed during the extraction. Do not generate additional entities.
-          - The values must only include text strings found in the citation.
-          - The document may be missing some entities. Omit those fields.
-          - "first_name" should include middle names, initials, etc.
-          - Do not include markdown or HTML in the values.
-          #{related_resource_prompt_text if published}
-
-          The citation is:
-          #{citation}
-        TEXT
-      end
-
-      def related_resource_prompt_text
-        <<~TEXT
-          - "doi" is the DOI (Digital Object Identifier) from this citation, for example, 10.5860/lrts.48n4.8259.
-        TEXT
-      end
-
-      def response_schema
-        schema = full_schema.deep_dup
-        schema[:properties].delete(:abstract)
-        schema[:properties].delete(:keywords)
-        schema[:properties].delete(:citation)
-        schema[:properties].delete(:doi) if published
-        schema
       end
     end
   end

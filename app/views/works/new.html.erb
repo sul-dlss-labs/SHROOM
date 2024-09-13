@@ -5,8 +5,6 @@
   </ol>
 </nav>
 
-<%= render Works::FallbackFormComponent.new(work_form: @work_form, work_file_id: params[:work_file], published: params[:published]) %>
-
 <%= render FormLayoutComponent.new(work_file: @work_file) do |component| %>
     <% component.with_form do %>
         <%= form_with model: @work_form, builder: ShroomFormBuilder, data: { controller: 'submits-with', action: 'submits-with#showStatus' } do |form| %>

@@ -18,10 +18,7 @@ class WorksController < ApplicationController
 
   def new
     @work_form = build_new_work_form(work_file: @work_file)
-    time = Benchmark.realtime do
-      RorEmbeddings::AffiliationOptions.call(work_form: @work_form)
-    end
-    Rails.logger.info("AffiliationOptions took #{time} seconds")
+    RorEmbeddings::AffiliationOptions.call(work_form: @work_form)
   rescue MetadataExtractionService::Error => e
     Honeybadger.notify(e)
     redirect_to works_path, alert: 'Sorry! Unable to process the PDF.'
@@ -86,19 +83,13 @@ class WorksController < ApplicationController
     @metadata_extraction_service ||= MetadataExtractionService.new
   end
 
-  # rubocop:disable Metrics/AbcSize
   def build_new_work_form(work_file:)
-    if params[:citation].present?
-      metadata_extraction_service.from_citation(citation: params[:citation], published: published?)
-    elsif params[:doi].present?
-      metadata_extraction_service.from_citation(citation: params[:doi], published: published?)
-    elsif params.key?(:work_file)
+    if params.key?(:work_file)
       metadata_extraction_service.from_file(path: work_file.path, published: published?)
     else
       WorkForm.new(published: published?)
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   def published?
     params[:published] == 'true'

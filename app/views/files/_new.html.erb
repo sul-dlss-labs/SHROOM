@@ -10,9 +10,5 @@
     <%= form.bs_label :file, 'Upload article:', class: 'mt-2' %>
     <%= form.file_field :file, required: true, accept: 'application/pdf', class: 'form-control', direct_upload: true %>
 
-    <%= form.bs_label :doi, 'DOI (optional):', class: 'mt-2' %>
-    <%= form.bs_text_field :doi, class: 'form-control', pattern: 'https://doi.org/10.\d+/.+' %>
-    <%= form.bs_help_text 'For example: https://doi.org/10.1177/1940161218781254' %>
-
     <%= form.submit 'Submit', class: 'btn btn-primary mt-3' %>
 <% end %>
