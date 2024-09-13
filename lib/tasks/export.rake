@@ -5,7 +5,7 @@ namespace :export do
   task :csv, [:collection_druid] => :environment do |_t, args|
     collection = Collection.find_by!(druid: args[:collection_druid])
 
-    rows = CsvService.call(works: collection.works)
+    rows = CsvService.call(works: collection.works.where.not(druid: nil))
     CSV.open('export.csv', 'w') do |csv|
       rows.each { |row| csv << row }
     end
@@ -18,7 +18,7 @@ namespace :export do
     collection = Collection.find_by!(druid: args[:collection_druid])
 
     File.open('export.jsonl', 'w') do |file|
-      collection.works.each do |work|
+      collection.works.where.not(druid: nil).find_each do |work|
         cocina_object = Sdr::Repository.find(druid: work.druid)
         work_form = WorkCocinaMapperService.to_work(cocina_object:, validate_lossless: false)
         hash = work_form.as_json
