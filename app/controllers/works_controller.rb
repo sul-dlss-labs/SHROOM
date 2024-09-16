@@ -85,7 +85,8 @@ class WorksController < ApplicationController
 
   def build_new_work_form(work_file:)
     if params.key?(:work_file)
-      metadata_extraction_service.from_file(path: work_file.path, published: published?)
+      work_form = metadata_extraction_service.from_file(path: work_file.path, published: published?)
+      Geonames::Clean.clean(work_form:)
     else
       WorkForm.new(published: published?)
     end
@@ -102,7 +103,7 @@ class WorksController < ApplicationController
       :related_resource_citation, :published, :collection_druid,
       :related_resource_doi,
       authors_attributes: [
-        :first_name, :last_name, { affiliations_attributes: %i[organization ror_id] }
+        :first_name, :last_name, { affiliations_attributes: %i[organization ror_id raw_organization] }
       ],
       keywords_attributes: %i[value]
     )

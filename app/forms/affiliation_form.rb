@@ -13,4 +13,6 @@ class AffiliationForm < BaseForm
   def option
     affiliation_options.first.first if affiliation_options.present?
   end
+
+  attribute :raw_organization, :string
 end

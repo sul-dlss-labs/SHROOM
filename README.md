@@ -54,6 +54,13 @@ If it crashes, loading can be continued with the resume flag.
 bin/rails runner "RorEmbeddings::Loader.call(json_filepath: 'ror-data/v1.51-2024-08-21-ror-data_schema_v2.json', resume: true)
 ```
 
+### Loading Geonames data
+The Geonames dataset can be downloaded and unzipped from https://download.geonames.org/export/dump/allCountries.zip.
+
+```
+bin/rails runner "Geonames::Loader.call(path: 'allCountryies.txt')"
+```
+
 ## Helpful tasks
 Export the metadata for a collection to CSV: `bin/rake "export:csv[druid:jk956kb4381]"`
 

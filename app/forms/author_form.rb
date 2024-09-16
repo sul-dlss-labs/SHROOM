@@ -11,6 +11,7 @@ class AuthorForm < BaseForm
   attribute :affiliations, array: true, default: -> { [] }
   before_validation do
     affiliations.compact_blank!
+    affiliations.uniq! { |affiliation| [affiliation.organization, affiliation.ror_id] }
   end
   validate :affiliations_are_valid
 

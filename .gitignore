@@ -48,3 +48,4 @@ export.jsonl
 workflow_service.log
 libtorch/
 ror-data/
+allCountries.txt
