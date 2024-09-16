@@ -44,11 +44,11 @@ module Geonames
       end
       all_names.to_a
     end
-  end
 
-  def names_for(parts)
-    [parts[1], parts[2]].tap do |names|
-      names.concat(parts[3].split(','))
-    end.map(&:downcase)
+    def names_for(parts)
+      [parts[1], parts[2]].tap do |names|
+        names.concat(parts[3].split(','))
+      end.map(&:downcase)
+    end
   end
 end

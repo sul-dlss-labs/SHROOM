@@ -58,7 +58,7 @@ bin/rails runner "RorEmbeddings::Loader.call(json_filepath: 'ror-data/v1.51-2024
 The Geonames dataset can be downloaded and unzipped from https://download.geonames.org/export/dump/allCountries.zip.
 
 ```
-bin/rails runner "Geonames::Loader.call(path: 'allCountryies.txt')"
+bin/rails runner "Geonames::Loader.call(path: 'allCountries.txt')"
 ```
 
 ## Helpful tasks
