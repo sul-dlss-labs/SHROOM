@@ -23,6 +23,8 @@ module Geonames
 
     def call
       parts = affiliation.split(/, ?/)
+      return affiliation if parts.empty?
+
       parts.pop while Geoname.exists?(name: parts.last.downcase)
       parts.join(', ')
     end
