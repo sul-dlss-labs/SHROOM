@@ -105,3 +105,58 @@ FAIL: druid:nv906wk0020 (6970.pdf)
     expected: Victor Lee, Christine Bywater, Robert Wachtel Pronovost, Kaifeng Cheng, Daniel Guimaraes
     actual:   Victor R Lee, Christine Bywater, Robert Wachtel, Kaifeng Cheng, Daniel Guimaraes
 ```
+
+## Creating a question / answer dataset
+Note:
+* The first time this is run, all of the PDFs will be downloaded from Google Cloud Storage.
+* Entries that are not articles and published before 2019 are filtered.
+
+### Prerequisites
+#### Install pdfalto
+```
+brew install cmake
+brew install automake
+brew install wget
+git clone https://github.com/kermitt2/pdfalto.git
+cd pdfalto
+git submodule update --init --recursive
+mkdir libs/freetype/mac/arm64
+mkdir libs/icu/mac/arm64
+mkdir libs/libxml/mac/arm64
+mkdir libs/image/png/mac/arm64
+mkdir libs/image/zlib/mac/arm64
+./install_deps.sh
+export C_INCLUDE_PATH=/opt/homebrew/include
+export CPLUS_INCLUDE_PATH=/opt/homebrew/include
+cmake .
+make
+```
+
+#### Download preprints metadata
+Available from https://storage.cloud.google.com/cloud-ai-platform-e215f7f7-a526-4a66-902d-eb69384ef0c4/preprints/metadata.jsonl
+
+### Generate summary
+```
+bin/rails runner "pp Dataset::Analyzer.summarize"
+
+{"title"=>{:total=>10782, :matches=>7338, :matches_articles=>7329},
+ "author"=>{:total=>125923, :matches=>97017, :matches_articles=>10188},
+ "all_authors"=>{:total=>10782, :matches=>6850, :matches_articles=>6841},
+ "affiliation"=>{:total=>82581, :matches=>31161, :matches_articles=>5272},
+ "all_affiliations_for_author"=>{:total=>125923, :matches=>47202, :matches_articles=>4967},
+ "all_affiliations"=>{:total=>10782, :matches=>1818, :matches_articles=>1815},
+ "abstract"=>{:total=>10782, :matches=>512, :matches_articles=>512}}
+```
+
+### Generate dataset
+```
+bin/rails runner "Dataset::Analyzer.question_dataset(output_filepath: 'question_dataset.jsonl')"
+
+head -1 question_dataset.jsonl | jq
+{
+  "filename": "www.biorxiv.org/W3164692211.pdf",
+  "question": "What is the title?",
+  "answer": "Integrated analysis of multimodal single-cell data",
+  "field": "title"
+}
+```

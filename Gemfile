@@ -54,6 +54,7 @@ gem 'edtf'
 gem 'faraday' # For posting to grobid web service
 gem 'faraday-multipart'
 gem 'gemini-ai'
+gem 'google-cloud-storage' # For retrieving dataset files
 gem 'hexapdf'
 gem 'honeybadger'
 gem 'kaminari'
