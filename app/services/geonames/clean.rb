@@ -8,6 +8,8 @@ module Geonames
     end
 
     def self.clean(work_form:)
+      return work_form unless Settings.features_enabled.clean_geonames
+
       work_form.authors.each do |author|
         author.affiliations.each do |affiliation|
           affiliation.raw_organization = affiliation.organization

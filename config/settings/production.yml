@@ -5,3 +5,7 @@ dor_services:
   url: https://dor-services-qa-lb.stanford.edu
 
 default_collection: druid:nk652wp5367
+
+features_enabled:
+  ror: false
+  clean_geonames: false

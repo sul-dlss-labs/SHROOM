@@ -13,6 +13,8 @@ module RorEmbeddings
 
     # rubocop:disable Metrics/AbcSize
     def call
+      return unless Settings.features_enabled.ror
+
       work_form.authors.each do |author|
         Parallel.each(author.affiliations, in_threads: 6) do |affiliation|
           organization = affiliation.raw_organization || affiliation.organization

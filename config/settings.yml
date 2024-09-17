@@ -25,3 +25,7 @@ redis:
 # Use classname of the metadata extraction service.
 # metadata_extraction_service: Grobid
 metadata_extraction_service: Gemini
+
+features_enabled:
+  ror: true
+  clean_geonames: true
