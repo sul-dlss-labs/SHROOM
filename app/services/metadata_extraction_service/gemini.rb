@@ -25,16 +25,18 @@ class MetadataExtractionService
       file_data = PdfSupport.subset_pages(path:)
       request = FromFileRequestGenerator.new(file_data:, published:).call
       work_attrs = execute_request(request:, key: "from-file-#{path}}")
-      Parallel.each(work_attrs['authors'], in_threads: 6) do |author_attrs|
-        author = "#{author_attrs['first_name']} #{author_attrs['last_name']}"
-        author_request = AuthorRequestGenerator
-                         .new(file_data:,
-                              author:).call
-        addl_author_attrs = execute_request(request: author_request, key: "author-#{author}-#{path}")
-        addl_author_attrs['affiliations'] = addl_author_attrs['affiliations'].uniq do |affiliation|
-          affiliation['organization']
+      if Settings.features_enabled.affiliations
+        Parallel.each(work_attrs['authors'], in_threads: 6) do |author_attrs|
+          author = "#{author_attrs['first_name']} #{author_attrs['last_name']}"
+          author_request = AuthorRequestGenerator
+                           .new(file_data:,
+                                author:).call
+          addl_author_attrs = execute_request(request: author_request, key: "author-#{author}-#{path}")
+          addl_author_attrs['affiliations'] = addl_author_attrs['affiliations'].uniq do |affiliation|
+            affiliation['organization']
+          end
+          author_attrs.merge!(addl_author_attrs)
         end
-        author_attrs.merge!(addl_author_attrs)
       end
       if published
         citation_request = CitationRequestGenerator.new(title: work_attrs['title'], file_data:).call
