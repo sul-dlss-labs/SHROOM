@@ -62,7 +62,7 @@ gem 'neighbor' # For ROR searching
 gem 'observer' # For citeproc-ruby
 gem 'parallel'
 gem 'sidekiq'
-gem 'torch-rb' # For ROR searching
+gem 'torch-rb', '~> 0.17.1' # For ROR searching
 gem 'transformers-rb' # For ROR searching
 gem 'view_component'
 gem 'whenever', require: false
