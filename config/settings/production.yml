@@ -7,6 +7,6 @@ dor_services:
 default_collection: druid:nk652wp5367
 
 features_enabled:
-  ror: false
-  clean_geonames: false
-  affiliations: false
+  ror: true
+  clean_geonames: true
+  affiliations: true

@@ -23,5 +23,5 @@ redis:
   url: redis://localhost:6379/
 
 # Use classname of the metadata extraction service.
-metadata_extraction_service: Grobid
-# metadata_extraction_service: Gemini
+# metadata_extraction_service: Grobid
+metadata_extraction_service: Gemini
